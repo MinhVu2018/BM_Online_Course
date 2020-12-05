@@ -1,8 +1,64 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font: 14px 'Open Sans',sans-serif;
 }
 
+/* This css is for footer */
 a {
-  color: #00B7FF;
+  text-decoration: none;
+}
+.footer-wrapper {
+  background-color: #151515;
+  width: 100%;
+}
+.footer-text {
+  color: gray;
+}
+.footer-title {
+  color: whitesmoke;
+  font-size: 1.5em;
+  margin-block-start: 2.33em;
+  margin-block-end: 2.33em;
+}
+.footer-logo-img {
+  max-width: 100%;
+}
+.footer-logo {
+  margin-block-start: 2.33em;
+}
+.btn-submit {
+  display: block;
+  background-color: #b80257;
+  border-radius: 20px;
+  font-size: 15px;
+  color: white;
+  margin-top: 10px;
+  padding: 10px 20px 10px 20px;
+}
+.btn-submit:hover {
+  background-color: white;
+  color: #b80257;
+}
+.footer-input-email {
+  border-radius: 20px;
+  background: #272727;
+  border: none;
+  color: rgba(255,255,255,.6);
+  padding: .375rem .75rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  text-align: start;
+  white-space: nowrap;
+}
+.footer-input-email:focus {
+  outline-width: 0;
+}
+a:hover {
+  color: #b80257;
+  text-decoration: none;
 }
