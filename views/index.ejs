@@ -6,11 +6,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
     <link href="stylesheets/header_style.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/slide.css" rel="stylesheet" type="text/css">
     <title>BM Online Courses</title>
 </head>
 <body>
     <%- include('partials/header.ejs') %>
-    <img src="images/background_01.jpeg" width="100%" alt="background_01">
+    
+    <div class="slideshow">
+        <img src="https://wallpaperaccess.com/full/268330.jpg" alt="hd working image" class="bg-slide-img bg-slide-img-one" id="bg-one">
+        <img src="https://www.wallpapertip.com/wmimgs/68-682086_working-desk-with-blank-notepad-and-ready-to.jpg" alt="hd working image" class="bg-slide-img bg-slide-img-two" id="bg-two">
+        
+        <div class="intro-slide-text">
+           <p class="intro-slide-text-one">Học lập trình với các khóa học chất lượng để đi làm! </p>
+           <p class="intro-slide-text-two">CỘNG ĐỒNG HỌC LẬP TRÌNH <br>MIỄN PHÍ</p>
+           <button>KHÓA HỌC</button>
+           <button>THAM GIA NGAY</button>
+        </div>
+    </div>
+
 
     <div class = "container" style = "margin-top: 30px; margin-bottom: 30px;">
         <div class = "row">
@@ -39,5 +52,9 @@
     </div>
 
     <%- include('partials/footer.ejs') %>
+
+
+    <!--Javascrip-->
+    <script type="text/javascript" src="javascripts/slide.js"></script>
 </body>
 </html>
