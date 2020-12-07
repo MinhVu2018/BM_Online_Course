@@ -62,3 +62,7 @@
     background-size: 200% auto;
     background-image: linear-gradient(to right, #d0b14d 0%, #c7745d 51%, #bfa44a 100%);
 }
+
+.slideshow-btn-courses:focus, .slideshow-btn-join:focus {
+    outline-width: 0;
+}
