@@ -28,16 +28,16 @@ a {
 .footer-logo {
   margin-block-start: 2.33em;
 }
-.btn-submit {
+#btn-submit {
   display: block;
   background-color: #b80257;
   border-radius: 20px;
   font-size: 15px;
   color: white;
   margin-top: 10px;
-  padding: 10px 20px 10px 20px;
+  padding: 0px 50px 0px 50px;
 }
-.btn-submit:hover {
+#btn-submit:hover {
   background-color: white;
   color: #b80257;
 }

@@ -30,8 +30,35 @@
 
 .intro-slide-text-one {
     font-size: 14px;
+    margin: 0 10px 40px 10px;
+    font-weight: 900;
 }
 
 .intro-slide-text-two {
-    font-size: 32px;
+    font-size: 62px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.slideshow-button {
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+
+    border-radius: 50px;
+    /*background-color: #f05123;*/
+    height: 10%;
+    margin-right: 2em;
+    padding: 2% 5%;
+}
+.slideshow-button:hover {
+    background-position: right center; /* change the direction of the change here */
+}
+
+.slideshow-btn-courses, .slideshow-btn-join {
+    transition: 0.5s;
+    background-size: 200% auto;
+    background-image: linear-gradient(to right, #d0b14d 0%, #c7745d 51%, #bfa44a 100%);
 }
