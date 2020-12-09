@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const db = require('../public/javascripts/db');
+const db = require('../utils/db');
+const bcrypt = require('bcrypt');
 
 /* GET users listing. */
 router.get('/regis', function(req, res, next) {
