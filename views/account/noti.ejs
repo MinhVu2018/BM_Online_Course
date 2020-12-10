@@ -22,16 +22,17 @@
       <div class="col-sm-12">
         <div class="card shadow w-50 mx-auto">
           <div class="card-body text-center">
-            <h1 class="card-title">Ooops!</h1>
+            <h1 class="card-title"><%= status %></h1>
             <h2 class="text-danger"><%= message %></h2>
-            <p class="card-text">
-              Sorry, requested page not found.
-            </p>
           </div>
           <div class="card-footer d-flex justify-content-center">
             <a class="btn btn-primary" href="/" role="button">
               <i class="fa fa-home" aria-hidden="true"></i>
               Home
+            </a>
+            <a class="btn btn-primary" href="/users/regis" role="button" style="margin-left: 10px;">
+              <i class="fa fa-home" aria-hidden="true"></i>
+              Back
             </a>
             <a class="btn btn-success ml-2" href="mailto:admin@g.c" role="button">
               <i class="fa fa-envelope" aria-hidden="true"></i>
