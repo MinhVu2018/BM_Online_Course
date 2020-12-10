@@ -8,7 +8,7 @@ router.get('/regis', function(req, res, next) {
   res.render('account/signup', { title: 'Regisation' });
 });
 
-router.post('/regis', async function(req, res) {
+router.post('/regis', function(req, res, next) {
   var user = {
     "userName": req.body.name,
     "password": req.body.psw,
@@ -16,7 +16,12 @@ router.post('/regis', async function(req, res) {
     "type": "User"
   }
 
-  console.log(user);
+  const rePass = req.body.re_psw;
+  console.log(user)
+  if (user.password.localeCompare(rePass) != 0) {
+    res.send("Your password is not the same!");
+  }
+
   db.add(user, 'Users')
 });
 
