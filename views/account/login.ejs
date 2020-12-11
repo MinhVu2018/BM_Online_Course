@@ -1,14 +1,41 @@
-<form ]>
-    <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="/stylesheets/authen_style.css" rel="stylesheet" type="text/css">
+    <title>LogIn</title>
+</head> 
+<body style="background-image: url('../../images/login_bg.png');">
+    <form>
+        <div class = "d-flex justify-content-center my-3" >
+            <a href = "../routes/index.ejs">
+                <img src="/images/logo.png" alt="logo" height = 100px>
+            </a>
+        </div>
+        <div class="container" >
+            <h4 class = "d-flex justify-content-center"><b>Log In to Online_Course</b></h4> <br>
 
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-        
-        <button type="submit">Login</button>
-        <label>
-            <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
-    </div>
-</form> 
+            <label for="umail"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="umail" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+            
+            <label style="color: red;" id = "notification">Please enter a valid email address</label><br><br>
+
+            <div class = "clearfix">
+                <button type="submit"> Login </button>
+            </div>
+
+            <div class = "d-flex justify-content-center">
+                Don't have an account? &nbsp;
+                <a href = "regis" style="color:orangered">
+                    Sign Up
+                </a>
+            </div>
+        </div>
+    </form> 
+</body>
+</html>
