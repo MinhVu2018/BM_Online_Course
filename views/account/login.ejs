@@ -8,7 +8,7 @@
     <title>LogIn</title>
 </head> 
 <body style="background-image: url('../../images/login_bg.png');">
-    <form>
+    <form action="login" method="POST">
         <div class = "d-flex justify-content-center my-3" >
             <a href = "../routes/index.ejs">
                 <img src="/images/logo.png" alt="logo" height = 100px>
@@ -18,10 +18,10 @@
             <h4 class = "d-flex justify-content-center"><b>Log In to Online_Course</b></h4> <br>
 
             <label for="umail"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="umail" required>
+            <input type="text" placeholder="Enter Email" name="email" required>
 
             <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
+            <input type="password" placeholder="Enter Password" name="pwd" required>
             
             <label style="color: red;" id = "notification">Please enter a valid email address</label><br><br>
 

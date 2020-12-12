@@ -67,34 +67,33 @@ router.post('/login', async function(req, res, next) {
 
     const { email, pwd } = req.body;
 
+
     var user =  await db.load("SELECT * FROM Users WHERE email = '" + req.body.email + "'");
-    console.log(user[0]);
-    
-    if (user) { //still this to handle this
+
+    if (user == null) { //still this to handle this
       res.redirect('/users/login');
     } else {
       user = user[0][0];
     }
 
-    console.log(user);
-    var result = bcrypt.compareSync(pwd, user.password)
-    console.log(result);
-    if (!result) {
-      console.log(req.body.psw);
-      res.redirect('/users/login');
-    } else {
-      debug(`Thực hiện tạo mã Token, [thời gian sống 1 giờ.]`);
-      const accessToken = await jwtHelper.generateToken(user, accessTokenSecret, accessTokenLife);
-      
-      debug(`Thực hiện tạo mã Refresh Token, [thời gian sống 10 năm] =))`);
-      const refreshToken = await jwtHelper.generateToken(user, refreshTokenSecret, refreshTokenLife);
-      // Lưu lại 2 mã access & Refresh token, với key chính là cái refreshToken để đảm bảo unique và không sợ hacker sửa đổi dữ liệu truyền lên.
-      // lưu ý trong dự án thực tế, nên lưu chỗ khác, có thể lưu vào Redis hoặc DB
-      tokenList[refreshToken] = {accessToken, refreshToken};
+    bcrypt.compare(pwd, user.password, async function(err, result) {
+      if (!result) {
+        res.redirect('/users/login');
+      } else {
+        debug(`Thực hiện tạo mã Token, [thời gian sống 1 giờ.]`);
+        const accessToken = await jwtHelper.generateToken(user, accessTokenSecret, accessTokenLife);
         
-      debug(`Gửi Token và Refresh Token về cho client...`);
-      return res.status(200).json({accessToken, refreshToken});
-    }
+        debug(`Thực hiện tạo mã Refresh Token, [thời gian sống 10 năm] =))`);
+        const refreshToken = await jwtHelper.generateToken(user, refreshTokenSecret, refreshTokenLife);
+        // Lưu lại 2 mã access & Refresh token, với key chính là cái refreshToken để đảm bảo unique và không sợ hacker sửa đổi dữ liệu truyền lên.
+        // lưu ý trong dự án thực tế, nên lưu chỗ khác, có thể lưu vào Redis hoặc DB
+        tokenList[refreshToken] = {accessToken, refreshToken};
+          
+        debug(`Gửi Token và Refresh Token về cho client...`);
+        return res.status(200).json({accessToken, refreshToken});
+      }
+    })
+    
   } catch (error) {
     return res.status(500).json(error);
   }
