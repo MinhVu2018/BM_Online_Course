@@ -22,7 +22,7 @@
     height: 80px;
     padding: 0;
     margin: 10;
-    z-index: 1000;
+    /* z-index: 1000; */
 }
 
 .btn {
@@ -37,7 +37,7 @@
     margin-top: 15px;
     color:white;
 }
-.right {font-size: 18px; font-weight: bold;}
+.right {font-size: 16px; font-weight: bold;}
 .left {font-size: 16px}
 /* On mouse-over */
 .btn:hover {background: #eee;}
