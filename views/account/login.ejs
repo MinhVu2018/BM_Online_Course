@@ -23,8 +23,15 @@
             <label for="psw"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="pwd" required>
             
-            <label style="color: red;" id = "notification">Please enter a valid email address</label><br><br>
+            <% if (msg == 1) { %>
+                <p class="text-danger">Your password is not correct!</p>
+              <% } %>
+            <% if (msg == 2) { %>
+                <p class="text-danger">Your email does not exist.</p>
+              <% } %>
 
+            
+            <br><br>
             <div class = "clearfix">
                 <button type="submit"> Login </button>
             </div>

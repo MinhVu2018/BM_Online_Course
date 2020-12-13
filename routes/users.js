@@ -20,7 +20,9 @@ const refreshTokenSecret = "refresh-token-secret-example-trungquandev.com-green-
 
 /* GET users listing. */
 router.get('/regis', function(req, res, next) {
-  res.render('account/signup');
+  res.render('account/signup', {
+    msg: 0
+  });
 });
 
 router.post('/regis', async function(req, res, next) {
@@ -33,32 +35,40 @@ router.post('/regis', async function(req, res, next) {
 
   const rePass = req.body.re_psw;
 
-  if (user.userName.length > 10) {
-    res.render('account/noti', {
-      status: "Oppps",
-      message: "Your user name is too long"
-    })
-    return;
-  }
-  console.log(user, rePass)
   if (!(user.password === rePass)) {
-    res.render('account/noti', {
-      status: "Oppps",
-      message: "Your repeat password is not correct"
+    res.render('account/signup', {
+      msg: 1
     })
     return;
   }
 
+  var user =  await db.load("SELECT * FROM Users WHERE email = '" + req.body.email + "'");
+  if (user[0].length) { //still this to handle this
+    res.render('account/signup', {
+      msg: 2
+    })
+    return;
+  }
+  user = await db.load("SELECT * FROM User WHERE userName = '" + req.body.name + "'");
+  if (user[0].length) { //still this to handle this
+    res.render('account/signup', {
+      msg: 3
+    })
+    return;
+  }
+  
   user.password = bcrypt.hashSync(user.password, 10);
   db.add(user, 'Users');
   res.render('account/noti', {
-    status: "Congratulation",
-    message: "Your account has been regis success."
+    status: "Complete Registration",
+    message: "Please sign in to continue!"
   })
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('account/login');
+  res.render('account/login', {
+    msg: 0
+  });
 });
 
 router.post('/login', async function(req, res, next) {
@@ -70,15 +80,21 @@ router.post('/login', async function(req, res, next) {
 
     var user =  await db.load("SELECT * FROM Users WHERE email = '" + req.body.email + "'");
 
-    if (user == null) { //still this to handle this
-      res.redirect('/users/login');
+    if (!user[0].length) { //still this to handle this
+      res.render('account/login', {
+        msg: 2
+      })
+      return;
     } else {
       user = user[0][0];
     }
 
     bcrypt.compare(pwd, user.password, async function(err, result) {
       if (!result) {
-        res.redirect('/users/login');
+        res.render('account/login', {
+          msg: 1
+        })
+        return;
       } else {
         debug(`Thực hiện tạo mã Token, [thời gian sống 1 giờ.]`);
         const accessToken = await jwtHelper.generateToken(user, accessTokenSecret, accessTokenLife);
