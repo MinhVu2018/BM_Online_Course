@@ -6,10 +6,10 @@
     <title>BM Online Courses</title>
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="stylesheets/slide.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
 
 </head>
 <body>
@@ -52,49 +52,112 @@
                 Học mọi lúc mọi nơi
             </div>
         </div>
-        
     </div>
 
-    <!-- multi-item carousel -->
-    <div class="slideshow multi-item">
-        <h2 style="text-align: center; font-weight: bold;">Những khóa học nổi bật</h2>
+    <!-- Hot courses -->
+    <h2 style="text-align: center; font-weight: bold;">Những khóa học nổi bật</h2>
+    <div class="slider slider-products" style="width: 50%; margin:auto">
+        <div ><img src="images/1.jpg" class="img-fluid mx-auto d-block" alt="img1"></div>
+        <div><img src="images/2.jpg" class="img-fluid mx-auto d-block" alt="img2"></div>
+        <div><img src="images/3.jpg" class="img-fluid mx-auto d-block" alt="img3"></div>
+        <div><img src="images/4.jpg" class="img-fluid mx-auto d-block" alt="img4"></div>
+        <div><img src="images/5.jpg" class="img-fluid mx-auto d-block" alt="img5"></div>
+    </div>
+    <div class="slider slider-nav" style="margin-left:100px; margin-right:100px;">
+        <div><img src="images/1.jpg" class="img-fluid mx-auto d-block" alt="img1"></div>
+        <div><img src="images/2.jpg" class="img-fluid mx-auto d-block" alt="img2"></div>
+        <div><img src="images/3.jpg" class="img-fluid mx-auto d-block" alt="img3"></div>
+        <div><img src="images/4.jpg" class="img-fluid mx-auto d-block" alt="img4"></div>
+        <div><img src="images/5.jpg" class="img-fluid mx-auto d-block" alt="img5"></div>
+    </div>
 
-        <div class="container-fluid">
-            <div id="carousel-example" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                        <img src="images/1.jpg" class="img-fluid mx-auto d-block" alt="img1">
-                    </div>
-                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-                        <img src="images/2.jpg" class="img-fluid mx-auto d-block" alt="img2">
-                    </div>
-                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-                        <img src="images/3.jpg" class="img-fluid mx-auto d-block" alt="img3">
-                    </div>
-                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-                        <img src="images/4.jpg" class="img-fluid mx-auto d-block" alt="img4">
-                    </div>
-                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-                        <img src="images/5.jpg" class="img-fluid mx-auto d-block" alt="img5">
-                    </div>
-                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-                        <img src="images/6.jpg" class="img-fluid mx-auto d-block" alt="img6">
-                    </div>
-                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-                        <img src="images/7.jpg" class="img-fluid mx-auto d-block" alt="img7">
-                    </div>
-                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-                        <img src="images/8.jpg" class="img-fluid mx-auto d-block" alt="img8">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+    <!-- new courses -->
+    <h2 style="text-align: center; font-weight: bold;">Những khóa học mới</h2>
+    <div id="slider-slick-1" class="slider-slick" style="margin-left:100px; margin-right:100px">
+        <div style="margin:10px">
+            <img src="images/1.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/2.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/3.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/4.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/5.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/6.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/7.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/8.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/9.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/10.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+    </div>
+
+    <!-- top viewed courses -->
+    <h2 style="text-align: center; font-weight: bold;">Những khóa học được xem nhiều nhất</h2>
+    <div id="slider-slick-2" class="slider-slick" style="margin-left:100px; margin-right:100px">
+        <div style="margin:10px">
+            <img src="images/1.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/2.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/3.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/4.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/5.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/6.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/7.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/8.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/9.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+        <div style="margin:10px">
+            <img src="images/10.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        </div>
+    </div>
+
+    <!-- hot topics -->
+    <h2 style="text-align: center; font-weight: bold;">Những chủ đề "nóng" :)))))</h2>
+    <div class = "container" style = "margin-top: 30px; margin-bottom: 100px;">
+        <div class = "row">
+            <div class = "col">
+                <a href="#"><img class="mx-auto d-block" src="https://miro.medium.com/max/1200/1*pE2fOVDikEUwiQJlh4ggzg.jpeg" alt="category1" width="100%" height ="100%"></a>
+            </div>
+            <div class = "col">
+                <a href="#"><img class="mx-auto d-block" src="https://igb.vn/uploads/images/lap-trinh-app-mobile-va-nhung-dieu-chua-biet.jpg" alt="category2" width="100%" height ="100%"></a>
+            </div>
+        </div>
+        <div class = "row" style="margin-top:30px">
+            <div class = "col">
+                <a href="#"><img class="mx-auto d-block" src="https://nordiccoder.com/app/uploads/2020/01/59-data-analysis.jpg" alt="category3" width="100%" height ="100%"></a>
+            </div>
+            <div class = "col">
+                <a href="#"><img class="mx-auto d-block" src="images/ML.jpg" alt="category4" width="100%" height ="100%"></a>
             </div>
         </div>
     </div>
@@ -103,9 +166,8 @@
 
     <!--Javascrip-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="javascripts/slide.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="javascripts/header_script.js"></script>
+    <script type="text/javascript" src="javascripts/slide.js"></script>
 </body>
 </html>

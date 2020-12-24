@@ -7,27 +7,57 @@ function anotherSlide() {
 }
 anotherSlide()
 
-// multi-item carousel
-jQuery(document).ready(function() {
-	$('#carousel-example').on('slide.bs.carousel', function (e) {
-		var $e = $(e.relatedTarget);
-		var idx = $e.index();
-		var itemsPerSlide = 5;
-		var totalItems = $('.carousel-item').length;
-		
-		if (idx >= totalItems-(itemsPerSlide-1)) {
-			var it = itemsPerSlide - (totalItems - idx);
-			for (var i=0; i<it; i++) {
-	            // append slides to end
-				if (e.direction=="left") {
-					$('.carousel-item').eq(i).appendTo('.carousel-inner');
-				}
-				else {
-					$('.carousel-item').eq(0).appendTo('.carousel-inner');
-				}
-			}
-		}
-	});
-	
+jQuery('#slider-slick-1').slick({
+	slidesToShow: 4,
+	slidesToScroll: 1,
+	autoplay: true,
+	autoplaySpeed: 2000,
+	swipeToSlide: true,
 });
 
+jQuery('#slider-slick-2').slick({
+	slidesToShow: 4,
+	slidesToScroll: 1,
+	autoplay: true,
+	autoplaySpeed: 2000,
+	swipeToSlide: true,
+});
+
+// sync
+var numSlick = 0;
+$('.slider-products').each( function() {
+	numSlick++;
+	$(this).addClass( 'slider-' + numSlick ).slick({
+		autoplay:true,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		arrows: false,
+		fade: true,
+		asNavFor: '.slider-nav.slider-' + numSlick
+	});
+});
+
+numSlick = 0;
+$('.slider-nav').each( function() {
+	numSlick++;
+	$(this).addClass( 'slider-' + numSlick ).slick({
+		autoplay: true,
+		vertical: false,
+		centerMode: true,
+		centerPadding: '0px',
+		slidesToShow: 4,
+		slidesToScroll: 1,
+		asNavFor: '.slider-products.slider-' + numSlick,
+		arrow: false,
+		focusOnSelect: true,
+		swipeToSlide: true,
+		responsive: [
+		{
+			breakpoint: 800,
+			settings: {
+				slidesToShow: 4,
+			}
+		}
+		]
+	});
+});
