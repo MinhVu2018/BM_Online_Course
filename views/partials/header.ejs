@@ -42,11 +42,20 @@
                     </menu>
                 </nav>
             </div>
-        
+            
+            <% if (auth == false) { %>
             <div class="col d-flex justify-content-end">
                 <a href="/users/login"><button class="btn right">Đăng nhập</button></a>
                 <a href="/users/regis"><button class="btn right">Đăng ký</button></a>
             </div>
+            <% } %>
+            
+            <% if (auth == true) { %>
+            <div class="col d-flex justify-content-end">
+                <a href="/users/profile"><button class="btn right"><%= name %></button></a>
+                <a href="/users/logout"><button class="btn right">Đăng xuất</button></a>
+            </div>
+            <% } %>
             
         </div>
     </div>
