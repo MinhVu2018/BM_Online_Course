@@ -8,5 +8,9 @@
     "waitForConnections": true,
     "connectionLimit": 50,
     "queueLimit": 0
+  },
+  "gmail": {
+    "user": "bm.onlinecourses@gmail.com",
+    "pass": "BmOC123!"
   }
 }

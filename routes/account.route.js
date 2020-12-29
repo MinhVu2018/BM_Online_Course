@@ -1,8 +1,20 @@
 var express = require('express');
 var router = express.Router();
+var nodemailer = require("nodemailer");
+const config = require("../config/default.json").gmail
 const db = require('../models/user.model')
 const bcrypt = require('bcrypt');
-const auth = require('../middlewares/auth.mdw')
+const auth = require('../middlewares/auth.mdw');
+
+var user;
+var smtpTransport = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+      user: config.user,
+      pass: config.pass
+  }
+});
+var rand,mailOptions,host,link;
 
 /* GET users listing. */
 router.get('/regis', function(req, res, next) {
@@ -16,7 +28,7 @@ router.post('/regis', async function(req, res, next) {
   const hash = bcrypt.hashSync(req.body.psw, salt);
   const rehash = bcrypt.hashSync(req.body.re_psw, salt);
 
-  var user = {
+  user = {
     "userName": req.body.name,
     "password": hash,
     "email": req.body.email,
@@ -46,11 +58,51 @@ router.post('/regis', async function(req, res, next) {
     return;
   }
   
-  const result = await db.add(user, 'Users');
+  rand=Math.floor((Math.random() * 100) + 54);
+  host=req.get('host');
+  link="http://"+req.get('host')+"/users/verify?id="+rand;
+  mailOptions={
+    to : user.email,
+    subject : "Please confirm your Email account",
+    html : "Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify</a>"
+  }
+
+  smtpTransport.sendMail(mailOptions, function(error, response) {
+    if(error){
+      console.log(error);
+      res.end("error");
+    } else {
+      console.log("Message sent: " + response.message);
+      res.end("sent");
+    }
+
+  });
   res.render('account/noti', {
-    status: "Complete Registration",
-    message: "Please sign in to continue!"
-  })
+    status: "Welcome to Online Courses",
+    message: "Một mail xác thực đã được gửi đến tài khoản email của bạn! Vui lòng kiểm tra hộp thư để có thể sử dụng dịch vụ của chúng tôi."
+  });
+});
+
+router.get('/verify', async function(req,res) {
+  console.log(req.protocol+":/"+req.get('host'));
+  if((req.protocol+"://"+req.get('host'))==("http://"+host))
+  {
+      console.log("Domain is matched. Information is from Authentic email");
+      if(req.query.id==rand)
+      {
+          console.log("email is verified");
+          const result = await db.add(user, 'Users');
+          res.end("<h1>Email "+ mailOptions.to +" is been Successfully verified");
+      }
+      else
+      {
+          console.log("email is not verified");
+          res.end("<h1>Bad Request</h1>");
+      }
+  }
+  else {
+      res.end("<h1>Request is from unknown source");
+  }
 });
 
 router.get('/login', auth.isNotAuth, function(req, res, next) {
@@ -59,7 +111,7 @@ router.get('/login', auth.isNotAuth, function(req, res, next) {
   });
 });
 
-router.post('/login', async function(req, res, next) {
+router.post('/login', auth.isNotAuth, async function(req, res, next) {
   const email = req.body.email
   const password = req.body.pwd;
 
@@ -87,7 +139,6 @@ router.post('/login', async function(req, res, next) {
     status: "Đăng nhập thành công",
     message: "Chào mừng bạn đến với Onlince Courses!"
   })
-  
 });
 
 router.get('/logout', async function (req, res) {
