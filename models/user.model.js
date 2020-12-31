@@ -2,7 +2,7 @@ const db = require("../utils/db");
 
 module.exports = {
     async singleByUserName(username) {
-        const sql = `select * from Users where userName = '${username}'`;
+        const sql = `select * from Users where Username = '${username}'`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0)
         return null;
@@ -11,7 +11,7 @@ module.exports = {
     },
     
     async singleByEmail(email) {
-        const sql = `select * from Users where email = '${email}'`;
+        const sql = `select * from Users where Email = '${email}'`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0)
           return null;

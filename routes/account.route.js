@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var nodemailer = require("nodemailer");
-const config = require("../config/default.json").gmail
-const db = require('../models/user.model')
+const config = require("../config/default.json").gmail;
+const db = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const auth = require('../middlewares/auth.mdw');
 

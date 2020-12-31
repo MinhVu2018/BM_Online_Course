@@ -7,6 +7,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/slide.css" type="text/css">
+    <link rel="stylesheet" href="stylesheets/course.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
     <!-- Add the slick-theme.css if you want default styling -->
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
@@ -58,87 +59,62 @@
     <!-- Hot courses -->
     <h2 style="text-align: center; font-weight: bold;">Những khóa học nổi bật</h2>
     <div class="slider slider-products" style="width: 50%; margin:auto">
-        <div ><img src="images/1.jpg" class="img-fluid mx-auto d-block" alt="img1"></div>
-        <div><img src="images/2.jpg" class="img-fluid mx-auto d-block" alt="img2"></div>
-        <div><img src="images/3.jpg" class="img-fluid mx-auto d-block" alt="img3"></div>
-        <div><img src="images/4.jpg" class="img-fluid mx-auto d-block" alt="img4"></div>
-        <div><img src="images/5.jpg" class="img-fluid mx-auto d-block" alt="img5"></div>
+        <div><img src="images/courses/1.jpg" class="img-fluid mx-auto d-block" alt="img1"></div>
+        <div><img src="images/courses/2.jpg" class="img-fluid mx-auto d-block" alt="img2"></div>
+        <div><img src="images/courses/3.jpg" class="img-fluid mx-auto d-block" alt="img3"></div>
+        <div><img src="images/courses/4.jpg" class="img-fluid mx-auto d-block" alt="img4"></div>
+        <div><img src="images/courses/5.jpg" class="img-fluid mx-auto d-block" alt="img5"></div>
     </div>
     <div class="slider slider-nav" style="margin-left:100px; margin-right:100px;">
-        <div><img src="images/1.jpg" class="img-fluid mx-auto d-block" alt="img1"></div>
-        <div><img src="images/2.jpg" class="img-fluid mx-auto d-block" alt="img2"></div>
-        <div><img src="images/3.jpg" class="img-fluid mx-auto d-block" alt="img3"></div>
-        <div><img src="images/4.jpg" class="img-fluid mx-auto d-block" alt="img4"></div>
-        <div><img src="images/5.jpg" class="img-fluid mx-auto d-block" alt="img5"></div>
+        <div><img src="images/courses/1.jpg" class="img-fluid mx-auto d-block" alt="img1"></div>
+        <div><img src="images/courses/2.jpg" class="img-fluid mx-auto d-block" alt="img2"></div>
+        <div><img src="images/courses/3.jpg" class="img-fluid mx-auto d-block" alt="img3"></div>
+        <div><img src="images/courses/4.jpg" class="img-fluid mx-auto d-block" alt="img4"></div>
+        <div><img src="images/courses/5.jpg" class="img-fluid mx-auto d-block" alt="img5"></div>
     </div>
 
     <!-- new courses -->
     <h2 style="text-align: center; font-weight: bold;">Những khóa học mới</h2>
     <div id="slider-slick-1" class="slider-slick" style="margin-left:100px; margin-right:100px">
-        <div style="margin:10px">
-            <img src="images/1.jpg" class="img-fluid mx-auto d-block" alt="img1">
+        <% for(var i=0; i < topNewest.length; i++) { %>
+        <div>
+            <img src="images/courses/<%= topNewest[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative" alt="img1">
         </div>
-        <div style="margin:10px">
-            <img src="images/2.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/3.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/4.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/5.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/6.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/7.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/8.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/9.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/10.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
+        <% } %>
     </div>
 
     <!-- top viewed courses -->
     <h2 style="text-align: center; font-weight: bold;">Những khóa học được xem nhiều nhất</h2>
     <div id="slider-slick-2" class="slider-slick" style="margin-left:100px; margin-right:100px">
         <div style="margin:10px">
-            <img src="images/1.jpg" class="img-fluid mx-auto d-block" alt="img1">
+            <img src="images/courses/1.jpg" class="img-fluid mx-auto d-block" alt="img1">
         </div>
         <div style="margin:10px">
-            <img src="images/2.jpg" class="img-fluid mx-auto d-block" alt="img1">
+            <img src="images/courses/2.jpg" class="img-fluid mx-auto d-block" alt="img1">
         </div>
         <div style="margin:10px">
-            <img src="images/3.jpg" class="img-fluid mx-auto d-block" alt="img1">
+            <img src="images/courses/3.jpg" class="img-fluid mx-auto d-block" alt="img1">
         </div>
         <div style="margin:10px">
-            <img src="images/4.jpg" class="img-fluid mx-auto d-block" alt="img1">
+            <img src="images/courses/4.jpg" class="img-fluid mx-auto d-block" alt="img1">
         </div>
         <div style="margin:10px">
-            <img src="images/5.jpg" class="img-fluid mx-auto d-block" alt="img1">
+            <img src="images/courses/5.jpg" class="img-fluid mx-auto d-block" alt="img1">
         </div>
         <div style="margin:10px">
-            <img src="images/6.jpg" class="img-fluid mx-auto d-block" alt="img1">
+            <img src="images/courses/6.jpg" class="img-fluid mx-auto d-block" alt="img1">
         </div>
         <div style="margin:10px">
-            <img src="images/7.jpg" class="img-fluid mx-auto d-block" alt="img1">
+            <img src="images/courses/7.jpg" class="img-fluid mx-auto d-block" alt="img1">
         </div>
         <div style="margin:10px">
-            <img src="images/8.jpg" class="img-fluid mx-auto d-block" alt="img1">
+            <img src="images/courses/8.jpg" class="img-fluid mx-auto d-block" alt="img1">
         </div>
         <div style="margin:10px">
-            <img src="images/9.jpg" class="img-fluid mx-auto d-block" alt="img1">
+            <img src="images/courses/9.jpg" class="img-fluid mx-auto d-block" alt="img1">
         </div>
         <div style="margin:10px">
-            <img src="images/10.jpg" class="img-fluid mx-auto d-block" alt="img1">
+            <img src="images/courses/10.jpg" class="img-fluid mx-auto d-block" alt="img1">
         </div>
     </div>
 

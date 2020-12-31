@@ -12,5 +12,8 @@
   "gmail": {
     "user": "bm.onlinecourses@gmail.com",
     "pass": "BmOC123!"
+  },
+  "paginate": {
+    "limit": 6
   }
 }
