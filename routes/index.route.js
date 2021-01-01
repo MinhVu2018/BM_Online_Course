@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next) {
   if (req.session.auth === true) {
     res.render('index', { 
       auth: true,
-      name: req.session.authUser.userName,
+      name: req.session.authUser.Username,
       topCourses: topCourses,
       topNewest: topNewest,
       topView: topView,

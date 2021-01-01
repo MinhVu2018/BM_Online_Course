@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
     <!-- Add the slick-theme.css if you want default styling -->
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
 </head>
 <body>
@@ -75,10 +76,31 @@
 
     <!-- new courses -->
     <h2 style="text-align: center; font-weight: bold;">Những khóa học mới</h2>
-    <div id="slider-slick-1" class="slider-slick" style="margin-left:100px; margin-right:100px">
+    <div id="slider-slick-1" class="slider-slick" style="margin-left:100px; margin-right:100px;">
         <% for(var i=0; i < topNewest.length; i++) { %>
-        <div>
-            <img src="images/courses/<%= topNewest[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative" alt="img1">
+        <div class="card" style="margin: 10px; text-align: left;">
+            <div style="width: 100%; height: 170px">
+                <img src="images/courses/<%= topNewest[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1">
+                <div style="position: absolute; top: 25px; right: 10px;"><span class="badge badge-danger">FREE</span></div>
+            </div>
+            <div class="card-body" style="padding-top: 10px; padding-left: 0px; padding-right: 0px;">
+                <% if (topNewest[i].Category == 1) { %>
+                    <h5 class="card-title" style="color: black"><%= topNewest[i].Name %> <br> <span class="badge badge-info">Web</span></h5>
+                <% } %>
+                <% if (topNewest[i].Category == 2) { %>
+                    <h5 class="card-title" style="color: black"><%= topNewest[i].Name %> <br> <span class="badge badge-warning">App</span></h5>
+                <% } %>
+
+
+                <p style="color:black;"><i class="fas fa-chalkboard-teacher"></i> <%= topNewest[i].Teacher %>&emsp; &emsp; <i class="fas fa-users"></i> <%= topNewest[i].NumberStudent %></p>
+
+                <% for(var j=0; j < topNewest[i].Preview; j++) { %>
+                    <i class="fas fa-star" style="color: orange;"></i>
+                <% } %>
+                <% for(var j=0; j < 5 - topNewest[i].Preview; j++) { %>
+                    <i class="far fa-star" style="color: orange"></i>
+                <% } %>
+            </div>
         </div>
         <% } %>
     </div>
@@ -86,57 +108,52 @@
     <!-- top viewed courses -->
     <h2 style="text-align: center; font-weight: bold;">Những khóa học được xem nhiều nhất</h2>
     <div id="slider-slick-2" class="slider-slick" style="margin-left:100px; margin-right:100px">
-        <div style="margin:10px">
-            <img src="images/courses/1.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/courses/2.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/courses/3.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/courses/4.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/courses/5.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/courses/6.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/courses/7.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/courses/8.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/courses/9.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
-        <div style="margin:10px">
-            <img src="images/courses/10.jpg" class="img-fluid mx-auto d-block" alt="img1">
-        </div>
+        <% for(var i=0; i < topView.length; i++) { %>
+            <div class="card" style="margin: 10px; text-align: left;">
+                <div style="width: 100%; height: 170px">
+                    <img src="images/courses/<%= topView[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1">
+                    <div style="position: absolute; top: 25px; right: 10px;"><span class="badge badge-danger">FREE</span></div>
+                </div>
+                <div class="card-body" style="padding-top: 10px; padding-left: 0px; padding-right: 0px;">
+                    <% if (topView[i].Category == 1) { %>
+                        <h5 class="card-title" style="color: black"><%= topView[i].Name %> <br> <span class="badge badge-info">Web</span></h5>
+                    <% } %>
+                    <% if (topView[i].Category == 2) { %>
+                        <h5 class="card-title" style="color: black"><%= topView[i].Name %> <br> <span class="badge badge-warning">App</span></h5>
+                    <% } %>
+    
+    
+                    <p style="color:black;"><i class="fas fa-chalkboard-teacher"></i> <%= topView[i].Teacher %>&emsp; &emsp; <i class="fas fa-users"></i> <%= topNewest[i].NumberStudent %></p>
+    
+                    <% for(var j=0; j < topView[i].Preview; j++) { %>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                    <% } %>
+                    <% for(var j=0; j < 5 - topView[i].Preview; j++) { %>
+                        <i class="far fa-star" style="color: orange"></i>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
     </div>
 
     <!-- hot topics -->
     <h2 style="text-align: center; font-weight: bold;">Những chủ đề "nóng" :)))))</h2>
     <div class = "container" style = "margin-top: 30px; margin-bottom: 100px;">
         <div class = "row">
+            <% for(var i=0; i < topCategory.length; i++) { %>
             <div class = "col">
-                <a href="#"><img class="mx-auto d-block" src="https://miro.medium.com/max/1200/1*pE2fOVDikEUwiQJlh4ggzg.jpeg" alt="category1" width="100%" height ="100%"></a>
+                <a href="#"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category1" width="100%" height ="100%"></a>
             </div>
-            <div class = "col">
-                <a href="#"><img class="mx-auto d-block" src="https://igb.vn/uploads/images/lap-trinh-app-mobile-va-nhung-dieu-chua-biet.jpg" alt="category2" width="100%" height ="100%"></a>
-            </div>
+            <% } %>
         </div>
-        <div class = "row" style="margin-top:30px">
+        <!-- <div class = "row" style="margin-top:30px">
             <div class = "col">
                 <a href="#"><img class="mx-auto d-block" src="https://nordiccoder.com/app/uploads/2020/01/59-data-analysis.jpg" alt="category3" width="100%" height ="100%"></a>
             </div>
             <div class = "col">
                 <a href="#"><img class="mx-auto d-block" src="images/ML.jpg" alt="category4" width="100%" height ="100%"></a>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <%- include('partials/footer.ejs') %>

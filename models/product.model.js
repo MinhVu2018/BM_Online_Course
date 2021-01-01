@@ -35,7 +35,7 @@ module.exports = {
     },
 
     async sortCategory() {
-        const sql = `select Category, sum(NumberStudent) from Courses group by Category order by sum(NumberStudent) DESC`;
+        const sql = `select Category, sum(NumberStudent) from Courses group by Category order by sum(NumberStudent) DESC limit 2`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0) 
             return null;

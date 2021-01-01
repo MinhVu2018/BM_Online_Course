@@ -112,8 +112,8 @@ router.get('/login', auth.isNotAuth, function(req, res, next) {
 });
 
 router.post('/login', auth.isNotAuth, async function(req, res, next) {
-  const email = req.body.email
-  const password = req.body.pwd;
+  const email = req.body.email;
+  const password = req.body.psw;
 
   const user = await db.singleByEmail(email);
   if (user == null) {
@@ -123,8 +123,8 @@ router.post('/login', auth.isNotAuth, async function(req, res, next) {
     return;
   }
 
-
-  if (!(bcrypt.compareSync(password, user.password))) {
+  console.log(user);
+  if (!(bcrypt.compareSync(password, user.Password))) {
     res.render('account/login', {
       msg: 'psw'
     });
