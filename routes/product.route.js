@@ -20,18 +20,22 @@ router.get('/web/page/:id', async function(req, res) {
     const page_numbers = [];
     for (i = 1; i <= nPages; i++) {
         page_numbers.push({
-          value: i,
-          isCurrentPage: i === +page
+            value: i,
+            isCurrentPage: i === +page
         });
     }
 
     const offset = (page - 1) * paginate.limit;
     const listProduct = await db.pageByCat(catId, offset);
     
-    res.render('vwProducts/byCat', {
+    res.render('courses/byCat', {
         products: listProduct,
         page_numbers,
     });
 });
+
+// router.get('/',function(req, res){
+//     res.render('courses/all_courses');
+// });
 
 module.exports = router;

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/header_style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/page_style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/sidebar_style.css" type="text/css">
+
+</head>
+    <%- include('../partials/header.ejs') %>
+<body>
+    <nav class="sidebar">
+        <ul class="sidebar_nav">
+            <img src="/images/IT_icon.png" width ="50" height="50">
+            <li class="sidebar_nav_items">
+                IT catergories:
+            </li>
+            
+            <li class="sidebar_nav_items">
+                <a href="/courses/web/page/1">Web</a>
+            </li>
+
+            <li class="sidebar_nav_items">
+                <a href="/courses/web/page/2">App</a>
+            </li>
+
+            <img src="/images/more_icon.png" width ="50" height="50">
+            <li class="sidebar_nav_items">
+                Coming soon...
+            </li>
+
+        </ul>
+    </nav>
+    
+    <div class="wrapper">
+        <main>
+            <h1>Fixed Side Drawer Hover Navigation</h1>
+        </main>
+
+        <div class="pagination" style="margin:auto">
+            <a href="#">&laquo;</a>
+            <a href="#">1</a>
+            <a href="#" class="active">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <a href="#">&raquo;</a>
+        </div>
+    </div>
+
+</body>
+    <%- include('../partials/footer.ejs') %>
+</html>

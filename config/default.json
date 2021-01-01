@@ -1,9 +1,9 @@
 {
   "mysql": {
-    "host": "localhost",
+    "host": "172.31.99.113",
     "port": 3306,
-    "user": "root",
-    "password": "Iloveyou3920",
+    "user": "minhvu",
+    "password": "123456",
     "database": "onCourses",
     "waitForConnections": true,
     "connectionLimit": 50,
