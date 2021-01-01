@@ -23,4 +23,19 @@ module.exports = {
         const [result, fields] = await db.add(user, 'Users');
         return result;
     },
+
+    async updateName(username, name) {
+        const [result, fields] = await db.update(name, 'Name', username, 'Users');
+        return result;
+    },
+
+    async updateEmail(username, email) {
+        const [result, fields] = await db.update(email, 'Email', username, 'Users');
+        return result;
+    },
+
+    async updatePass(username, pass) {
+        const [result, fields] = await db.update(pass, 'Password', username, 'Users');
+        return result;
+    }
   };

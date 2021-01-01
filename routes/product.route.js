@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const db = require('../models/product.model');
 const { paginate } = require('../config/default.json');
+const { auth } = require('../middlewares/auth.mdw');
 
 router.get('/web/page/:id', async function(req, res) {
     const catId = +req.params.id;
@@ -28,7 +29,18 @@ router.get('/web/page/:id', async function(req, res) {
     const offset = (page - 1) * paginate.limit;
     const listProduct = await db.pageByCat(catId, offset);
     
+    var auth, name;
+    if (req.session.auth === true) {
+        auth = true;
+        name = req.session.authUser.Username;
+    } else {
+        auth = false;
+        name = null;
+    }
+
     res.render('courses/byCat', {
+        auth: auth,
+        name: name,
         products: listProduct,
         page_numbers,
     });

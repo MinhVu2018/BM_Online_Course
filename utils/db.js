@@ -17,6 +17,11 @@ module.exports = {
     del(condition, table_name) {
         const sql = `delete from ${table_name} where ?`;
         return promisePool.query(sql, condition);
+    },
+
+    update(value, column, condition, table_name) {
+        const sql = `update ${table_name} set ${column} = '${value}' where Username = ?`;
+        return promisePool.query(sql, condition);
     }
 }
 

@@ -123,7 +123,6 @@ router.post('/login', auth.isNotAuth, async function(req, res, next) {
     return;
   }
 
-  console.log(user);
   if (!(bcrypt.compareSync(password, user.Password))) {
     res.render('account/login', {
       msg: 'psw'
