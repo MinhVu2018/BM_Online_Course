@@ -60,7 +60,7 @@ router.post('/regis', async function(req, res, next) {
   
   rand=Math.floor((Math.random() * 100) + 54);
   host=req.get('host');
-  link="http://"+req.get('host')+"/users/verify?id="+rand;
+  link="http://"+req.get('host')+"/authen/verify?id="+rand;
   mailOptions={
     to : user.email,
     subject : "Please confirm your Email account",
