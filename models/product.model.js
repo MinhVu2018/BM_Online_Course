@@ -3,7 +3,7 @@ const { paginate } = require('../config/default.json');
 
 module.exports = {
     async singleByID(id) {
-        const sql = `select * from Courses where CourseID = ${username}`;
+        const sql = `select * from Courses where CourseID= '${id}'`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0)
             return null;

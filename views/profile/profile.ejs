@@ -106,11 +106,11 @@ button:focus {
             align-items: center;
             justify-content: center;">
                 <% if (type == 'user') { %> 
-                <button class="big-button" style="margin-right: 10px;" href="#">Favorites Courses</a>
-                <button class="big-button" style="margin-left: 10px;"href="#">My Courses</a>
+                <a href="/profile/favorites/1"><button class="big-button" style="margin-right: 10px;" href="#">Favorites Courses</button></a>
+                <a href="/profile/courses/1"><button class="big-button" style="margin-left: 10px;"href="#">My Courses</button></a>
                 <% } else if (type == 'teacher') { %>
-                <button class="big-button" style="margin-right: 10px;" href="#">New Course</a>
-                <button class="big-button" style="margin-left: 10px;"href="#">My Courses</a>  
+                <a href="/profile/new_course"><button class="big-button" style="margin-right: 10px;" href="#">New Course</button></a>
+                <button class="big-button" style="margin-left: 10px;"href="#">My Courses</a> 
                 <% } %>
             </div>
 

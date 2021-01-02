@@ -2,7 +2,7 @@ module.exports = {
     auth: function (req, res, next) {
       if (req.session.auth === false) {
         req.session.retUrl = req.originalUrl;
-        return res.redirect('/users/login');
+        return res.redirect('/authen/login');
       }
       next();
     },
@@ -14,4 +14,14 @@ module.exports = {
       }
       next();
     },
+
+    authTeacher: function(req, res, next) {
+      if (req.session.auth === true) {
+        if (req.session.authUser.Type == 'teacher') {
+          console.log('teacher');
+          return next();
+        }
+      }
+      return res.redirect('/');
+    }
 };

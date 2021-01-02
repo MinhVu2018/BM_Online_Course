@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+
+    <!--Pusher-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    
+    <!--Include CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/header_style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/detail_course.css" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+</head>
+<body>
+    <%- include('../partials/header.ejs', {auth: auth, user: name}) %>
+
+    <div class="d-flex flex-row">
+        <div class="p2 dc_detail">
+            <h1 style="font-weight: 700; color:brown"><%= course.Name %></h1>
+            <h3 style="font-weight: 700;">Nội dung khóa học:</h3>
+            <h3 style="font-weight: 700;">Yêu cầu cơ bản:</h3>
+            <ul class="dc_ul">
+                <li><i class="fas fa-check"></i> Máy vi tính kết nối internet (Windows, Ubuntu hoặc MacOS)</li>
+                <li><i class="fas fa-check"></i> Ý thức tự học cao, trách nhiệm cao, kiên trì bền bỉ không ngại cái khó</li>
+                <li><i class="fas fa-check"></i> Không được nóng vội, bình tĩnh học, làm bài tập sau mỗi bài học</li>
+                <li><i class="fas fa-check"></i> Khi học nếu có khúc mắc hãy hỏi giáo viên giảng bài</li>
+                <li><i class="fas fa-check"></i> Bạn không cần biết gì hơn nữa, trong khóa học tôi sẽ chỉ cho bạn những gì bạn cần phải biết</li>
+            </ul>
+            <h3 style="font-weight: 700;">Nhận xét - đánh giá:</h3>
+        </div>
+
+        <div class="p2 dc_card card" >
+            <img class="card-img-top dc_img" src="/images/courses/2.jpg" alt="Card image cap">
+            <div class="card-body text-center">
+                <h1 class="text-danger">Miễn phí</h1>
+                <a href="/courses/course/<%= course.CourseID %>/like" id="like"><button class="btn" id="dc_btn_love">Yêu thích</button></a>
+                <a href="/courses/course/<%= course.CourseID %>/buy" id="buy"><button class="btn" id="dc_btn_buy">Mua ngay</button></a>
+                <p style="margin-top: 20px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, 
+                    iure illo voluptatibus blanditiis dolor laboriosam harum omnis qui cumque illum minima tempora doloremque, 
+                    reiciendis modi earum nobis placeat id minus.</p>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('../partials/footer.ejs') %>
+
+    <script>
+        $('#like').on('click', function(e) {
+            $.getJSON('/courses/detail/is-like?courseid=<%= course.CourseID %>', function (data) {
+                if (data == 'success') {
+                    alert('Thêm khóa học vào danh sách yêu thích thành công.');
+                } else if (data == 'fail') {
+                    alert('Khóa học này đã nằm trong danh sách yêu thích.');
+                    e.preventDefault();
+                } else if (data == 'error') {
+                    alert('Người dùng không khả dụng cho tính năng này');
+                    e.preventDefault();
+                }
+            })
+        })
+
+        $('#buy').on('click', function(e) {
+            $.getJSON('/courses/detail/is-buy?courseid=<%= course.CourseID %>', function (data) {
+                if (data === true) {
+                    alert('Mua khóa học thành công.');
+                    $(this).trigger('click', ['TBM']);
+                } else if (data === false) {
+                    alert('Khóa học này đã nằm trong tài khoản của bạn.');
+                    e.preventDefault();
+                } else {
+                    alert('Chức năng không khả dụng.');
+                    e.preventDefault();
+                }
+            })
+        })
+
+     </script>
+</body>
+</html>

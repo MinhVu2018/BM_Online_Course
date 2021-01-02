@@ -82,7 +82,12 @@
         <% for(var i=0; i < topNewest.length; i++) { %>
         <div class="card" style="margin: 10px; text-align: left; border: 1px solid black">
             <div style="width: 100%; height: 170px">
-                <img src="images/courses/<%= topNewest[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1">
+                <% if (topNewest[i].Category == 1) { %> 
+                    <a href="courses/detail/web/<%= topNewest[i].CourseID %>"><img src="images/courses/<%= topNewest[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
+                <% } else { %>
+                    <a href="courses/detail/app/<%= topNewest[i].CourseID %>"><img src="images/courses/<%= topNewest[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
+                <% } %>
+
                 <div style="position: absolute; top: 25px; right: 10px;"><span class="badge badge-danger">FREE</span></div>
             </div>
             <div class="card-body" style="margin:10px; padding-top: 10px; padding-left: 0px; padding-right: 0px;">
@@ -113,7 +118,11 @@
         <% for(var i=0; i < topView.length; i++) { %>
             <div class="card" style="margin: 10px; text-align: left; border:1px solid black">
                 <div style="width: 100%; height: 170px">
-                    <img src="images/courses/<%= topView[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1">
+                    <% if (topView[i].Category == 1) { %> 
+                    <a href="courses/detail/web/<%= topView[i].CourseID %>"><img src="images/courses/<%= topView[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
+                    <% } else { %> 
+                    <a href="courses/detail/app/<%= topView[i].CourseID %>"><img src="images/courses/<%= topView[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
+                    <% } %>
                     <div style="position: absolute; top: 25px; right: 10px;"><span class="badge badge-danger">FREE</span></div>
                 </div>
                 <div class="card-body" style="margin:10px; padding-top: 10px; padding-left: 0px; padding-right: 0px;">
@@ -148,7 +157,7 @@
                     <a href="/courses/web/page/1"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category1" width="100%" height ="100%"></a>
                 <% } %>
                 <% if (topCategory[i].Category == 2) { %>
-                    <a href="/courses/web/page/2"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category1" width="100%" height ="100%"></a>
+                    <a href="/courses/app/page/1"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category1" width="100%" height ="100%"></a>
                 <% } %>
             </div>
             <% } %>

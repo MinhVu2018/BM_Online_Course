@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 var auth = require('../middlewares/auth.mdw');
 var bcrypt = require('bcrypt');
-var db = require('../models/user.model')
+var db = require('../models/user.model');
+var favDb = require('../models/like.model');
+
 router.get('/', auth.auth, function(req, res) {
     var name;
     if (req.session.authUser.Name == null) {
@@ -60,6 +62,14 @@ router.post('/edit', auth.auth, async function(req, res) {
 
     req.session.authUser = user;
     res.render('profile/editPro', { title: req.session.authUser, error: 'success' });
+})
+
+//router.get('/favorites/:id', auth.auth, async function(req, res) {  
+//})
+
+router.get('/new_course', auth.authTeacher, function(req, res) {
+    res.render('profile/add_course');
+    return;
 })
 
 module.exports = router;

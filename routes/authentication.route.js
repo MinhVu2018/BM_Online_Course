@@ -140,14 +140,14 @@ router.post('/login', auth.isNotAuth, async function(req, res, next) {
   })
 });
 
-router.get('/logout', async function (req, res) {
+router.get('/logout', auth.auth, async function (req, res) {
   req.session.auth = false;
   req.session.authUser = null;
   req.session.retUrl = null;
   //req.session.cart = [];
 
   const url = req.headers.referer || '/';
-  res.redirect('/')
+  res.redirect('/');
 });
 
 module.exports = router;
