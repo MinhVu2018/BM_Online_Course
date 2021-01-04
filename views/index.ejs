@@ -15,6 +15,16 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
+    <style>
+        .top_img {
+            width: 500px;
+            height: 500px;
+        }
+        .slide_img {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
 </head>
 <body>
     <%- include('partials/header.ejs', {auth: auth, user: name}) %>
@@ -62,18 +72,18 @@
     <!-- Hot courses -->
     <h2 style="text-align: center; font-weight: bold;">Những khóa học nổi bật</h2>
     <div class="slider slider-products" style="width: 50%; margin:auto">
-        <div><img src="images/courses/1.jpg" class="img-fluid mx-auto d-block" alt="img1"></div>
-        <div><img src="images/courses/2.jpg" class="img-fluid mx-auto d-block" alt="img2"></div>
-        <div><img src="images/courses/3.jpg" class="img-fluid mx-auto d-block" alt="img3"></div>
-        <div><img src="images/courses/4.jpg" class="img-fluid mx-auto d-block" alt="img4"></div>
-        <div><img src="images/courses/5.jpg" class="img-fluid mx-auto d-block" alt="img5"></div>
+        <% for(var i=0; i < topCourses.length; i++) { %>
+            <div class="top_img">
+                <img src="images/courses/<%= topCourses[i].CourseID %>.jpg" class="img-fluid mx-auto d-block" alt="img" style="width: 100%; height: 100%;">
+                <div style="position: absolute; top: 25px; right: 10px;"><span class="badge badge-secondary"><h3><%= topCourses[i].Name %></h3></span></div>
+            </div>
+            
+        <% } %>
     </div>
     <div class="slider slider-nav" style="margin-left:100px; margin-right:100px;">
-        <div><img src="images/courses/1.jpg" class="img-fluid mx-auto d-block" alt="img1"></div>
-        <div><img src="images/courses/2.jpg" class="img-fluid mx-auto d-block" alt="img2"></div>
-        <div><img src="images/courses/3.jpg" class="img-fluid mx-auto d-block" alt="img3"></div>
-        <div><img src="images/courses/4.jpg" class="img-fluid mx-auto d-block" alt="img4"></div>
-        <div><img src="images/courses/5.jpg" class="img-fluid mx-auto d-block" alt="img5"></div>
+        <% for(var i=0; i < topCourses.length; i++) { %>
+            <div class="slide_img"><img src="images/courses/<%= topCourses[i].CourseID %>.jpg" class="img-fluid mx-auto d-block" alt="img1" style="width: 100%; height: 100%;"></div>
+        <% } %>
     </div>
 
     <!-- new courses -->
@@ -82,12 +92,7 @@
         <% for(var i=0; i < topNewest.length; i++) { %>
         <div class="card" style="margin: 10px; text-align: left; border: 1px solid black">
             <div style="width: 100%; height: 170px">
-                <% if (topNewest[i].Category == 1) { %> 
-                    <a href="courses/detail/web/<%= topNewest[i].CourseID %>"><img src="images/courses/<%= topNewest[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
-                <% } else { %>
-                    <a href="courses/detail/app/<%= topNewest[i].CourseID %>"><img src="images/courses/<%= topNewest[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
-                <% } %>
-
+                <a href="courses/detail/<%= topNewest[i].CourseID %>"><img src="images/courses/<%= topNewest[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
                 <div style="position: absolute; top: 25px; right: 10px;"><span class="badge badge-danger">FREE</span></div>
             </div>
             <div class="card-body" style="margin:10px; padding-top: 10px; padding-left: 0px; padding-right: 0px;">
@@ -101,10 +106,10 @@
 
                 <p style="color:black;"><i class="fas fa-chalkboard-teacher"></i> <%= topNewest[i].Teacher %>&emsp; &emsp; <i class="fas fa-users"></i> <%= topNewest[i].NumberStudent %></p>
 
-                <% for(var j=0; j < topNewest[i].Preview; j++) { %>
+                <% for(var j=0; j < Math.round(topNewest[i].Preview); j++) { %>
                     <i class="fas fa-star" style="color: orange;"></i>
                 <% } %>
-                <% for(var j=0; j < 5 - topNewest[i].Preview; j++) { %>
+                <% for(var j=0; j < 5 - Math.round(topNewest[i].Preview); j++) { %>
                     <i class="far fa-star" style="color: orange"></i>
                 <% } %>
             </div>
@@ -118,11 +123,7 @@
         <% for(var i=0; i < topView.length; i++) { %>
             <div class="card" style="margin: 10px; text-align: left; border:1px solid black">
                 <div style="width: 100%; height: 170px">
-                    <% if (topView[i].Category == 1) { %> 
-                    <a href="courses/detail/web/<%= topView[i].CourseID %>"><img src="images/courses/<%= topView[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
-                    <% } else { %> 
-                    <a href="courses/detail/app/<%= topView[i].CourseID %>"><img src="images/courses/<%= topView[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
-                    <% } %>
+                    <a href="courses/detail/<%= topView[i].CourseID %>"><img src="images/courses/<%= topView[i].CourseID %>.jpg" class="img-fluid mx-auto d-block size" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
                     <div style="position: absolute; top: 25px; right: 10px;"><span class="badge badge-danger">FREE</span></div>
                 </div>
                 <div class="card-body" style="margin:10px; padding-top: 10px; padding-left: 0px; padding-right: 0px;">
@@ -154,10 +155,10 @@
             <% for(var i=0; i < topCategory.length; i++) { %>
             <div class = "col">
                 <% if (topCategory[i].Category == 1) { %>
-                    <a href="/courses/web/page/1"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category1" width="100%" height ="100%"></a>
+                    <a href="/courses/it/web/page/1"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category1" width="100%" height ="100%"></a>
                 <% } %>
                 <% if (topCategory[i].Category == 2) { %>
-                    <a href="/courses/app/page/1"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category1" width="100%" height ="100%"></a>
+                    <a href="/courses/it/app/page/1"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category1" width="100%" height ="100%"></a>
                 <% } %>
             </div>
             <% } %>

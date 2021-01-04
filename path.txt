@@ -1,0 +1,18 @@
+PRODUCT ROUTE JS
+
+Courses list:
+localhost:3000/courses/it/web/page/:id
+localhost:3000/courses/it/app/page/:id
+
+Detail of a product
+localhost:3000/courses/detail/:id
+
+Added to favorite or buy
+localhost:3000/courses/course/:id/like
+localhost:3000/courses/course/:id/buy
+
+Router to check if course id added to favorite or buyed
+localhost:3000/courses/detail/is-like?courseid=:id
+localhost:3000/courses/detail/is-buy?courseid=:id
+
+Add lesson

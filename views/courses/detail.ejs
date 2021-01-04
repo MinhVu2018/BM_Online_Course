@@ -22,7 +22,41 @@
         <div class="p2 dc_detail">
             <h1 style="font-weight: 700; color:brown"><%= course.Name %></h1>
             <h3 style="font-weight: 700;">Nội dung khóa học:</h3>
-            <h3 style="font-weight: 700;">Yêu cầu cơ bản:</h3>
+            <div class="container" style="border: 1px solid gray; padding: 20px 50px 20px 0px; border-radius: 5px; margin: 10px 0px 10px 0px">
+                <div class="container" style="margin-left: 20px;">
+                    <% if (course.DetailDescription == null) { %>
+                        <p>Giảng viên vẫn chưa thêm thông tin khóa học!</p>
+                    <% } else { %>
+                        <%- course.DetailDescription %>
+                    <% } %>
+                </div>
+            </div>
+            <h3 style="font-weight: 700; margin-top: 50px;">Danh sách bài học:</h3>
+            <div class="container">
+                <% if (lesson == null) { %>
+                    <p>Hiện tại khóa học vẫn chưa có bài giảng nào</p>
+                <% } else { %>
+                    <h5><%= lesson.length %> lesson 
+                        <% if (course.Status == 0) { %>
+                            <span class="badge badge-info">UPDATING</span>
+                        <% } else { %>
+                            <span class="badge badge-success">COMPLETED</span>
+                        <% } %>
+                    </h5>
+
+                    <% for (var i = 0; i < lesson.length; i++) { %>
+                        <div class="container" style="background-color: #fbfbf8; padding: 1.6rem 2.4rem; border: 1px solid #dcdacb; border-radius: 5px; margin-bottom: 10px;">
+                            <a href="#" class="d-flex justify-content-between align-items-center" style="text-decoration: none; color: #000;">
+                                <p style="font-size: 18px;"><%= lesson[i].Name %></p>
+                                <p style="color: green; font-size: 16px;" >
+                                    Upload: <%= moment(lesson[i].DateUpload).format('DD-MM-YYYY') %>
+                                </p>
+                            </a>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+            <h3 style="font-weight: 700; margin-top: 50px;">Yêu cầu cơ bản:</h3>
             <ul class="dc_ul">
                 <li><i class="fas fa-check"></i> Máy vi tính kết nối internet (Windows, Ubuntu hoặc MacOS)</li>
                 <li><i class="fas fa-check"></i> Ý thức tự học cao, trách nhiệm cao, kiên trì bền bỉ không ngại cái khó</li>
@@ -30,18 +64,25 @@
                 <li><i class="fas fa-check"></i> Khi học nếu có khúc mắc hãy hỏi giáo viên giảng bài</li>
                 <li><i class="fas fa-check"></i> Bạn không cần biết gì hơn nữa, trong khóa học tôi sẽ chỉ cho bạn những gì bạn cần phải biết</li>
             </ul>
-            <h3 style="font-weight: 700;">Nhận xét - đánh giá:</h3>
+            <h3 style="font-weight: 700; margin-top: 50px;">Nhận xét - đánh giá:</h3>
         </div>
 
         <div class="p2 dc_card card" >
-            <img class="card-img-top dc_img" src="/images/courses/2.jpg" alt="Card image cap">
+            <img class="card-img-top dc_img" src="/images/courses/<%= course.CourseID %>.jpg" alt="Card image cap">
             <div class="card-body text-center">
                 <h1 class="text-danger">Miễn phí</h1>
                 <a href="/courses/course/<%= course.CourseID %>/like" id="like"><button class="btn" id="dc_btn_love">Yêu thích</button></a>
                 <a href="/courses/course/<%= course.CourseID %>/buy" id="buy"><button class="btn" id="dc_btn_buy">Mua ngay</button></a>
-                <p style="margin-top: 20px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, 
-                    iure illo voluptatibus blanditiis dolor laboriosam harum omnis qui cumque illum minima tempora doloremque, 
-                    reiciendis modi earum nobis placeat id minus.</p>
+                <p style="margin-top: 20px;"><%= course.Description %></p>
+
+                <% for(var j=0; j < Math.round(course.Preview); j++) { %>
+                    <i class="fas fa-star" style="color: orange;"></i>
+                <% } %>
+                <% for(var j=0; j < 5 - Math.round(course.Preview); j++) { %>
+                    <i class="far fa-star" style="color: orange"></i>
+                <% } %>
+                <span>(<%= course.NumPreview %> ratings)</span>
+                <span>, <%= course.NumberStudent %> student</span>
             </div>
         </div>
     </div>

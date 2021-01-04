@@ -10,8 +10,33 @@ module.exports = {
         return rows[0];
     },
 
+    async addCourse(course) {
+        const [result, fields] = await db.add(course, 'Courses');
+        return result;
+    },
+    
+    //current view of a course
+    async numView(id) {
+        const sql = `select View from Courses where CourseID = '${id}'`;
+        const [rows, fields] = await db.load(sql);
+        if (rows.length === 0)
+            return null;
+        return rows[0];
+    },
+    async updateView(id, view) {
+        const sql = `update Courses set View = '${view}' where CourseID = ${id}`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+    //total course number
+    async numberCourse() {
+        const sql = `select * from Courses`;
+        const [rows, fields] = await db.load(sql);
+        return rows.length;
+    },
+    
     async sortHighlight() {
-        const sql = `select * from Courses order by Preview DESC limit 4`;
+        const sql = `select * from Courses order by Preview DESC limit 5`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0) 
             return null;
@@ -42,6 +67,7 @@ module.exports = {
         return rows;
     },
 
+    //get list of product depend on category
     async getByCategory(catId) {
         const sql = `select * from Courses where Category = ${catId}`;
         const [rows, fields] = await db.load(sql);

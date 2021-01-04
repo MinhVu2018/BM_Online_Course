@@ -4,6 +4,10 @@ var auth = require('../middlewares/auth.mdw');
 var bcrypt = require('bcrypt');
 var db = require('../models/user.model');
 var favDb = require('../models/like.model');
+var proDb = require('../models/product.model');
+const productModel = require('../models/product.model');
+//Khởi tạo biến cấu hình cho việc lưu trữ file
+
 
 router.get('/', auth.auth, function(req, res) {
     var name;
@@ -66,10 +70,5 @@ router.post('/edit', auth.auth, async function(req, res) {
 
 //router.get('/favorites/:id', auth.auth, async function(req, res) {  
 //})
-
-router.get('/new_course', auth.authTeacher, function(req, res) {
-    res.render('profile/add_course');
-    return;
-})
 
 module.exports = router;
