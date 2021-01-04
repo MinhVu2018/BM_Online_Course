@@ -6,7 +6,6 @@ const buyDb = require('../models/buy.model');
 const lessonDb = require('../models/lesson.model');
 const { paginate } = require('../config/default.json');
 const auth = require('../middlewares/auth.mdw');
-const db = require('../utils/db');
 var upload = require('../middlewares/upload.mdw');
 var moment = require('moment');
 
@@ -54,7 +53,7 @@ router.get('/it/web/page/:id', async function(req, res) {
 
 router.get('/detail/:id', async function(req, res){
     var id = req.params.id;
-
+    
     //increase view
     var numView = await proDb.numView(id);
     numView = numView.View + 1;
@@ -73,22 +72,21 @@ router.get('/detail/:id', async function(req, res){
     var lesson = await lessonDb.getLessonByID(+id);
     var course = await proDb.singleByID(+id);
 
+    //find the relative courses
+    var relative = await proDb.relativeCourses(id, course.Category);
+
     res.render('courses/detail', {
         auth: auth,
         name: name,
         course: course,
         lesson: lesson,
+        relative: relative,
         moment: moment
     });
 })
 
-router.get('/detail/is-like', auth.auth, async function (req, res) {
+router.get('/detail/check/is-like', auth.auth, async function (req, res) {
     const id = req.query.courseid;
-    
-    if (req.session.authUser.Type != 'user') {
-        console.log(req.session.authUser.Type);
-        return res.json('error');
-    }   
 
     const user = await likeDb.ifUserLike(req.session.authUser.Username, id);
     //console.log(user);
@@ -99,13 +97,9 @@ router.get('/detail/is-like', auth.auth, async function (req, res) {
     return res.json('fail');
   })
 
-  router.get('/detail/is-buy', auth.auth, async function (req, res) {
+  router.get('/detail/check/is-buy', auth.auth, async function (req, res) {
     const id = req.query.courseid;
     
-    if (req.session.authUser.Type != 'user') {
-        return res.json('error');
-    }
-
     const user = await buyDb.ifUserBuy(req.session.authUser.Username, id);
 
     if (user === null) {
@@ -135,16 +129,20 @@ router.get('/course/:id/like', auth.auth, async function(req, res){
 router.get('/course/:id/buy', auth.auth, async function(req, res){
     var id = req.params.id;
 
-    var listLike = await likeDb.listByUser(req.session.authUser.Username);
-    if (listLike != null) {
-        for (var i = 0; i < listLike.length; i++) {
-            if (+listLike[i].CourseID == +id) {
+    var listBuy = await buyDb.listByUser(req.session.authUser.Username);
+    if (listBuy != null) {
+        for (var i = 0; i < listBuy.length; i++) {
+            if (+listBuy[i].CourseID == +id) {
                 res.redirect('back');
                 return;
             }
         }
     }
+    
+    var numUser = await proDb.numStudent(id);
+    numUser = numUser.NumberStudent + 1;
 
+    await proDb.updateStudent(numUser, id)
     await buyDb.add(req.session.authUser.Username, id);
     res.redirect('back');
 })
@@ -187,4 +185,8 @@ router.post('/new_course', upload.single('course_img'), async function(req, res,
     res.send(file);
 })
 
+
+router.get('/learning/:courseid/:lessionid', auth.auth, async function(req, res) {
+    res.render('/');
+})
 module.exports = router;

@@ -12,7 +12,8 @@ localhost:3000/courses/course/:id/like
 localhost:3000/courses/course/:id/buy
 
 Router to check if course id added to favorite or buyed
-localhost:3000/courses/detail/is-like?courseid=:id
-localhost:3000/courses/detail/is-buy?courseid=:id
+localhost:3000/courses/detail/check/is-like?courseid=:id
+localhost:3000/courses/detail/check/is-buy?courseid=:id
 
-Add lesson
+Learn a lesson:
+localhost:3000/courses/watching/:courseid/:lessonid

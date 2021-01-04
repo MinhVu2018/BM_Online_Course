@@ -30,7 +30,7 @@
 .dc_detail {
     margin: 100px 0px 20px 50px;
     width: 70%; 
-    height: 1000px; 
+    height: fit-content; 
     font-family: 'Open Sans', sans-serif;
 }
 
