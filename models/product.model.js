@@ -101,5 +101,11 @@ module.exports = {
         const sql = `select * from Courses where Category = ${catId} limit ${paginate.limit} offset ${offset}`;
         const [rows, fields] = await db.load(sql);
         return rows;
+    },
+
+    async updatePreview(id, new_preview, new_number) {
+        const sql = `update Courses set Preview = '${new_preview}', NumPreview = '${new_number}' where CourseID = '${id}'`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
     }
 }

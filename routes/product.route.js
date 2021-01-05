@@ -4,6 +4,8 @@ const proDb = require('../models/product.model');
 const likeDb = require('../models/like.model');
 const buyDb = require('../models/buy.model');
 const lessonDb = require('../models/lesson.model');
+const learnDb = require('../models/learn.model');
+const commentDb = require('../models/comment.model');
 const { paginate } = require('../config/default.json');
 const auth = require('../middlewares/auth.mdw');
 var upload = require('../middlewares/upload.mdw');
@@ -51,11 +53,43 @@ router.get('/it/web/page/:id', async function(req, res) {
     });
 })
 
+router.post('/detail/comment/:id', async function(req, res) {
+    var comment = req.body.comment;
+    var point = req.body.point;
+    var courseid = req.params.id;
+    var username = req.session.authUser.Username;
+
+    //current date
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+
+    var com = {
+        Username: username,
+        CourseID: courseid,
+        Comment: comment,
+        Point: +point,
+        Date: yyyy + '-' + mm + '-' + dd
+    }
+
+    //update score point of course
+    var course = await proDb.singleByID(courseid);
+    var sum_point = course.Preview * course.NumPreview;
+    var new_numPreview = course.NumPreview + 1;
+    var new_point = (sum_point + (+point)) / new_numPreview;
+    await proDb.updatePreview(courseid, new_point, new_numPreview);
+
+    await commentDb.addComment(com);
+    res.redirect('back');
+})
+
 router.get('/detail/:id', async function(req, res){
     var id = req.params.id;
     
     //increase view
     var numView = await proDb.numView(id);
+    console.log(numView);
     numView = numView.View + 1;
 
     var auth, name;
@@ -69,22 +103,45 @@ router.get('/detail/:id', async function(req, res){
     
     //update view
     await proDb.updateView(id, numView);
-    var lesson = await lessonDb.getLessonByID(+id);
+    var lesson = await lessonDb.getLessonByCourseID(+id);
     var course = await proDb.singleByID(+id);
 
     //find the relative courses
     var relative = await proDb.relativeCourses(id, course.Category);
 
+    //list lesson user have learn
+    if (name != null) 
+        var learned = await learnDb.getLessonLearned(name, +id);
+    else
+        var learned = null;
+    
+    //list comment 
+    var comment = await commentDb.newestComment();
+
+    console.log(learned);
     res.render('courses/detail', {
         auth: auth,
         name: name,
         course: course,
         lesson: lesson,
         relative: relative,
+        learn: learned,
+        comment: comment,
         moment: moment
     });
 })
 
+router.get('/detail/check/is-comment', auth.auth, async function(req, res) {
+    var courseid = req.query.courseid;
+    var username = req.session.authUser.Username;
+
+    var result = await commentDb.checkExist(courseid, username);
+    if (result === null) {
+        return res.json('success');
+    } else {
+        return res.json('fail');
+    }
+})
 router.get('/detail/check/is-like', auth.auth, async function (req, res) {
     const id = req.query.courseid;
 
@@ -186,7 +243,28 @@ router.post('/new_course', upload.single('course_img'), async function(req, res,
 })
 
 
-router.get('/learning/:courseid/:lessionid', auth.auth, async function(req, res) {
-    res.render('/');
+
+router.get('/learning/:courseid/:lessonid', auth.auth, async function(req, res) {
+    var lessonid = req.params.lessonid;
+    var courseid = req.params.courseid;
+
+    var lesson = await lessonDb.singeLessonByID(+courseid, +lessonid);
+
+    //update user learned lesson
+    var learn = {
+        Username: req.session.authUser.Username,
+        CourseID: +courseid,
+        Lesson: +lessonid
+    }
+
+    var temp = await learnDb.checkExist(learn);
+    if (temp == null)
+        await learnDb.updateLearnLesson(learn);
+
+    res.render('courses/lesson', {
+        lesson: lesson
+    });
 })
+
+
 module.exports = router;

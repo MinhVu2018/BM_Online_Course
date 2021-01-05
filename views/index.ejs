@@ -135,12 +135,12 @@
                     <% } %>
     
     
-                    <p style="color:black;"><i class="fas fa-chalkboard-teacher"></i> <%= topView[i].Teacher %>&emsp; &emsp; <i class="fas fa-users"></i> <%= topNewest[i].NumberStudent %></p>
+                    <p style="color:black;"><i class="fas fa-chalkboard-teacher"></i> <%= topView[i].Teacher %>&emsp; &emsp; <i class="fas fa-users"></i> <%= topView[i].NumberStudent %></p>
     
-                    <% for(var j=0; j < topView[i].Preview; j++) { %>
+                    <% for(var j=0; j < Math.round(topView[i].Preview); j++) { %>
                         <i class="fas fa-star" style="color: orange;"></i>
                     <% } %>
-                    <% for(var j=0; j < 5 - topView[i].Preview; j++) { %>
+                    <% for(var j=0; j < 5 - Math.round(topView[i].Preview); j++) { %>
                         <i class="far fa-star" style="color: orange"></i>
                     <% } %>
                 </div>

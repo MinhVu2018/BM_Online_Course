@@ -10,6 +10,7 @@
     
     <!--Include CSS-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/header_style.css" type="text/css">
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
     <link rel="stylesheet" href="/stylesheets/detail_course.css" type="text/css">
@@ -47,15 +48,42 @@
                     <% for (var i = 0; i < lesson.length; i++) { %>
                         <div class="container" style="background-color: #fbfbf8; padding: 1.6rem 2.4rem; border: 1px solid #dcdacb; border-radius: 5px; margin-bottom: 10px;">
                             <% if (lesson[i].Trailer == 1) { %> 
-                                <a href="/courses/learning/<%= course.CourseID %>/<%= lesson[i].Lession %>" class="d-flex justify-content-between align-items-center" id="free" style="text-decoration: none; color: #000;">
-                                    <p style="font-size: 18px;"><%= lesson[i].Name %><i class="fas fa-check" style="color: green"> Free</i> </p>
+                                <a href="/courses/learning/<%= course.CourseID %>/<%= lesson[i].Lesson %>" class="d-flex justify-content-between align-items-center" id="free" style="text-decoration: none; color: #000;">
+                                    <p style="font-size: 18px;">
+                                        <% var check = false; %>
+                                        <% if (learn != null) { %> 
+                                            <% for (var j = 0; j < learn.length; j++) { %> 
+                                                <% if (learn[j].Lesson == lesson[i].Lesson) { check = true; } %>
+                                            <% } %>
+                                        <% } %>
+                                        <% if (check == false) { %> 
+                                            <i class="far fa-square"></i>
+                                        <% } else { %>
+                                            <i class="far fa-check-square"></i>
+                                        <% } %>
+                                        <%= lesson[i].Name %>
+                                        <i class="fas fa-check" style="color: green"> Free</i>
+                                    </p>
                                     <p style="color: green; font-size: 16px;" >
                                         Upload: <%= moment(lesson[i].DateUpload).format('DD-MM-YYYY') %>
                                     </p>
                                 </a>
                             <% } else { %>
-                                <a href="/courses/learning/<%= course.CourseID %>/<%= lesson[i].Lession %>" class="d-flex justify-content-between align-items-center" id="paid" style="text-decoration: none; color: #000;">
-                                    <p style="font-size: 18px;"><%= lesson[i].Name %></p>
+                                <a href="/courses/learning/<%= course.CourseID %>/<%= lesson[i].Lesson %>" class="d-flex justify-content-between align-items-center" id="paid" style="text-decoration: none; color: #000;">
+                                    <p style="font-size: 18px;">
+                                        <% var check = false; %>
+                                        <% if (learn != null) { %> 
+                                            <% for (var j = 0; j < learn.length; j++) { %> 
+                                                <% if (learn[j].Lesson == lesson[i].Lesson) { check = true; } %>
+                                            <% } %>
+                                        <% } %>
+                                        <% if (check == false) { %> 
+                                            <i class="far fa-square"></i>
+                                        <% } else { %>
+                                            <i class="far fa-check-square"></i>
+                                        <% } %>
+                                        <%= lesson[i].Name %>
+                                    </p>
                                     <p style="color: green; font-size: 16px;" >
                                         Upload: <%= moment(lesson[i].DateUpload).format('DD-MM-YYYY') %>
                                     </p>
@@ -93,10 +121,10 @@
             
                             <p style="color:black;"><i class="fas fa-chalkboard-teacher"></i> <%= relative[i].Teacher %>&emsp; &emsp; <i class="fas fa-users"></i> <%= relative[i].NumberStudent %></p>
             
-                            <% for(var j=0; j < relative[i].Preview; j++) { %>
+                            <% for(var j=0; j < Math.round(relative[i].Preview); j++) { %>
                                 <i class="fas fa-star" style="color: orange;"></i>
                             <% } %>
-                            <% for(var j=0; j < 5 - relative[i].Preview; j++) { %>
+                            <% for(var j=0; j < 5 - Math.round(relative[i].Preview); j++) { %>
                                 <i class="far fa-star" style="color: orange"></i>
                             <% } %>
                         </div>
@@ -105,6 +133,45 @@
             </div>
 
             <h3 style="font-weight: 700; margin-top: 50px;">Nhận xét - đánh giá:</h3>
+            <div class="d-flex flex-row" style="margin: 20px;">
+                <div style="width: 100px; height: 100px;">
+                    <img src="/images/avatar/avatar.png" style="width: 100%; height: 100%;">
+                </div>
+                <form action="comment/<%= course.CourseID %>" class="d-flex flex-column align-items-center" method="POST" id="form_comment" style="margin-left: 30px">
+                    <textarea style="height: 100px; border: 1px solid #dcdacb; resize: none; padding: 10px;" name="comment" cols="130" placeholder="Nhận xét khóa học ở đây"></textarea>
+                    <div class="d-flex flex-row" style="width: 100%; height: 70px; background-color: #f5f6f7;">
+                        <div class="range" style="width: fit-content; margin: 15px 0px 0px 15px;">
+                            <label for="point" id="score"></label>
+                            <input type="range" class="form-range" min="0" max="5" id="point" value="0" name="point" onchange="updateTextInput(this.value);"> 
+                            
+                        </div>
+                        <div class="text-right" style="width: 100%; margin: 20px 15px 0px 0px;">
+                            <input class="text-right" type="submit" id="sub_comment" text="Comment" style="padding: 5px 20px; background-color: #9cb4d8;">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="container">
+            <% if (comment == null) { %> 
+                <hr>
+                <p>Khóa học hiện chưa có đánh giá nào!</p>
+            <% } else { %>
+                <% for (var i = 0; i < comment.length; i++) { %> 
+                    <hr>
+                    <div class="d-flex flex-row justify-content-between">
+                        <p style="font-size: 20px; color: darkcyan"><%= comment[i].Username %></p>
+                        <p class="font-italic"><%= moment(comment[i].Date).format('DD-MM-YYYY') %></p>
+                    </div>
+                    <% for(var j=0; j < comment[i].Point; j++) { %>
+                        <i class="fas fa-star" style="color: orange;"></i>
+                    <% } %>
+                    <% for(var j=0; j < 5 - comment[i].Point; j++) { %>
+                        <i class="far fa-star" style="color: orange"></i>
+                    <% } %>
+                    <p style="margin-top: 20px;"><%= comment[i].Comment %></p>
+                <% } %>
+            <% } %>
+            </div>
         </div>
 
         <div class="p2 dc_card card" >
@@ -133,25 +200,31 @@
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js"></script>
     <script>
+        $('#score').text("0 star"); 
+        function updateTextInput(val) {
+          $('#score').text(val + " star"); 
+        }
         $('#like').on('click', function(e) {
+            e.preventDefault();
             $.getJSON('/courses/detail/check/is-like?courseid=<%= course.CourseID %>', function (data) {
                 if (data == 'success') {
                     alert('Thêm khóa học vào danh sách yêu thích thành công.');
+                    window.location.href = "/courses/course/<%= course.CourseID %>/like";
                 } else if (data == 'fail') {
                     alert('Khóa học này đã nằm trong danh sách yêu thích.');
-                    e.preventDefault();
                 }
             })
         })
 
         $('#buy').on('click', function(e) {
+            e.preventDefault();
             $.getJSON('/courses/detail/check/is-buy?courseid=<%= course.CourseID %>', function (data) {
                 if (data == 'success') {
                     alert('Mua khóa học thành công.');
-                    $(this).trigger('click', ['TBM']);
+                    window.location.href = "/courses/course/<%= course.CourseID %>/buy";
                 } else if (data == 'fail') {
                     alert('Khóa học này đã nằm trong tài khoản của bạn.');
-                    e.preventDefault();
+
                 }
             })
         })
@@ -161,14 +234,31 @@
             $.getJSON('/courses/detail/check/is-buy?courseid=<%= course.CourseID %>', function (data) {
                 if (data == 'success') {
                     alert('Bạn chưa mua khóa học này, vui lòng mua để tiếp tục.');
-                    
-                    return true;
                 } else if (data == 'fail') {
                     alert('Redirecting ....');
+                    window.location.href = $('#paid').attr('href');
                 }
             });
         }) 
 
+        $('#form_comment').on('submit', function(e) {
+            e.preventDefault();
+            $.getJSON('/courses/detail/check/is-buy?courseid=<%= course.CourseID %>', function (data) {
+                if (data == 'success') {
+                    alert('Bạn chưa mua khóa học này, vui lòng mua để tiếp tục.');
+                } else if (data == 'fail') {
+                    $.getJSON('/courses/detail/check/is-comment?courseid=<%= course.CourseID %>', function (data) {
+                        console.log(data);
+                        if (data == 'success') {
+                            $('#form_comment').off('submit').submit();
+                        } else if (data == 'fail') {
+                            alert('Bạn đã đánh giá khóa học này rồi!');
+                        }
+                    });
+                }
+            });
+            
+        }) 
      </script>
 </body>
 </html>

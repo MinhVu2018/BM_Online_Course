@@ -14,7 +14,7 @@ router.get('/', auth.auth, function(req, res) {
     if (req.session.authUser.Name == null) {
         name = "Unknown";
     } else {
-        name = req.session.authUser.Name;
+        name = req.session.authUser.Username;
     }
     
 
