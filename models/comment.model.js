@@ -2,7 +2,6 @@ const db = require("../utils/db");
 
 module.exports = {
     async addComment(comment) {
-        console.log(comment)
         const [result, fields] = await db.add(comment, 'Comment');
         return result;
     },
@@ -15,8 +14,8 @@ module.exports = {
         return rows;
     },
 
-    async newestComment() {
-        const sql = `select * from Comment order by Date DESC limit 5`;
+    async newestComment(id) {
+        const sql = `select * from Comment where CourseID = '${id}' order by Date DESC limit 5`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0)
             return null;

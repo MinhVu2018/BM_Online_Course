@@ -17,14 +17,12 @@
     background-color: #f05123;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 700;
-    margin-right: 10px;
 }
 #dc_btn_buy {
     color:azure;
     background-color:blue;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 700;
-    margin-left: 10px;
 }
 
 .dc_detail {

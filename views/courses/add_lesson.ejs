@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New lesson</title>
+
+    <!--CSS inllude-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container" style="margin-top: 20px; margin-bottom: 50px;">
+        <h1 class="text-bold">New Lesson</h1>
+        <a href="/profile" style="text-decoration: none;">Back</a>
+        <form action="/courses/new_lesson/<%= course.CourseID %>" method="POST" id="form_sub">
+            <div class="container" style="border: 1px solid gray; border-radius: 10px; padding-bottom: 50px; margin-top: 50px;">
+                <div class="row" style="margin-top: 50px;">
+                    <div class="col">
+                        <label for="lesson_name" style="width: 100%;">Lesson name:</p>
+                        <input type="text" class="form-control" placeholder="Enter lesson name" maxlength="45" name="lesson_name" id="lesson_name" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="course_cate" style="width: 100%;">Course name:</p>
+                        <input type="text" class="form-control" value="<%= course.Name %>" disabled>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col">
+                        <label for="lesson_link" style="width: 100%;">
+                            <p>Embed link:</p>
+                            <i class="fas fa-info-circle"></i> <span class="font-italic">(chỉ chấp nhận link nhúng từ youtube)</span>
+                        </label>
+                        <input class="form-control" id="lesson_link" name="lesson_link" type="url" required></textarea>
+                    </div>
+                    <div class="col form-group">
+                        <label for="lesson_trailer" style="width: 100%;">Free</p>
+                        <select class="form-control" name="lesson_trailer" id="course_price">
+                            <option value="Yes" selected>Yes</option>
+                            <option value="No">No</option>
+                            <option disabled>Comming soon...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center" style="margin-top: 50px;">
+                <input type="submit" class="btn" text="SUBMIT" id="submit" style="text-align:center;">
+            </div>
+        </form>
+    </div>
+
+
+</body>
+</html>

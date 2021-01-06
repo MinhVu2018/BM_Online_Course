@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>
+
+    <style>
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div style="background-color: #d5d5d5; width: 200px; height: 200vh; position: fixed;">
+        <a href="/" style="position: absolute; left: 20px; top: 10px; font-size: 40px;"><i class="fas fa-chevron-left" style="color: black"></i></a>
+        <hr style="margin-top: 70px;">
+        <a href="#edit_course" style="color: #515151; text-decoration: none; margin-left: 20px; font-size: 25px">Edit Course</a>
+        <hr style="margin-top: 10px;">
+        <a href="#edit_lesson" style="color: #515151; text-decoration: none; margin-left: 20px; font-size: 25px">Edit Lesson</a>
+        <hr style="margin-top: 10px;">
+    </div>
+    
+    <div id="edit_course" style="position: absolute; margin-left: 200px;">
+        <% if (courses == null) { %> 
+            <h4>Bạn vẫn chưa có khóa học nào để chỉnh sửa!</h4>
+        <% } else { %>
+        <form action="edit_course" method="POST" style="margin-top: 50px; margin-left: 50px; height: 100vh;">
+            <label class="font-bold" for="course" style="width: 100%; font-weight: 900;">Course name:</label>
+            <select class="form-control" name="course_choose" id="course_choose" style="margin-bottom: 20px;">
+                <% for (var i=0; i<courses.length; i++) { %>
+                    <option value="<%= courses[i].CourseID %>"><%= courses[i].Name %></option>
+                <% } %>
+            </select>
+
+            <input type="checkbox" class="custom-control-input" name="course_complete" id="course_complete">
+
+            <label class="custom-control-label font-bold" for="customCheck1">Complete</label>
+
+            <label for="course_description" style="width: 100%; font-weight: 900; margin-top: 20px;">Brief Description</label>
+            <textarea class="form-control" id="course_description" name="course_description" rows="3" style="resize: none;" maxlength="100" required></textarea>
+
+            <label for="course_detail_description" style="width: 100%; font-weight: 900; margin-top: 20px;">Detail Description</label>
+            <textarea name="course_detail_description" id="editor"></textarea>
+
+            <a href="/courses/new_lesson/<%= courses[0].CourseID %>" id="add_lesson"><button style="margin-top: 20px; padding: 10px; border-radius: 2px;" type="button">Add Lesson</button></a>
+            <input type="submit" value="UPDATE" id="submit_btn" style="margin-top: 20px; padding: 10px; border-radius: 2px;">
+        </form>
+        <% } %>
+ 
+        <div id="edit_lesson" style="height: 100vh;">
+            <form action="edit_lesson" method="POST" style="margin-left: 50px;">
+                <label class="font-bold" for="lesson_course_choose" style="width: 100%; font-weight: 900; margin-top: 50px;">Course name:</label>
+                <select class="form-control" name="lesson_course_choose" id="lesson_course_choose" style="margin-bottom: 20px;">
+                    <% for (var i=0; i<courses.length; i++) { %>
+                        <option value="<%= courses[i].CourseID %>"><%= courses[i].Name %></option>
+                    <% } %>
+                </select>
+                <label class="font-bold" for="lesson_choose" style="width: 100%; font-weight: 900; ">Lesson name:</label>
+                <select class="form-control" name="lesson_choose" id="lesson_choose" style="margin-bottom: 20px;">
+                    <% if (courses[0].length == 0) { %>
+                        <option disabled>Khóa học này chưa có lesson nào!</option>
+                    <% } else { %>
+                        <% for (var i=0; i<lesson[0].length; i++) { %>
+                            <option value="<%= lesson[0][i].Lesson %>"><%= lesson[0][i].Name %></option>
+                        <% } %>
+                    <% } %>
+                </select>
+
+                <label class="font-bold" for="lesson_video" style="width: 100%; font-weight: 900;">Current video:</label>
+                <% if (lesson[0].length != 0) { %> 
+                    <input type="text" class="form-control" name="lesson_video" id="lesson_video" value="<%= lesson[0][0].Video %>">
+                <% } else { %> 
+                    <input type="text" class="form-control" name="lesson_video" id="lesson_video">
+                <% } %>
+                <input type="submit" value="UPDATE" id="submit_btn" style="margin-top: 20px; padding: 10px; border-radius: 2px;">
+            </form>
+        </div>
+    </div>
+
+    <script type='text/javascript'>
+        //editor handle
+        let editor;
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .then (newEditor => {
+                 editor = newEditor;
+            })
+            .catch( error => {
+                console.error( error );
+            });
+
+        var courses = <%-JSON.stringify(courses)%>;
+        var lesson = <%- JSON.stringify(lesson)%>;
+        console.log(lesson);
+        $('#course_choose').on('change', function() {
+            var courseid = $('#course_choose').val();
+            $('#course_complete').prop('checked', courses[courseid - 1].Status);
+            $('#course_description').val(courses[courseid - 1].Description);
+            if (courses[courseid - 1].DetailDescription != null) {
+                editor.setData(courses[courseid - 1].DetailDescription);
+            } else {
+                editor.setData("Empty");
+            }
+            $('#add_lesson').attr('href', "/courses/new_lesson/" + courseid);
+        });
+
+        $('#lesson_course_choose').on('change', function() {
+            var courseid = $('#lesson_course_choose').val();
+            $('#lesson_choose').empty();
+            if (lesson[courseid - 1].length != 0) {
+                for (var i=0; i < lesson[courseid - 1].length; i++) {
+                    $('#lesson_choose').append(`<option value="${lesson[courseid - 1][i].Lesson}">${lesson[courseid - 1][i].Name}</option>`);
+                }
+                $('#lesson_video').val(lesson[courseid - 1][0].Video);
+            } else {
+                $('#lesson_choose').append(`<option disable>Khóa học này chưa có lesson nào!</option>`)
+                $('#lesson_video').val("");
+            }
+        })
+        $("#lesson_choose").on('change', function() {
+            var courseid = $('#lesson_course_choose').val();
+            var lessonid = $('#lesson_choose').val();
+            $('#lesson_video').val(lesson[courseid - 1][lessonid - 1].Video);
+        })
+    </script>
+</body>
+</html>

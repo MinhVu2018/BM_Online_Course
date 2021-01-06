@@ -17,3 +17,6 @@ localhost:3000/courses/detail/check/is-buy?courseid=:id
 
 Learn a lesson:
 localhost:3000/courses/watching/:courseid/:lessonid
+
+New lesson:
+localhost:3000/courses/new_lesson/:courseid

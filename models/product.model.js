@@ -107,5 +107,19 @@ module.exports = {
         const sql = `update Courses set Preview = '${new_preview}', NumPreview = '${new_number}' where CourseID = '${id}'`;
         const [rows, fields] = await db.load(sql);
         return rows;
+    },
+
+    async getByTeacher(teacher) {
+        const sql = `select * from Courses where Teacher = '${teacher}'`;
+        const [rows, fields] = await db.load(sql);
+        if (rows.length === 0) 
+            return null;
+        return rows;
+    },
+
+    async update(id, status, des, detail_des) {
+        const sql = `update Courses set Status = '${status}', Description = '${des}', DetailDescription = '${detail_des}', Status = '${status}' where CourseID = '${id}'`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
     }
 }

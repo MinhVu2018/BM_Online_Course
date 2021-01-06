@@ -10,6 +10,7 @@ const { paginate } = require('../config/default.json');
 const auth = require('../middlewares/auth.mdw');
 var upload = require('../middlewares/upload.mdw');
 var moment = require('moment');
+const db = require('../utils/db');
 
 router.get('/it/web/page/:id', async function(req, res) {
     const catId = +req.params.id;
@@ -22,8 +23,9 @@ router.get('/it/web/page/:id', async function(req, res) {
     //find the number of page
     var list = proDb.sortCategory(web);
     const total = list.length;
-    const nPages = Math.floor(total/paginate.limit);
+    const nPages = Math.floor(total/+paginate.limit);
     if (total % paginate.limit > 0) nPages++;
+    console.log(nPages)
 
     const page_numbers = [];
     for (i = 1; i <= nPages; i++) {
@@ -89,7 +91,7 @@ router.get('/detail/:id', async function(req, res){
     
     //increase view
     var numView = await proDb.numView(id);
-    console.log(numView);
+
     numView = numView.View + 1;
 
     var auth, name;
@@ -116,9 +118,9 @@ router.get('/detail/:id', async function(req, res){
         var learned = null;
     
     //list comment 
-    var comment = await commentDb.newestComment();
+    var comment = await commentDb.newestComment(id);
 
-    console.log(learned);
+
     res.render('courses/detail', {
         auth: auth,
         name: name,
@@ -146,7 +148,7 @@ router.get('/detail/check/is-like', auth.auth, async function (req, res) {
     const id = req.query.courseid;
 
     const user = await likeDb.ifUserLike(req.session.authUser.Username, id);
-    //console.log(user);
+
     if (user === null) {
       return res.json('success');
     }
@@ -216,7 +218,6 @@ router.post('/new_course', upload.single('course_img'), async function(req, res,
     var mm = today.getMonth()+1; 
     var yyyy = today.getFullYear();
 
-    console.log(req.body);
     var course = {
         CourseID: await proDb.numberCourse() + 1,
         Name: req.body.course_name,
@@ -232,7 +233,9 @@ router.post('/new_course', upload.single('course_img'), async function(req, res,
         Price: 0
     }
 
+    //add to db
     await proDb.addCourse(course);
+
     const file = req.file;
     if (!file) {
         const error = new Error('Please upload a file')
@@ -242,7 +245,44 @@ router.post('/new_course', upload.single('course_img'), async function(req, res,
     res.send(file);
 })
 
+router.get('/new_lesson/:courseid', auth.authTeacher, async function(req, res) {
+    var courseid = req.params.courseid;
+    var course = await proDb.singleByID(courseid);
 
+    if (course.Teacher != req.session.authUser.Username) {
+        res.redirect('/');
+    }
+    res.render('courses/add_lesson', {
+        course: course
+    });
+})
+
+router.post('/new_lesson/:courseid', async function(req,res) {
+    var courseid = req.params.courseid;
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+
+
+    var lessons = await lessonDb.getLessonByCourseID(courseid);
+    var num_lesson = 0;
+    if (lessons != null) {
+        num_lesson = lessons.length;
+    }
+    var lesson = {
+        CourseID: courseid,
+        Lesson: num_lesson + 1,
+        Name: req.body.lesson_name,
+        Video: req.body.lesson_link,
+        DateUpload: yyyy + '-' + mm + '-' + dd,
+        Trailer: (req.body.lesson_trailer == 'Yes') ? 1 : 0
+    }
+
+    await lessonDb.addLesson(lesson);
+    res.redirect('/courses/detail/' + courseid);
+})
 
 router.get('/learning/:courseid/:lessonid', auth.auth, async function(req, res) {
     var lessonid = req.params.lessonid;
@@ -266,5 +306,44 @@ router.get('/learning/:courseid/:lessonid', auth.auth, async function(req, res) 
     });
 })
 
+router.get('/edit', auth.authTeacher, async function(req, res) {
+    var courses = await proDb.getByTeacher(req.session.authUser.Username);
+    var lessons_all = [];
 
+    if (courses != null) {
+        for (var i = 0; i < courses.length; i++) {
+            var lessons = await lessonDb.getLessonByCourseID(courses[i].CourseID);
+            if (lessons == null) 
+                lessons_all.push([]);
+            else 
+                lessons_all.push(lessons);
+
+        }
+    }
+
+
+    res.render('courses/edit', {
+        courses: courses,
+        lesson: lessons_all
+    });
+})
+
+router.post('/edit_course', async function(req, res) {
+    var courseid = req.body.course_choose;
+    var description = req.body.course_description;
+    var detail_description = req.body.course_detail_description;
+    var status = (req.body.course_complete == 'on') ? 1 : 0;
+
+    await proDb.update(courseid, status, description, detail_description);
+    res.redirect("/courses/detail/"+courseid);
+})
+
+router.post('/edit_lesson', async function(req, res) {
+    var courseid = req.body.lesson_course_choose;
+    var lessonid = req.body.lesson_choose;
+    var video = req.body.lesson_video;
+
+    await lessonDb.update(courseid, lessonid, video);
+    res.redirect("/courses/detail"+courseid);
+})
 module.exports = router;
