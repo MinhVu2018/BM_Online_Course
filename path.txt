@@ -1,7 +1,7 @@
 PRODUCT ROUTE JS
 
 Courses list:
-localhost:3000/courses/it/web/page/:id
+localhost:3000/courses/it/web/? page_id
 localhost:3000/courses/it/app/page/:id
 
 Detail of a product
@@ -20,3 +20,12 @@ localhost:3000/courses/watching/:courseid/:lessonid
 
 New lesson:
 localhost:3000/courses/new_lesson/:courseid
+
+// database:
+Preview = Rating
+
+// Account:
+_admin_:            bm.onlinecourses@gmail.com      admin
+_teacher_:          tvuminht@gmail.com              123456
+_student_1_:        lethanhbinh3920@gmail.com       iloveyou3920
+_student_2_:        lulien315@gmail.com             1234567890

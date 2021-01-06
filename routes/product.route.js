@@ -12,21 +12,21 @@ var upload = require('../middlewares/upload.mdw');
 var moment = require('moment');
 const db = require('../utils/db');
 
-router.get('/it/web/page/:id', async function(req, res) {
-    const catId = +req.params.id;
-    const web = 1;
+router.get('/it/:id', async function(req, res) {
+    var catId = 1;  // web
+    if (req.params.id == "app")
+        catId = 2;
 
     //current page
     var page = req.query.page || 1; 
-    if (page < 1) page = 1; 
 
     //find the number of page
-    var list = proDb.sortCategory(web);
+    var list = await proDb.getByCategory(catId);
     const total = list.length;
-    const nPages = Math.floor(total/+paginate.limit);
-    if (total % paginate.limit > 0) nPages++;
-    console.log(nPages)
-
+    var nPages = Math.floor(total/+paginate.limit);
+    
+    if (total % +paginate.limit > 0) nPages++;
+    
     const page_numbers = [];
     for (i = 1; i <= nPages; i++) {
         page_numbers.push({
@@ -50,8 +50,10 @@ router.get('/it/web/page/:id', async function(req, res) {
     res.render('courses/byCat', {
         auth: auth,
         name: name,
-        products: listProduct,
-        page_numbers,
+        courses: listProduct,
+        numPage: nPages,
+        cate: req.params.id,
+        curPage: +page,
     });
 })
 
@@ -119,8 +121,6 @@ router.get('/detail/:id', async function(req, res){
     
     //list comment 
     var comment = await commentDb.newestComment(id);
-
-
     res.render('courses/detail', {
         auth: auth,
         name: name,
@@ -150,23 +150,23 @@ router.get('/detail/check/is-like', auth.auth, async function (req, res) {
     const user = await likeDb.ifUserLike(req.session.authUser.Username, id);
 
     if (user === null) {
-      return res.json('success');
+        return res.json('success');
     }
-  
-    return res.json('fail');
-  })
 
-  router.get('/detail/check/is-buy', auth.auth, async function (req, res) {
+    return res.json('fail');
+})
+
+router.get('/detail/check/is-buy', auth.auth, async function (req, res) {
     const id = req.query.courseid;
     
     const user = await buyDb.ifUserBuy(req.session.authUser.Username, id);
 
     if (user === null) {
-      return res.json('success');
+        return res.json('success');
     }
-  
+
     return res.json('fail');
-  })
+})
 
 router.get('/course/:id/like', auth.auth, async function(req, res){
     var id = req.params.id;

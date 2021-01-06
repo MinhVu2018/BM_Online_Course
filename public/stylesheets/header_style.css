@@ -22,7 +22,7 @@
     height: 80px;
     padding: 0;
     margin: 10;
-    z-index: 1000;
+    z-index: 10;
 }
 
 .btn {

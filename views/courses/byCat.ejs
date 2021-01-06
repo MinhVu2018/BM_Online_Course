@@ -4,57 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
 
+    <link rel="shortcut icon" type="image/png" href="/images/logo.png"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- CSS -->
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
     <link rel="stylesheet" href="/stylesheets/header_style.css" type="text/css">
     <link rel="stylesheet" href="/stylesheets/page_style.css" type="text/css">
     <link rel="stylesheet" href="/stylesheets/sidebar_style.css" type="text/css">
-
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
 </head>
     <%- include('../partials/header.ejs') %>
 <body>
-    <nav class="sidebar">
-        <ul class="sidebar_nav">
-            <img src="/images/IT_icon.png" width ="50" height="50">
-            <li class="sidebar_nav_items">
-                IT catergories:
-            </li>
+    <div>
+        <nav class="sidebar">
+            <ul class="sidebar_nav">
+                <img src="/images/IT_icon.png" width ="50" height="50">
+                <li class="sidebar_nav_items">
+                    IT catergories:
+                </li>
+                
+                <li class="sidebar_nav_items">
+                    <a href="/courses/it/web">Web</a>
+                </li>
+
+                <li class="sidebar_nav_items">
+                    <a href="/courses/it/app">App</a>
+                </li>
+
+                <img src="/images/more_icon.png" width ="50" height="50">
+                <li class="sidebar_nav_items">
+                    Coming soon...
+                </li>
+
+            </ul>
+        </nav>
+        
+        <div class="wrapper">
+            <main>
+                <h1>Courses:</h1>
+                
+                <% var numCourse = courses.length %>
+
+                <% for(var i=0; i < courses.length; i++) { %>
+                    <hr style="border-top: 1px solid black;">
+                    <div class="container" style="margin-top:20px; margin-bottom: 20px;">
+                        <a href="../detail/<%= courses[i].CourseID %>" style="display: block;" > 
+                            <div class="row">
+                                <div id="cover" class = "col-sm-4">
+                                    <img src="/images/courses/<%= courses[i].CourseID %>.jpg" style = "width: 300px; height: 200px; object-fit: fill; border: 1px solid black;">
+                                </div>
+
+                                <div id="content" class = "col" style="line-height: 3;">
+                                    <h1><%= courses[i].Name %></h1>
+                                    <img src="/images/information_icon.png" style="width:30px; height: 30px; object-fit: fill;">
+                                    <%= courses[i].Description %> <br>
+                                    <img src="/images/teacher_icon.png" style="width:30px; height: 30px; object-fit: fill;">
+                                    <%= courses[i].Teacher %> <br>
+                                    
+                                    <% for(var j=0, numrate = courses[i].Preview ; j < 5; j++, numrate--) { %>
+                                        <% if (numrate > 0){ %>
+                                            <span class="fa fa-star checked"></span>
+                                        <%}%>
+                                        <% if (numrate <= 0) {%>
+                                            <span class="fa fa-star"></span>
+                                        <% } %>
+                                    <%}%>
+                                </div>
+
+                                <div id="price" class = "col-sm-1 text-right">
+                                    FREE <br>
+                                    <% var price = Math.random()*(1000-100) + 100 %>
+                                    <del>$<%- price.toFixed(2) %> </del>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <% } %>
+
+            </main>
             
-            <li class="sidebar_nav_items">
-                <a href="/courses/web/page/1">Web</a>
-            </li>
-
-            <li class="sidebar_nav_items">
-                <a href="/courses/web/page/2">App</a>
-            </li>
-
-            <img src="/images/more_icon.png" width ="50" height="50">
-            <li class="sidebar_nav_items">
-                Coming soon...
-            </li>
-
-        </ul>
-    </nav>
-    
-    <div class="wrapper">
-        <main>
-            <h1>Fixed Side Drawer Hover Navigation</h1>
-        </main>
-
-        <div class="pagination" style="margin:auto">
-            <a href="#">&laquo;</a>
-            <a href="#">1</a>
-            <a href="#" class="active">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">&raquo;</a>
+            <div class="pagination" style="margin:auto">
+                <% var reqPage = curPage - 1 %>
+                <% if (reqPage < 1) reqPage = 1%>
+                <a href="/courses/it/<%= cate %>/?page=<%= reqPage %>">&laquo;</a>
+                
+                <% for (var i=1; i<=numPage; i++) { %>
+                    <% if (i == curPage){ %> 
+                        <a href="/courses/it/<%= cate %>/?page=<%= i %>" class="active"> <%=i%> </a>
+                    <% } %>
+                    <% if (i != curPage){ %> 
+                        <a href="/courses/it/<%= cate %>/?page=<%= i %>"> <%= i %> </a>
+                    <% } %>
+                <% } %>
+                <% var reqPage = curPage + 1 %>
+                <% if (reqPage > numPage) reqPage = numPage%>
+                <a href="/courses/it/<%= cate %>/?page=<%= reqPage%>">&raquo;</a>
+            </div>
         </div>
     </div>
-
-</body>
     <%- include('../partials/footer.ejs') %>
+</body>
 </html>

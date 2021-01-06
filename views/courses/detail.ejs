@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Detail</title>
 
+    <link rel="shortcut icon" type="image/png" href="/images/logo.png"/>
     <!--Pusher-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     
@@ -15,6 +16,8 @@
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
     <link rel="stylesheet" href="/stylesheets/detail_course.css" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/magnific-popup.min.css" rel="stylesheet">
+
 </head>
 <body>
     <%- include('../partials/header.ejs', {auth: auth, user: name}) %>
@@ -32,7 +35,9 @@
                     <% } %>
                 </div>
             </div>
+
             <h3 style="font-weight: 700; margin-top: 50px;">Danh sách bài học:</h3>
+
             <div class="container">
                 <% if (lesson == null) { %>
                     <p>Hiện tại khóa học vẫn chưa có bài giảng nào</p>
@@ -44,11 +49,11 @@
                             <span class="badge badge-success">COMPLETED</span>
                         <% } %>
                     </h5>
-
+                    <div class="lesson_gallery">
                     <% for (var i = 0; i < lesson.length; i++) { %>
-                        <div class="container" style="background-color: #fbfbf8; padding: 1.6rem 2.4rem; border: 1px solid #dcdacb; border-radius: 5px; margin-bottom: 10px;">
+                        <div id="lesson" class="container" style="background-color: #fbfbf8; padding: 1.6rem 2.4rem; border: 1px solid #dcdacb; border-radius: 5px; margin-bottom: 10px;">
                             <% if (lesson[i].Trailer == 1) { %> 
-                                <a href="/courses/learning/<%= course.CourseID %>/<%= lesson[i].Lesson %>" class="d-flex justify-content-between align-items-center" id="free" style="text-decoration: none; color: #000;">
+                                <a href="https://www.youtube.com/watch?v=cfWKse-pCm0"  class="mfp-iframe">
                                     <p style="font-size: 18px;">
                                         <% var check = false; %>
                                         <% if (learn != null) { %> 
@@ -69,7 +74,7 @@
                                     </p>
                                 </a>
                             <% } else { %>
-                                <a href="/courses/learning/<%= course.CourseID %>/<%= lesson[i].Lesson %>" class="d-flex justify-content-between align-items-center" id="paid" style="text-decoration: none; color: #000;">
+                                <a href="<%=lesson[i].Video%>" class="mfp-iframe">
                                     <p style="font-size: 18px;">
                                         <% var check = false; %>
                                         <% if (learn != null) { %> 
@@ -91,8 +96,10 @@
                             <% } %>
                         </div>
                     <% } %>
+                    </div>
                 <% } %>
             </div>
+
             <h3 style="font-weight: 700; margin-top: 50px;">Yêu cầu cơ bản:</h3>
             <ul class="dc_ul">
                 <li><i class="fas fa-check"></i> Máy vi tính kết nối internet (Windows, Ubuntu hoặc MacOS)</li>
@@ -134,11 +141,11 @@
 
             <h3 style="font-weight: 700; margin-top: 50px;">Nhận xét - đánh giá:</h3>
             <div class="d-flex flex-row" style="margin: 20px;">
-                <div style="width: 100px; height: 100px;">
+                <div style="width: 70px; height: 70px;">
                     <img src="/images/avatar/avatar.png" style="width: 100%; height: 100%;">
                 </div>
-                <form action="comment/<%= course.CourseID %>" class="d-flex flex-column align-items-center" method="POST" id="form_comment" style="margin-left: 30px">
-                    <textarea style="height: 100px; border: 1px solid #dcdacb; resize: none; padding: 10px 0 10px 10px;" name="comment" cols="130" placeholder="Nhận xét khóa học ở đây"></textarea>
+                <form action="comment/<%= course.CourseID %>" class="d-flex flex-column align-items-center" method="POST" id="form_comment" style="margin-left: 30px;">
+                    <textarea style="height: 100px; border: 1px solid #dcdacb; resize: none; padding: 10px 0 10px 10px;" name="comment" cols="80" placeholder="Nhận xét khóa học ở đây"></textarea>
                     <div class="d-flex flex-row" style="width: 100%; height: 70px; background-color: #f5f6f7;">
                         <div class="range" style="width: fit-content; margin: 15px 0px 0px 15px;">
                             <label for="point" id="score"></label>
@@ -146,32 +153,42 @@
                             
                         </div>
                         <div class="text-right" style="width: 100%; margin: 20px 15px 0px 0px;">
-                            <input class="text-right" type="submit" id="sub_comment" text="Comment" style="padding: 5px 20px; background-color: #9cb4d8;">
+                            <input class="text-right" type="submit" id="sub_comment" text="Comment" value = 'Comment' style="padding: 5px 20px; background-color: #9cb4d8;">
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="container">
-            <% if (comment == null) { %> 
-                <hr>
-                <p>Khóa học hiện chưa có đánh giá nào!</p>
-            <% } else { %>
-                <% for (var i = 0; i < comment.length; i++) { %> 
+            
+            <div id="comments" class="container">
+                <% if (comment == null) { %> 
                     <hr>
-                    <div class="d-flex flex-row justify-content-between">
-                        <p style="font-size: 20px; color: darkcyan"><%= comment[i].Username %></p>
-                        <p class="font-italic"><%= moment(comment[i].Date).format('DD-MM-YYYY') %></p>
-                    </div>
-                    <% for(var j=0; j < comment[i].Point; j++) { %>
-                        <i class="fas fa-star" style="color: orange;"></i>
+                    <p>Khóa học hiện chưa có đánh giá nào!</p>
+                <% } else { %>
+                    <% for (var i = 0; i < comment.length; i++) { %> 
+                        <hr>
+                        <div class = "container">
+                            <div class = "row">
+                                <div class="col">
+                                    <img src="/images/avatar/avatar.png" style="width: 60px; height: 60px; margin-right: 45px;">
+                                        <% for(var j=0; j < comment[i].Point; j++) { %>
+                                            <i class="fas fa-star" style="color: orange;"></i>
+                                        <% } %>
+                                        <% for(var j=0; j < 5 - comment[i].Point; j++) { %>
+                                            <i class="far fa-star" style="color: black"></i>
+                                        <% } %>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <p class="col" style="font-size: 20px; color: darkcyan; width:120px; width: 1%;"><%= comment[i].Username %></p>
+                                <p class="col-9" style="overflow-wrap: break-word;"><%= comment[i].Comment %> </p>
+                                <p class="col font-italic"><%= moment(comment[i].Date).format('DD-MM-YYYY') %></p>
+                            </div>
+                            
+                        </div>
                     <% } %>
-                    <% for(var j=0; j < 5 - comment[i].Point; j++) { %>
-                        <i class="far fa-star" style="color: orange"></i>
-                    <% } %>
-                    <p style="margin-top: 20px;"><%= comment[i].Comment %></p>
                 <% } %>
-            <% } %>
             </div>
+            
         </div>
 
         <div class="p2 dc_card card" >
@@ -198,11 +215,25 @@
     
     <%- include('../partials/footer.ejs') %>
 
-    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js"></script>
+
+    <script>
+        $('.lesson_gallery').each(function() { // the containers for all your galleries
+            $(this).magnificPopup({
+                delegate: 'a', // the selector for gallery item
+                gallery: {
+                    enabled:true
+                }
+            });
+        });
+    </script>
+
     <script>
         $('#score').text("0 star"); 
         function updateTextInput(val) {
-          $('#score').text(val + " star"); 
+            $('#score').text(val + " star"); 
         }
         $('#like').on('click', function(e) {
             e.preventDefault();
@@ -259,6 +290,6 @@
             });
             
         }) 
-     </script>
+    </script>
 </body>
 </html>
