@@ -3,9 +3,7 @@ var router = express.Router();
 var auth = require('../middlewares/auth.mdw');
 var bcrypt = require('bcrypt');
 var db = require('../models/user.model');
-var favDb = require('../models/like.model');
-var proDb = require('../models/product.model');
-const productModel = require('../models/product.model');
+var userDb = require('../models/user.model')
 //Khởi tạo biến cấu hình cho việc lưu trữ file
 
 
@@ -45,8 +43,6 @@ router.post('/edit', auth.auth, async function(req, res) {
         return;
     }
 
-    
-    console.log(name, email, new_psw);
     if (name != '') {
         user.Name = name;
         await db.updateName(user.Username, name);
@@ -68,6 +64,15 @@ router.post('/edit', auth.auth, async function(req, res) {
     res.render('profile/editPro', { title: req.session.authUser, error: 'success' });
 })
 
+router.get('/edit/is-exists-email', async function(req, res) {
+    const email = req.query.email;
+    
+    var user = await userDb.singleByEmail(email);
+    if (user !== false) {
+        return res.json('success');
+    }
+    return res.json('fail');
+})
 //router.get('/favorites/:id', auth.auth, async function(req, res) {  
 //})
 

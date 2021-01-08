@@ -306,8 +306,18 @@ router.get('/learning/:courseid/:lessonid', auth.auth, async function(req, res) 
     });
 })
 
-router.get('/edit', auth.authTeacher, async function(req, res) {
-    var courses = await proDb.getByTeacher(req.session.authUser.Username);
+router.get('/edit', auth.auth, async function(req, res) {
+    if (req.session.authUser.Type == 'user') {
+        res.redirect('/');
+    }
+
+    var courses;
+    if (req.session.authUser.Type == 'admin') {
+        courses = await proDb.allCourse();
+    } else {
+        courses = await proDb.getByTeacher(req.session.authUser.Username);
+    }
+    
     var lessons_all = [];
 
     if (courses != null) {

@@ -112,8 +112,11 @@ button:focus {
                 <% } else if (type == 'teacher') { %>
                 <a href="/courses/new_course"><button class="big-button" style="margin-right: 10px;" href="#">New Course</button></a>
                 <button class="big-button" style="margin-left: 10px;"href="#">My Courses</a> 
+                <% } else if (type == 'admin') { %>
+                <a href="/manage"><button class="big-button" style="margin-right: 10px;" href="#">Manage</button></a>
                 <% } %>
             </div>
+
 
         </div>
     </div>

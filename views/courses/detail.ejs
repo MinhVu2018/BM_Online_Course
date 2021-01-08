@@ -209,6 +209,10 @@
                 <span>, <%= course.NumberStudent %> student</span>
 
                 <p style="font-size: 20px; margin-top: 10px;"><i class="fas fa-chalkboard-teacher"></i> <%= course.Teacher %></p>
+
+                <% if (course.Teacher == name) { %>
+                    <a href="/courses/edit">Edit</a>
+                    <% } %>
             </div>
         </div>
     </div>

@@ -18,10 +18,17 @@ module.exports = {
     authTeacher: function(req, res, next) {
       if (req.session.auth === true) {
         if (req.session.authUser.Type == 'teacher') {
-          console.log('teacher');
           return next();
         }
       }
       return res.redirect('/');
+    },
+
+    authAdmin: function(req, res, next) {
+      if (req.session.auth === true) {
+        if (req.session.authUser.Type == 'admin') {
+          return next();
+        }
+      }
     }
 };

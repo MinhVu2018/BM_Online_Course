@@ -21,9 +21,6 @@ require('./middlewares/session.mdw')(app);
 require('./middlewares/local.mdw')(app);
 require('./middlewares/route.mdw')(app);
 
-
-
-
 //error handle
 app.use(function (err, req, res, next) {
   console.error(err.stack);

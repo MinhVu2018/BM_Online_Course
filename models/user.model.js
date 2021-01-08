@@ -19,6 +19,14 @@ module.exports = {
         return rows[0];
     },
 
+    async allUser() {
+        const sql = `select * from Users`;
+        const [rows, fields] = await db.load(sql);
+        if (rows.length === 0)
+          return null;
+        return rows;
+    },
+
     async add(user) {
         const [result, fields] = await db.add(user, 'Users');
         return result;

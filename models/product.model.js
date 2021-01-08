@@ -10,6 +10,14 @@ module.exports = {
         return rows[0];
     },
 
+    async allCourse() {
+        const sql = `select * from Courses`;
+        const [rows, fields] = await db.load(sql);
+        if (rows.length === 0)
+            return null;
+        return rows;
+    },
+
     async relativeCourses(courseid, cate) {
         const sql = `select * from Courses where CourseID != '${courseid}' and Category = '${cate}' order by NumberStudent DESC limit 5`;
         const [rows, fields] = await db.load(sql);
