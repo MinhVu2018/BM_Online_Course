@@ -144,6 +144,7 @@ router.get('/detail/check/is-comment', auth.auth, async function(req, res) {
         return res.json('fail');
     }
 })
+
 router.get('/detail/check/is-like', auth.auth, async function (req, res) {
     const id = req.query.courseid;
 

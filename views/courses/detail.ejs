@@ -51,9 +51,9 @@
                     </h5>
                     <div class="lesson_gallery">
                     <% for (var i = 0; i < lesson.length; i++) { %>
-                        <div id="lesson" class="container" style="background-color: #fbfbf8; padding: 1.6rem 2.4rem; border: 1px solid #dcdacb; border-radius: 5px; margin-bottom: 10px;">
+                        <div id="lesson" class="container d-flex" style="background-color: #fbfbf8; padding: 1.6rem 2.4rem; border: 1px solid #dcdacb; border-radius: 5px; margin-bottom: 10px;">
                             <% if (lesson[i].Trailer == 1) { %> 
-                                <a href="https://www.youtube.com/watch?v=cfWKse-pCm0"  class="mfp-iframe">
+                                <a href="https://www.youtube.com/watch?v=cfWKse-pCm0"  class="mfp-iframe p-2 w-100">
                                     <p style="font-size: 18px;">
                                         <% var check = false; %>
                                         <% if (learn != null) { %> 
@@ -61,11 +61,11 @@
                                                 <% if (learn[j].Lesson == lesson[i].Lesson) { check = true; } %>
                                             <% } %>
                                         <% } %>
-                                        <% if (check == false) { %> 
+                                        <!-- <% if (check == false) { %> 
                                             <i class="far fa-square"></i>
                                         <% } else { %>
                                             <i class="far fa-check-square"></i>
-                                        <% } %>
+                                        <% } %> -->
                                         <%= lesson[i].Name %>
                                         <i class="fas fa-check" style="color: green"> Free</i>
                                     </p>
@@ -73,8 +73,16 @@
                                         Upload: <%= moment(lesson[i].DateUpload).format('DD-MM-YYYY') %>
                                     </p>
                                 </a>
+                                
+                                <!-- check student learned  -->
+                                <% if (check == false) { %>
+                                    <input class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Name %>"/>
+                                <% } else {%>
+                                    <input checked class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Name %>"/>
+                                <% } %>
+                                
                             <% } else { %>
-                                <a href="<%=lesson[i].Video%>" class="mfp-iframe">
+                                <a href="<%=lesson[i].Video%>" class="mfp-iframe p-2 w-100">
                                     <p style="font-size: 18px;">
                                         <% var check = false; %>
                                         <% if (learn != null) { %> 
@@ -93,6 +101,14 @@
                                         Upload: <%= moment(lesson[i].DateUpload).format('DD-MM-YYYY') %>
                                     </p>
                                 </a>
+
+                                <!-- check student learned  -->
+                                <% if (check == false) { %>
+                                    <input class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Name %>"/>
+                                <% } else {%>
+                                    <input checked class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Name %>"/>
+                                <% } %>
+                                
                             <% } %>
                         </div>
                     <% } %>
@@ -124,10 +140,9 @@
                             <% if (relative[i].Category == 2) { %>
                                 <h5 class="card-title" style="color: black"><%= relative[i].Name %> <br> <span class="badge badge-warning">App</span></h5>
                             <% } %>
-            
-            
+                            
                             <p style="color:black;"><i class="fas fa-chalkboard-teacher"></i> <%= relative[i].Teacher %>&emsp; &emsp; <i class="fas fa-users"></i> <%= relative[i].NumberStudent %></p>
-            
+                            
                             <% for(var j=0; j < Math.round(relative[i].Preview); j++) { %>
                                 <i class="fas fa-star" style="color: orange;"></i>
                             <% } %>
@@ -223,6 +238,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js"></script>
 
+    
+    <script>
+        $('input').on('click', function(){
+            var checkboxes = document.getElementsByName('lesson_check');
+            var selected = [];
+            for (var i=0; i<checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    selected.push(checkboxes[i].value);
+                }
+            }
+            alert(selected);
+        });
+    </script>
+
+    <!-- pop up video  -->
     <script>
         $('.lesson_gallery').each(function() { // the containers for all your galleries
             $(this).magnificPopup({

@@ -21,6 +21,7 @@ router.get('/', auth.auth, function(req, res) {
         email: req.session.authUser.Email,
         type: req.session.authUser.Type
     });
+    
 })
 
 router.get('/edit', auth.auth, function (req, res) {
@@ -73,7 +74,15 @@ router.get('/edit/is-exists-email', async function(req, res) {
     }
     return res.json('fail');
 })
-//router.get('/favorites/:id', auth.auth, async function(req, res) {  
-//})
+
+router.get('/favorites/:id', auth.auth, async function(req, res) {
+    res.render('profile/favorites', {
+        error: null
+    });
+})
+
+// router.get('/cources/:id', auth.auth, async function(req, res){
+
+// })
 
 module.exports = router;
