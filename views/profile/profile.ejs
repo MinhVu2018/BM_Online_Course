@@ -110,11 +110,11 @@ button:focus {
             align-items: center;
             justify-content: center;">
                 <% if (type == 'user') { %> 
-                <a href="/profile/favorites/1"><button class="big-button" >Những khóa học yêu thích</button></a>
-                <a href="/profile/courses/1"><button class="big-button" >Những khóa học của tôi</button></a>
+                <a href="/profile/favorite_courses"><button class="big-button" >Những khóa học yêu thích</button></a>
+                <a href="/profile/enroll_courses"><button class="big-button" >Những khóa học của tôi</button></a>
                 <% } else if (type == 'teacher') { %>
-                <a href="/courses/new_course"><button class="big-button" style="margin-right: 10px;" href="#">Thêm khóa học mới</button></a>
-                <button class="big-button" style="margin-left: 10px;"href="#">Khóa học của tôi</a> 
+                <a href="/courses/new_course"><button class="big-button" style="margin-right: 10px;">Thêm khóa học mới</button></a>
+                <a href="/profile/my_courses"><button class="big-button" style="margin-left: 10px;">Khóa học của tôi</button> </a>
                 <% } else if (type == 'admin') { %>
                 <a href="/manage"><button class="big-button" style="margin-right: 10px;" href="#">Quản lý khóa học</button></a>
                 <% } %>

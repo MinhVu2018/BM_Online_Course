@@ -38,6 +38,7 @@ module.exports = {
             return null;
         return rows[0];
     },
+
     async updateStudent(num, id) {
         const sql = `update Courses set NumberStudent = '${num}' where CourseID = ${id}`;
         const [rows, fields] = await db.load(sql);
@@ -52,11 +53,13 @@ module.exports = {
             return null;
         return rows[0];
     },
+
     async updateView(id, view) {
         const sql = `update Courses set View = '${view}' where CourseID = ${id}`;
         const [rows, fields] = await db.load(sql);
         return rows;
     },
+
     //total course number
     async numberCourse() {
         const sql = `select * from Courses`;
@@ -122,6 +125,12 @@ module.exports = {
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0) 
             return null;
+        return rows;
+    },
+
+    async pageByTeacherCourses(teacher, offset) {
+        const sql = `select * from Courses where Teacher = '${teacher}' limit ${paginate.limit} offset ${offset}`;
+        const [rows, fields] = await db.load(sql);
         return rows;
     },
 

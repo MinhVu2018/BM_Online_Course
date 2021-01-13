@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FavoriteCourses</title>
+    <title>MyCourses</title>
 
     <link rel="shortcut icon" type="image/png" href="/images/logo.png"/>
 
@@ -24,7 +24,7 @@
     <%- include('../partials/header.ejs') %>
 <body>
     <div style="height:100%; margin-top: 100px">
-        <h1 style="margin-left:80px">Những khóa học yêu thích: (<%= numCourse %> kết quả)</h1>
+        <h1 style="margin-left:80px">Những khóa học của tôi: (<%= numCourse %> kết quả) </h1>
 
         <% for(var i=0; i < courses.length; i++) { %>
             <hr style="border-top: 1px solid black;">
@@ -71,19 +71,19 @@
     <div class="pagination d-flex justify-content-center">
         <% var reqPage = curPage - 1 %>
         <% if (reqPage < 1) reqPage = 1%>
-        <a href="/profile/favorite_courses/?page=<%= reqPage %>">&laquo;</a>
+        <a href="/profile/my_courses/?page=<%= reqPage %>">&laquo;</a>
         
         <% for (var i=1; i<=numPage; i++) { %>
             <% if (i == curPage){ %> 
-                <a href="/profile/favorite_courses/?page=<%= i %>" class="active"> <%=i%> </a>
+                <a href="/profile/my_courses/?page=<%= i %>" class="active"> <%=i%> </a>
             <% } %>
             <% if (i != curPage){ %> 
-                <a href="/profile/favorite_courses/?page=<%= i %>"> <%= i %> </a>
+                <a href="/profile/my_courses/?page=<%= i %>"> <%= i %> </a>
             <% } %>
         <% } %>
         <% var reqPage = curPage + 1 %>
         <% if (reqPage > numPage) reqPage = numPage%>
-        <a href="/profile/favorite_courses/?page=<%= reqPage%>">&raquo;</a>
+        <a href="/profile/my_courses/?page=<%= reqPage%>">&raquo;</a>
     </div>
 
 </body>
