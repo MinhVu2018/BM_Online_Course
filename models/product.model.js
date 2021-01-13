@@ -161,8 +161,14 @@ module.exports = {
     },
     
     async getBySearch(search_input){
-        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher)) AGAINST ('${search_input}' IN NATURAL LANGUAGE MODE)`;
+        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher) AGAINST ('${search_input}' IN NATURAL LANGUAGE MODE)`;
         const [result, fields] = await db.load(sql);
         return result;
+    },
+
+    async pageBySearch(search_input, offset) {
+        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher) AGAINST ('${search_input}' IN NATURAL LANGUAGE MODE) limit ${paginate.limit} offset ${offset}`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
     },
 } 

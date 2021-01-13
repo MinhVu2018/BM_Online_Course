@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="shortcut icon" type="image/png" href="/images/logo.png"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/header_style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/page_style.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/sidebar_style.css" type="text/css">
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+</head>
+    <%- include('../partials/header.ejs') %>
+<body>
+    <div>
+        <nav class="sidebar">
+            <ul class="sidebar_nav">
+                <img src="/images/IT_icon.png" width ="50" height="50">
+                <li class="sidebar_nav_items">
+                    IT catergories:
+                </li>
+                
+                <li class="sidebar_nav_items">
+                    <a href="/courses/it/web">Web</a>
+                </li>
+
+                <li class="sidebar_nav_items">
+                    <a href="/courses/it/app">App</a>
+                </li>
+
+                <img src="/images/more_icon.png" width ="50" height="50">
+                <li class="sidebar_nav_items">
+                    Coming soon...
+                </li>
+
+            </ul>
+        </nav>
+        
+        <div class="wrapper">
+            <main>
+                <h1> Các khóa học liên quan '<%= search_input %>': (<%= numCourse %> kết quả)</h1>
+
+                <% for(var i=0; i < courses.length; i++) { %>
+                    <hr style="border-top: 1px solid black;">
+                    <div class="container" style="margin-top:20px; margin-bottom: 20px;">
+                        <a href="/courses/detail/<%= courses[i].CourseID %>" style="display: block;" > 
+                            <div class="row">
+                                <div id="cover" class = "col-sm-4">
+                                    <img src="/images/courses/<%= courses[i].CourseID %>.jpg" style = "width: 300px; height: 200px; object-fit: fill; border: 1px solid black;">
+                                </div>
+
+                                <div id="content" class = "col" style="line-height: 3; color:black">
+                                    <h1><%= courses[i].Name %></h1>
+                                    <img src="/images/information_icon.png" style="width:30px; height: 30px; object-fit: fill;">
+                                    <%= courses[i].Description %> <br>
+                                    <img src="/images/teacher_icon.png" style="width:30px; height: 30px; object-fit: fill;">
+                                    Giáo viên: <%= courses[i].Teacher %> <br>
+                                    <img src="/images/learner_icon.png" style="width:30px; height: 30px; object-fit: fill;">
+                                    Học viên: <%= courses[i].NumberStudent %> <br>
+                                    
+                                    <span style="color: rgb(224, 172, 28); font-size: 25px;"> <%= courses[i].Preview %></span>
+                                    <% for(var j=0, numrate = courses[i].Preview ; j < 5; j++, numrate--) { %>
+                                        <% if (numrate > 0){ %>
+                                            <span class="fa fa-star checked"></span>
+                                        <%}%>
+                                        <% if (numrate <= 0) {%>
+                                            <span class="fa fa-star"></span>
+                                        <% } %>
+                                    <%}%>
+
+                                    <span>(<%= courses[i].NumPreview %> lượt bình chọn)</span>
+                                </div>
+
+                                <div id="price" class = "col-sm-1 text-right">
+                                    FREE <br>
+                                    <% var price = Math.random()*(1000-100) + 100 %>
+                                    <del>$<%- price.toFixed(2) %> </del>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <% } %>
+
+            </main>
+            
+            <div class="pagination d-flex justify-content-center">
+                <% var reqPage = curPage - 1 %>
+                <% if (reqPage < 1) reqPage = 1%>
+                <a href="/courses/search/?page=<%= reqPage %>&search_input=<%= search_input %>">&laquo;</a>
+                
+                <% for (var i=1; i<=numPage; i++) { %>
+                    <% if (i == curPage){ %> 
+                        <a href="/courses/search/?page=<%= i %>&search_input=<%= search_input %>" class="active"> <%=i%> </a>
+                    <% } %>
+                    <% if (i != curPage){ %> 
+                        <a href="/courses/search/?page=<%= i %>&search_input=<%= search_input %>"> <%= i %> </a>
+                    <% } %>
+                <% } %>
+                <% var reqPage = curPage + 1 %>
+                <% if (reqPage > numPage) reqPage = numPage%>
+                <a href="/courses/search/?page=<%= reqPage%>&search_input=<%= search_input %>">&raquo;</a>
+            </div>
+        </div>
+    </div>
+    <%- include('../partials/footer.ejs') %>
+</body>
+</html>

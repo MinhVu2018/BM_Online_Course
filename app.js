@@ -29,7 +29,6 @@ app.use(function (err, req, res, next) {
   })
 })
 
-
 //open port
 const PORT = 3000;
 app.listen(PORT, function () {

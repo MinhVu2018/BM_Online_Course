@@ -73,9 +73,9 @@
     </div>
 
     <!-- search bar  -->
-    <form style="margin: auto;" onsubmit="event.preventDefault();" role="search">
-		<input id="search" type="search" placeholder="Search..." autofocus required />
-		<button style="position: absolute; top: 0; right: 0; width: var(--btn-width); height: 100%; font-weight: bold; background: var(--color-brand); border-radius: 0 var(--rad) var(--rad) 0;" type="submit">Go</button>    
+    <form style="margin: auto;" action="courses/search" method="POST">
+		<input name="search_input" type="search" placeholder="Search..." autofocus required />
+		<button type="submit" style="position: absolute; top: 0; right: 0; width: var(--btn-width); height: 100%; font-weight: bold; background: var(--color-brand); border-radius: 0 var(--rad) var(--rad) 0;">Go</button>
 	</form>
 
     <!-- Hot courses -->
@@ -181,7 +181,7 @@
             </div>
         </div> -->
     </div>
-
+</body>
     <%- include('partials/footer.ejs') %>
 
     <!--Javascrip-->
@@ -189,5 +189,4 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js"></script>
     <script type="text/javascript" src="javascripts/header_script.js"></script>
     <script type="text/javascript" src="javascripts/slide.js"></script>
-</body>
 </html>
