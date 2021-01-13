@@ -5,8 +5,7 @@ module.exports = {
         const sql = `select * from Users where Username = '${username}'`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0)
-        return null;
-  
+            return null;
         return rows[0];
     },
     
@@ -14,8 +13,7 @@ module.exports = {
         const sql = `select * from Users where Email = '${email}'`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0)
-          return null;
-    
+            return null;
         return rows[0];
     },
 
@@ -23,7 +21,7 @@ module.exports = {
         const sql = `select * from Users`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0)
-          return null;
+            return null;
         return rows;
     },
 
@@ -46,4 +44,4 @@ module.exports = {
         const [result, fields] = await db.update(pass, 'Password', username, 'Users');
         return result;
     }
-  };
+};

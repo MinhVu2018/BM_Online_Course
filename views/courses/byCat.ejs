@@ -48,7 +48,7 @@
         
         <div class="wrapper">
             <main>
-                <h1>Courses:</h1>
+                <h1> Các khóa học: </h1>
                 
                 <% var numCourse = courses.length %>
 
@@ -61,13 +61,16 @@
                                     <img src="/images/courses/<%= courses[i].CourseID %>.jpg" style = "width: 300px; height: 200px; object-fit: fill; border: 1px solid black;">
                                 </div>
 
-                                <div id="content" class = "col" style="line-height: 3;">
+                                <div id="content" class = "col" style="line-height: 3; color:black">
                                     <h1><%= courses[i].Name %></h1>
                                     <img src="/images/information_icon.png" style="width:30px; height: 30px; object-fit: fill;">
                                     <%= courses[i].Description %> <br>
                                     <img src="/images/teacher_icon.png" style="width:30px; height: 30px; object-fit: fill;">
-                                    <%= courses[i].Teacher %> <br>
+                                    Giáo viên: <%= courses[i].Teacher %> <br>
+                                    <img src="/images/learner_icon.png" style="width:30px; height: 30px; object-fit: fill;">
+                                    Học viên: <%= courses[i].NumberStudent %> <br>
                                     
+                                    <span style="color: rgb(224, 172, 28); font-size: 25px;"> <%= courses[i].Preview %></span>
                                     <% for(var j=0, numrate = courses[i].Preview ; j < 5; j++, numrate--) { %>
                                         <% if (numrate > 0){ %>
                                             <span class="fa fa-star checked"></span>
@@ -76,6 +79,8 @@
                                             <span class="fa fa-star"></span>
                                         <% } %>
                                     <%}%>
+
+                                    <span>(<%= courses[i].NumPreview %> lượt bình chọn)</span>
                                 </div>
 
                                 <div id="price" class = "col-sm-1 text-right">
