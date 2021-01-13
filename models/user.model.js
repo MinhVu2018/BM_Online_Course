@@ -53,7 +53,6 @@ module.exports = {
         const sql = `delete from Users where Username = '${username}'`;
         const [result, fields] = await db.load(sql);
         return result;
-<<<<<<< HEAD
     },
 
     async listType(type) {
@@ -64,8 +63,4 @@ module.exports = {
     
         return rows;
     } 
-  };
-=======
-    }
 };
->>>>>>> a7f5b5061ad7e30d72e5e76e91f82689bc5d9441

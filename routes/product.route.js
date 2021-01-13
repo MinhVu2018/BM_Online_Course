@@ -11,7 +11,6 @@ const { paginate } = require('../config/default.json');
 const auth = require('../middlewares/auth.mdw');
 var upload = require('../middlewares/upload.mdw');
 var moment = require('moment');
-const db = require('../utils/db');
 
 router.get('/it/:id', async function(req, res) {
     var catId = 1;  // web
