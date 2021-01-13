@@ -28,7 +28,6 @@ module.exports = {
         const [result, fields] = await db.add({'Username': username, 'CourseID': courseid}, 'UserBuy');
         return result;
     },
-<<<<<<< HEAD
 
     async deleteByUser(username) {
         const sql = `delete from UserBuy where Username = '${username}'`;
@@ -41,7 +40,4 @@ module.exports = {
         const [result, fields] = await db.load(sql);
         return result;
     }
-  };
-=======
 };
->>>>>>> a7f5b5061ad7e30d72e5e76e91f82689bc5d9441

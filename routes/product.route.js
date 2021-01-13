@@ -382,4 +382,47 @@ router.post('/edit_lesson', async function(req, res) {
     await lessonDb.update(courseid, lessonid, video);
     res.redirect("/courses/detail/"+courseid);
 })
+
+router.get('/search', async function(req, res) {
+    //current page
+    var page = req.query.page || 1; 
+
+    //find the number of page
+    var list = await proDb.getByCategory(catId);
+    const total = list.length;
+    var nPages = Math.floor(total/+paginate.limit);
+    
+    if (total % +paginate.limit > 0) nPages++;
+    
+    const page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+
+    const offset = (page - 1) * paginate.limit;
+    const listProduct = await proDb.pageByCat(catId, offset);
+    
+    var auth, name;
+    if (req.session.auth === true) {
+        auth = true;
+        name = req.session.authUser.Username;
+    } else {
+        auth = false;
+        name = null;
+    }
+
+    res.render('courses/byCat', {
+        auth: auth,
+        name: name,
+        courses: listProduct,
+        numPage: nPages,
+        numCourse: total,
+        cate: req.params.id,
+        curPage: +page,
+    });
+})
+
 module.exports = router;

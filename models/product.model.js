@@ -160,4 +160,9 @@ module.exports = {
         return result;
     },
     
+    async getBySearch(search_input){
+        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher)) AGAINST ('${search_input}' IN NATURAL LANGUAGE MODE)`;
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
 } 
