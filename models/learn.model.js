@@ -20,5 +20,15 @@ module.exports = {
         if (rows.length === 0)
             return null;
         return rows;
+    },
+    async deleteByID(courseid) {
+        const sql = `delete from UserLessonLearn where CourseID = '${courseid}'`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+    async deleteByUser(username) {
+        const sql = `delete from UserLessonLearn where Username = '${username}'`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
     }
 }

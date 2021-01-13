@@ -7,6 +7,11 @@ var bcrypt = require('bcrypt');
 const cateDb = require('../models/cate.model');
 const proDb = require('../models/product.model');
 const userDb = require('../models/user.model');
+const buyDb = require('../models/buy.model');
+const likeDb = require('../models/like.model');
+const lessonDb = require('../models/lesson.model');
+const learnDb = require('../models/learn.model');
+
 const db = require('../utils/db');
 
 
@@ -22,10 +27,28 @@ router.get('/', auth.authAdmin, async function(req, res) {
     });
 })
 
+router.post('/del_course', auth.authAdmin, async function(req, res) {
+    var course = req.body.del_courseid;
+
+    await proDb.deleteByID(course);
+    await likeDb.deleteByID(course);
+    await lessonDb.deleteByID(course);
+    await proDb.deleteByID(course);
+    await learnDb.deleteByID(course);
+    res.redirect('back');
+})
+
 router.post('/del_user', auth.authAdmin, async function(req, res) {
     const username = req.body.del_username;
 
     var result = await userDb.deleteUser(username);
+    await buyDb.deleteByUser(username);
+    await likeDb.deleteByUser(username);
+    await learnDb.deleteByUser(username);
+    
+    //delete courses if user own courses
+    //do here
+
     res.redirect('back');
 })
 
@@ -79,5 +102,12 @@ router.get('/email-exists', async function(req, res) {
         res.json('fail');
     }
 })
-
+router.get('/course-exists', async function(req, res) {
+    var course = await proDb.singleByID(req.query.course);
+    if (course != null) {
+        res.json('success');
+    } else {
+        res.json('fail');
+    }
+})
 module.exports = router;

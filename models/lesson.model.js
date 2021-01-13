@@ -1,5 +1,6 @@
 const { update } = require("../utils/db");
 const db = require("../utils/db");
+const { deleteByID } = require("./product.model");
 
 module.exports = {
     async getLessonByCourseID(courseid) {
@@ -24,5 +25,11 @@ module.exports = {
         const sql = `update CourseDetail set Video = '${video}' where CourseID = '${lid}' and Lesson = '${lid}'`;
         const [rows, fields] = await db.load(sql);
         return rows;
+    },
+    async deleteByID(courseid) {
+        const sql = `delete from CourseDetail where CourseID = '${courseid}'`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
     }
+
 }

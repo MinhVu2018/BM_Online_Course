@@ -53,10 +53,10 @@
                     <a href="/courses/new_course"><button style="background-color: black; color:#d5d5d5;" class="btn">UPDATE</button></a>
                 </div>
 
-                <form action="del_course" method="POST" style="margin: 20px;">
+                <form action="manage/del_course" method="POST" id="del_course" style="margin: 20px;">
                     <h4>Delete course:</h4>
                     <div class="d-flex flex-row">
-                        <input type="text" id="del_course" class="form-control" placeholder="Input id you want to delete" required style="margin-right: 30px">
+                        <input type="text" id="del_courseid" name="del_courseid" class="form-control" placeholder="Input id you want to delete" required style="margin-right: 30px">
                         <input class="btn" value="UPDATE" type="submit" style="background-color: black; color:#d5d5d5;">
                     </div>
                 </form>
@@ -115,6 +115,16 @@
     </div>
 
     <script>
+        $('#del_course').on('submit', function(e) {
+            e.preventDefault();
+            $.getJSON('/manage/course-exists?course=' + $('#del_courseid').val(), function(data) {
+                if (data == 'success') {
+                    $('#del_course').off('submit').submit();
+                } else {
+                    alert("Không tồn tại khóa học với ID này!");
+                }
+            })
+        })
         $('#edit_user').on('submit', function(e) {
             e.preventDefault();
             $.getJSON('/manage/user-exists?username=' + $('#edit_username').val(), function (data) {

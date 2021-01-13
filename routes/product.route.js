@@ -6,6 +6,7 @@ const buyDb = require('../models/buy.model');
 const lessonDb = require('../models/lesson.model');
 const learnDb = require('../models/learn.model');
 const commentDb = require('../models/comment.model');
+const userDb = require('../models/user.model');
 const { paginate } = require('../config/default.json');
 const auth = require('../middlewares/auth.mdw');
 var upload = require('../middlewares/upload.mdw');
@@ -207,8 +208,19 @@ router.get('/course/:id/buy', auth.auth, async function(req, res){
     res.redirect('back');
 })
 
-router.get('/new_course', auth.authTeacher, function(req, res) {
-    res.render('courses/add_course');
+router.get('/new_course', auth.auth, async function(req, res) {
+    if (req.session.authUser.Type == 'user') {
+        res.redirect('/');
+    }
+
+    var teachers = null;
+    if (req.session.authUser.Type == 'admin') {
+        teachers = await userDb.listType('teacher');
+    }
+    res.render('courses/add_course', {
+        type: req.session.authUser.Type,
+        teachers: teachers
+    });
 })
 
 router.post('/new_course', upload.single('course_img'), async function(req, res, next) {
@@ -219,8 +231,9 @@ router.post('/new_course', upload.single('course_img'), async function(req, res,
     var mm = today.getMonth()+1; 
     var yyyy = today.getFullYear();
 
+
     var course = {
-        CourseID: await proDb.numberCourse() + 1,
+        CourseID: null,
         Name: req.body.course_name,
         Teacher: req.session.authUser.Username,
         Description: req.body.course_description,
@@ -234,6 +247,18 @@ router.post('/new_course', upload.single('course_img'), async function(req, res,
         Price: 0
     }
 
+    //name of the teacher
+    if (req.session.authUser.Type == 'admin') {
+        course.Teacher = req.body.course_teacher;
+    }
+
+    var lastCourse = await proDb.lastCourse();
+    if (lastCourse == null) {
+        course.CourseID = 1;
+    } else {
+        course.CourseID = +lastCourse.CourseID + 1
+    }
+
     //add to db
     await proDb.addCourse(course);
 
@@ -243,7 +268,7 @@ router.post('/new_course', upload.single('course_img'), async function(req, res,
         error.httpStatusCode = 400
         return next(error);
     }
-    res.send(file);
+    res.redirect('/courses/detail/' + course.CourseID);
 })
 
 router.get('/new_lesson/:courseid', auth.authTeacher, async function(req, res) {
@@ -355,6 +380,6 @@ router.post('/edit_lesson', async function(req, res) {
     var video = req.body.lesson_video;
 
     await lessonDb.update(courseid, lessonid, video);
-    res.redirect("/courses/detail"+courseid);
+    res.redirect("/courses/detail/"+courseid);
 })
 module.exports = router;

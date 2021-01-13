@@ -129,5 +129,26 @@ module.exports = {
         const sql = `update Courses set Status = '${status}', Description = '${des}', DetailDescription = '${detail_des}', Status = '${status}' where CourseID = '${id}'`;
         const [rows, fields] = await db.load(sql);
         return rows;
-    }
-}
+    },
+
+    async lastCourse() {
+        const sql = `select * from Courses order by CourseID DESC limit 1`;
+        const [rows, fields] = await db.load(sql);
+        if (rows.length === 0) 
+            return null;
+        return rows[0];
+    },
+
+    async deleteByUsername(username) {
+        const sql = `delete from Courses where Teacher = '${username}'`;
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+
+    async deleteByID(id) {
+        const sql = `delete from Courses where CourseID = '${id}'`;
+        const [result, fields] = await db.load(sql);
+        return result;
+    },
+    
+} 

@@ -30,6 +30,20 @@
                             <option disabled>Comming soon...</option>
                         </select>
                     </div>
+                    <% if (type == 'admin') { %> 
+                        <div class="col">
+                            <label for="course_teacher" style="width: 100%;">Teacher</p>
+                                <select class="form-control" name="course_teacher" id="course_teacher" style="margin-bottom: 20px;">
+                                    <% if (teachers[0].length == 0) { %>
+                                        <option disabled>Chưa có giảng viên nào!</option>
+                                    <% } else { %>
+                                        <% for (var i=0; i < teachers.length; i++) { %>
+                                            <option value="<%= teachers[i].Username %>"><%= teachers[i].Username %></option>
+                                        <% } %>
+                                    <% } %>
+                                </select>
+                        </div>
+                    <% } %>
                 </div>
                 <div class="row" style="margin-top: 30px;">
                     <div class="col">
