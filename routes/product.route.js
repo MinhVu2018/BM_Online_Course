@@ -53,6 +53,7 @@ router.get('/it/:id', async function(req, res) {
         name: name,
         courses: listProduct,
         numPage: nPages,
+        numCourse: total,
         cate: req.params.id,
         curPage: +page,
     });

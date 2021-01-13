@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../middlewares/auth.mdw');
+const proDb = require('../models/product.model');
+const likeDb = require('../models/like.model');
+const buyDb = require('../models/buy.model');
 var bcrypt = require('bcrypt');
 var db = require('../models/user.model');
-var userDb = require('../models/user.model')
+var userDb = require('../models/user.model');
+const { paginate } = require('../config/default.json');
 //Khởi tạo biến cấu hình cho việc lưu trữ file
 
 
@@ -75,14 +79,116 @@ router.get('/edit/is-exists-email', async function(req, res) {
     return res.json('fail');
 })
 
-router.get('/favorites/:id', auth.auth, async function(req, res) {
+router.get('/favorite_courses', auth.auth, async function(req, res) {
+    var name, auth;
+    name = req.session.authUser.Username;
+    auth = true;
+
+    //current page
+    var page = req.query.page || 1; 
+
+    //find the number of page
+    var list = await likeDb.listByUser(name);
+    const total = list.length;
+    var nPages = Math.floor(total/+paginate.limit);
+    
+    if (total % +paginate.limit > 0) nPages++;
+    
+    const page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+
+    const offset = (page - 1) * paginate.limit;
+    const listProduct = await likeDb.pageByFav(name, offset);
+
     res.render('profile/favorites', {
+        auth: auth,
+        name: name,
+        courses: listProduct,
+        curPage: +page,
+        numPage: nPages,
+        numCourse: total,
         error: null
     });
 })
 
-// router.get('/cources/:id', auth.auth, async function(req, res){
+router.get('/enroll_courses', auth.auth, async function(req, res){
+    var name, auth;
+    name = req.session.authUser.Username;
+    auth = true;
 
-// })
+    //current page
+    var page = req.query.page || 1; 
+
+    //find the number of page
+    var list = await buyDb.listByUser(name);
+    const total = list.length;
+    var nPages = Math.floor(total/+paginate.limit);
+    
+    if (total % +paginate.limit > 0) nPages++;
+    
+    const page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+
+    const offset = (page - 1) * paginate.limit;
+    const listProduct = await buyDb.pageByBought(name, offset);
+
+    res.render('profile/myCourses', {
+        auth: auth,
+        name: name,
+        courses: listProduct,
+        curPage: +page,
+        numPage: nPages,
+        numCourse: total,
+        error: null
+    });
+})
+
+router.get('/my_courses', auth.auth, async function(req, res){
+    var name, auth;
+    name = req.session.authUser.Username;
+    auth = true;
+
+    //current page
+    var page = req.query.page || 1; 
+
+    //find the number of page
+    var list = await proDb.getByTeacher(name);
+    const total = list.length;
+    var nPages = Math.floor(total/+paginate.limit);
+    
+    if (total % +paginate.limit > 0) nPages++;
+    
+    const page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+
+    const offset = (page - 1) * paginate.limit;
+    const listProduct = await proDb.pageByTeacherCourses(name, offset);
+    console.log(listProduct);
+    
+    res.render('profile/myCourses', {
+        auth: auth,
+        name: name,
+        courses: listProduct,
+        curPage: +page,
+        numPage: nPages,
+        numCourse: total,
+        error: null
+    });
+})
 
 module.exports = router;

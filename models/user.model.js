@@ -5,8 +5,7 @@ module.exports = {
         const sql = `select * from Users where Username = '${username}'`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0)
-        return null;
-  
+            return null;
         return rows[0];
     },
     
@@ -14,8 +13,7 @@ module.exports = {
         const sql = `select * from Users where Email = '${email}'`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0)
-          return null;
-    
+            return null;
         return rows[0];
     },
 
@@ -23,7 +21,7 @@ module.exports = {
         const sql = `select * from Users`;
         const [rows, fields] = await db.load(sql);
         if (rows.length === 0)
-          return null;
+            return null;
         return rows;
     },
 
@@ -55,6 +53,7 @@ module.exports = {
         const sql = `delete from Users where Username = '${username}'`;
         const [result, fields] = await db.load(sql);
         return result;
+<<<<<<< HEAD
     },
 
     async listType(type) {
@@ -66,3 +65,7 @@ module.exports = {
         return rows;
     } 
   };
+=======
+    }
+};
+>>>>>>> a7f5b5061ad7e30d72e5e76e91f82689bc5d9441
