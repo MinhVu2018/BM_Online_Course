@@ -27,6 +27,10 @@ module.exports = {
         return rows;
     },
 
+    async updateType(username, type) {
+        const [result, fields] = await db.update(type, 'Type', username, 'Users');
+        return result;
+    },
     async add(user) {
         const [result, fields] = await db.add(user, 'Users');
         return result;
@@ -44,6 +48,12 @@ module.exports = {
 
     async updatePass(username, pass) {
         const [result, fields] = await db.update(pass, 'Password', username, 'Users');
+        return result;
+    },
+
+    async deleteUser(username) {
+        const sql = `delete from Users where Username = '${username}'`;
+        const [result, fields] = await db.load(sql);
         return result;
     }
   };
