@@ -161,13 +161,37 @@ module.exports = {
     },
     
     async getBySearch(search_input){
-        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher) AGAINST ('${search_input}' IN NATURAL LANGUAGE MODE)`;
+        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher, Description) AGAINST ('${search_input}' IN NATURAL LANGUAGE MODE)`;
         const [result, fields] = await db.load(sql);
         return result;
     },
 
     async pageBySearch(search_input, offset) {
-        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher) AGAINST ('${search_input}' IN NATURAL LANGUAGE MODE) limit ${paginate.limit} offset ${offset}`;
+        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher, Description) AGAINST ('${search_input}' IN NATURAL LANGUAGE MODE) limit ${paginate.limit} offset ${offset}`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+
+    async pageBySearchAsc(search_input, offset) {
+        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher, Description) AGAINST ('${search_input}') > 0 ORDER BY (MATCH (Name, Teacher, Description) AGAINST ('${search_input}')) ASC limit ${paginate.limit} offset ${offset}`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+
+    async pageBySearchDesc(search_input, offset) {
+        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher, Description) AGAINST ('${search_input}') > 0 ORDER BY (MATCH (Name, Teacher, Description) AGAINST ('${search_input}')) DESC limit ${paginate.limit} offset ${offset}`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+
+    async pageBySearchNew(search_input, offset) {
+        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher, Description) AGAINST ('${search_input}') > 0 ORDER BY (DateStart) DESC limit ${paginate.limit} offset ${offset}`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    },
+
+    async pageBySearchOld(search_input, offset) {
+        const sql = `SELECT * FROM Courses WHERE MATCH (Name, Teacher, Description) AGAINST ('${search_input}') > 0 ORDER BY (DateStart) ASC limit ${paginate.limit} offset ${offset}`;
         const [rows, fields] = await db.load(sql);
         return rows;
     },

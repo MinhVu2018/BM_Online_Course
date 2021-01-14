@@ -50,6 +50,14 @@
             <main>
                 <h1> Các khóa học liên quan '<%= search_input %>': (<%= numCourse %> kết quả)</h1>
 
+                <div class="d-flex justify-content-around">
+                    <a href = "/courses/search?page=1&search_input=<%= search_input %>"><button type="button" class="btn btn-primary" style="height:60px; background: #4CAF50; color: black">Bình thường</button></a>
+                    <a href = "/courses/search_sort_asc/?page=1&search_input=<%= search_input %>"><button type="button" class="btn btn-primary" style="height:60px; background: #4CAF50; color: black">Độ liên quan tăng dần</button></a>
+                    <a href = "/courses/search_sort_desc/?page=1&search_input=<%= search_input %>"><button type="button" class="btn btn-primary" style="height:60px; background: #4CAF50; color: black">Độ liên quan giảm dần</button></a>
+                    <a href = "/courses/search_new/?page=1&search_input=<%= search_input %>"><button type="button" class="btn btn-primary" style="height:60px; background:#4CAF50; color: black">Mới nhất</button></a>
+                    <a href = "/courses/search_old/?page=1&search_input=<%= search_input %>"><button type="button" class="btn btn-primary" style="height:60px; background: #4CAF50; color: black">Cũ nhất</button></a>
+                </div>
+
                 <% for(var i=0; i < courses.length; i++) { %>
                     <hr style="border-top: 1px solid black;">
                     <div class="container" style="margin-top:20px; margin-bottom: 20px;">
@@ -90,7 +98,6 @@
                         </a>
                     </div>
                 <% } %>
-
             </main>
             
             <div class="pagination d-flex justify-content-center">

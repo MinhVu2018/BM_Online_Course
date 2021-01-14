@@ -481,4 +481,188 @@ router.get('/search', async function(req, res){
     });
 })
 
+router.get('/search_sort_asc', async function(req, res){
+    console.log(req.query);
+    var search_input = req.query.search_input
+    //current page
+    var page = req.query.page; 
+
+    //find the number of page
+    var list = await proDb.getBySearch(search_input);
+
+    const total = list.length;
+    var nPages = Math.floor(total/+paginate.limit);
+
+    if (total % +paginate.limit > 0) nPages++;
+
+    const page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+
+    const offset = (page - 1) * paginate.limit;
+    const listProduct = await proDb.pageBySearchAsc(search_input, offset);
+
+    var auth, name;
+    if (req.session.auth === true) {
+        auth = true;
+        name = req.session.authUser.Username;
+    } else {
+        auth = false;
+        name = null;
+    }
+
+    res.render('courses/bySearch', {
+        auth: auth,
+        name: name,
+        courses: listProduct,
+        numPage: nPages,
+        numCourse: total,
+        cate: req.params.id,
+        curPage: +page,
+        search_input: search_input
+    });
+})
+
+router.get('/search_sort_desc', async function(req, res){
+    console.log(req.query);
+    var search_input = req.query.search_input
+    //current page
+    var page = req.query.page; 
+
+    //find the number of page
+    var list = await proDb.getBySearch(search_input);
+
+    const total = list.length;
+    var nPages = Math.floor(total/+paginate.limit);
+
+    if (total % +paginate.limit > 0) nPages++;
+
+    const page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+
+    const offset = (page - 1) * paginate.limit;
+    const listProduct = await proDb.pageBySearchDesc(search_input, offset);
+
+    var auth, name;
+    if (req.session.auth === true) {
+        auth = true;
+        name = req.session.authUser.Username;
+    } else {
+        auth = false;
+        name = null;
+    }
+
+    res.render('courses/bySearch', {
+        auth: auth,
+        name: name,
+        courses: listProduct,
+        numPage: nPages,
+        numCourse: total,
+        cate: req.params.id,
+        curPage: +page,
+        search_input: search_input
+    });
+})
+
+router.get('/search_new', async function(req, res){
+    console.log(req.query);
+    var search_input = req.query.search_input
+    //current page
+    var page = req.query.page; 
+
+    //find the number of page
+    var list = await proDb.getBySearch(search_input);
+
+    const total = list.length;
+    var nPages = Math.floor(total/+paginate.limit);
+
+    if (total % +paginate.limit > 0) nPages++;
+
+    const page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+
+    const offset = (page - 1) * paginate.limit;
+    const listProduct = await proDb.pageBySearchNew(search_input, offset);
+
+    var auth, name;
+    if (req.session.auth === true) {
+        auth = true;
+        name = req.session.authUser.Username;
+    } else {
+        auth = false;
+        name = null;
+    }
+
+    res.render('courses/bySearch', {
+        auth: auth,
+        name: name,
+        courses: listProduct,
+        numPage: nPages,
+        numCourse: total,
+        cate: req.params.id,
+        curPage: +page,
+        search_input: search_input
+    });
+})
+
+router.get('/search_old', async function(req, res){
+    console.log(req.query);
+    var search_input = req.query.search_input
+    //current page
+    var page = req.query.page; 
+
+    //find the number of page
+    var list = await proDb.getBySearch(search_input);
+
+    const total = list.length;
+    var nPages = Math.floor(total/+paginate.limit);
+
+    if (total % +paginate.limit > 0) nPages++;
+
+    const page_numbers = [];
+    for (i = 1; i <= nPages; i++) {
+        page_numbers.push({
+            value: i,
+            isCurrentPage: i === +page
+        });
+    }
+
+    const offset = (page - 1) * paginate.limit;
+    const listProduct = await proDb.pageBySearchOld(search_input, offset);
+
+    var auth, name;
+    if (req.session.auth === true) {
+        auth = true;
+        name = req.session.authUser.Username;
+    } else {
+        auth = false;
+        name = null;
+    }
+
+    res.render('courses/bySearch', {
+        auth: auth,
+        name: name,
+        courses: listProduct,
+        numPage: nPages,
+        numCourse: total,
+        cate: req.params.id,
+        curPage: +page,
+        search_input: search_input
+    });
+})
+
 module.exports = router;
