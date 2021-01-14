@@ -51,64 +51,65 @@
                     </h5>
                     <div class="lesson_gallery">
                     <% for (var i = 0; i < lesson.length; i++) { %>
-                        <div id="lesson" class="container d-flex" style="background-color: #fbfbf8; padding: 1.6rem 2.4rem; border: 1px solid #dcdacb; border-radius: 5px; margin-bottom: 10px;">
+                        <div id="lesson"style="background-color: #fbfbf8; padding: 1.6rem 2.4rem; border: 1px solid #dcdacb; border-radius: 5px; margin-bottom: 10px;">
                             <% if (lesson[i].Trailer == 1) { %> 
-                                <a href="https://www.youtube.com/watch?v=cfWKse-pCm0"  class="mfp-iframe p-2 w-100">
-                                    <p style="font-size: 18px;">
-                                        <% var check = false; %>
-                                        <% if (learn != null) { %> 
-                                            <% for (var j = 0; j < learn.length; j++) { %> 
-                                                <% if (learn[j].Lesson == lesson[i].Lesson) { check = true; } %>
+                                <div  class="container d-flex" >
+                                    <a href="<%=lesson[i].Video%>" id="lesson-free" class="mfp-iframe p-2 w-100">
+                                        <p style="font-size: 18px;">
+                                            <% var check = false; %>
+                                            <% if (learn != null) { %> 
+                                                <% for (var j = 0; j < learn.length; j++) { %> 
+                                                    <% if (learn[j].Lesson == lesson[i].Lesson) { check = true; } %>
+                                                <% } %>
                                             <% } %>
-                                        <% } %>
-                                        <!-- <% if (check == false) { %> 
-                                            <i class="far fa-square"></i>
-                                        <% } else { %>
-                                            <i class="far fa-check-square"></i>
-                                        <% } %> -->
-                                        <%= lesson[i].Name %>
-                                        <i class="fas fa-check" style="color: green"> Free</i>
-                                    </p>
-                                    <p style="color: green; font-size: 16px;" >
-                                        Upload: <%= moment(lesson[i].DateUpload).format('DD-MM-YYYY') %>
-                                    </p>
-                                </a>
-                                
-                                <!-- check student learned  -->
-                                <% if (check == false) { %>
-                                    <input class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Name %>"/>
-                                <% } else {%>
-                                    <input checked class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Name %>"/>
-                                <% } %>
-                                
+                                            <%= lesson[i].Name %>
+                                            <i class="fas fa-check" style="color: green"> Free</i>
+                                        </p>
+                                        <p style="color: green; font-size: 16px;" >
+                                            Upload: <%= moment(lesson[i].DateUpload).format('DD-MM-YYYY') %>
+                                        </p>
+                                    </a>
+                                    
+                                    <!-- check student learned  -->
+                                    <% if (check == false) { %>
+                                        <input class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Lesson %>"/>
+                                    <% } else {%>
+                                        <input checked class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Lesson %>"/>
+                                    <% } %>
+                                </div>
                             <% } else { %>
-                                <a href="<%=lesson[i].Video%>" class="mfp-iframe p-2 w-100">
-                                    <p style="font-size: 18px;">
-                                        <% var check = false; %>
-                                        <% if (learn != null) { %> 
-                                            <% for (var j = 0; j < learn.length; j++) { %> 
-                                                <% if (learn[j].Lesson == lesson[i].Lesson) { check = true; } %>
-                                            <% } %>
-                                        <% } %>
-                                        <% if (check == false) { %> 
-                                            <i class="far fa-square"></i>
-                                        <% } else { %>
-                                            <i class="far fa-check-square"></i>
-                                        <% } %>
-                                        <%= lesson[i].Name %>
-                                    </p>
-                                    <p style="color: green; font-size: 16px;" >
-                                        Upload: <%= moment(lesson[i].DateUpload).format('DD-MM-YYYY') %>
-                                    </p>
-                                </a>
+                                <div class="hide">
+                                    <div class="container d-flex flex-row justify-content-between">
+                                        <a href="<%= lesson[i].Video %>" id="lesson-paid" class="mfp-iframe p-2 w-100">
+                                            <p style="font-size: 18px;">
+                                                <% var check = false; %>
+                                                <% if (learn != null) { %> 
+                                                    <% for (var j = 0; j < learn.length; j++) { %> 
+                                                        <% if (learn[j].Lesson == lesson[i].Lesson) { check = true; } %>
+                                                    <% } %>
+                                                <% } %>
+                                                <%= lesson[i].Name %>
+                                            </p>
+                                            <p style="color: green; font-size: 16px;" >
+                                                Upload: <%= moment(lesson[i].DateUpload).format('DD-MM-YYYY') %>
+                                            </p>
+                                        </a>
 
-                                <!-- check student learned  -->
-                                <% if (check == false) { %>
-                                    <input class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Name %>"/>
-                                <% } else {%>
-                                    <input checked class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Name %>"/>
-                                <% } %>
+                                        <!-- check student learned  -->
+                                        <% if (check == false) { %>
+                                            <input class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Lesson %>"/>
+                                        <% } else {%>
+                                            <input checked class="p-2 flex-shrink-1" name="lesson_check" type="checkbox" value="<%= lesson[i].Lesson %>"/>
+                                        <% } %>
+                                    </div>
+                                </div>
                                 
+                                <div class="need-to-buy">
+                                    <div class="container">
+                                        <p>Bạn cần phải mua khóa học để có thể xem bài học này!</p>
+                                    </div>
+                                </div>
+
                             <% } %>
                         </div>
                     <% } %>
@@ -234,21 +235,15 @@
     
     <%- include('../partials/footer.ejs') %>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js"></script>
 
     
     <script>
         $('input').on('click', function(){
-            var checkboxes = document.getElementsByName('lesson_check');
-            var selected = [];
-            for (var i=0; i<checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                    selected.push(checkboxes[i].value);
-                }
-            }
-            alert(selected);
+            $.getJSON('/courses/detail/check/learn?courseid=<%=course.CourseID%>&lessonid=' + $(this).val() + '&status=' + $(this).prop('checked'), function(data) {
+            })
         });
     </script>
 
@@ -262,6 +257,18 @@
                 }
             });
         });
+
+        $(document).ready(function() {
+            $.getJSON('/courses/detail/check/is-buy?courseid=<%= course.CourseID %>', function (data) {
+                if (data == 'success') {
+                    $('.hide').hide();
+                    $('.need-to-buy').show();
+                } else {
+                    $('.hide').show();
+                    $('.need-to-buy').hide();
+                }
+            });
+        });
     </script>
 
     <script>
@@ -269,6 +276,7 @@
         function updateTextInput(val) {
             $('#score').text(val + " star"); 
         }
+
         $('#like').on('click', function(e) {
             e.preventDefault();
             $.getJSON('/courses/detail/check/is-like?courseid=<%= course.CourseID %>', function (data) {
@@ -289,22 +297,9 @@
                     window.location.href = "/courses/course/<%= course.CourseID %>/buy";
                 } else if (data == 'fail') {
                     alert('Khóa học này đã nằm trong tài khoản của bạn.');
-
                 }
             })
         })
-
-        $('#paid').on('click', function(e) {
-            e.preventDefault();
-            $.getJSON('/courses/detail/check/is-buy?courseid=<%= course.CourseID %>', function (data) {
-                if (data == 'success') {
-                    alert('Bạn chưa mua khóa học này, vui lòng mua để tiếp tục.');
-                } else if (data == 'fail') {
-                    alert('Redirecting ....');
-                    window.location.href = $('#paid').attr('href');
-                }
-            });
-        }) 
 
         $('#form_comment').on('submit', function(e) {
             e.preventDefault();

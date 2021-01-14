@@ -30,5 +30,11 @@ module.exports = {
         const sql = `delete from UserLessonLearn where Username = '${username}'`;
         const [rows, fields] = await db.load(sql);
         return rows;
+    },
+
+    async deleteLesson(lesson) {
+        const sql = `delete from UserLessonLearn where Username = '${lesson.Username}' and CourseID = '${lesson.CourseID}' and Lesson = '${lesson.Lesson}'`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
     }
 }

@@ -58,7 +58,7 @@ router.post('/del_user', auth.authAdmin, async function(req, res) {
             await learnDb.deleteByID(courses[i].CourseID);
         }
     }
-    
+
     res.redirect('back');
 })
 
@@ -72,7 +72,6 @@ router.post('/add_user', auth.authAdmin, async function(req, res) {
     }
 
     var result = await userDb.add(user);
-    console.log(result);
     res.redirect('back');
 })
 
