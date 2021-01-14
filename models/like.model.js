@@ -30,8 +30,8 @@ module.exports = {
     },
 
     async remove(username, courseid) {
-        const sql=`Username = '${username}' and CourseID = ${courseid}`
-        const [result, fields] = await db.del(sql, 'UserLike');
+        const sql=`delete from UserLike where Username = '${username}' and CourseID = '${courseid}'`
+        const [result, fields] = await db.load(sql);
         return result;
     },
 

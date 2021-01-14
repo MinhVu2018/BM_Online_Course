@@ -51,7 +51,6 @@ router.get('/it/:id', async function(req, res) {
     //list hot courses
     
     var hot = await proDb.relativeCourses(listProduct[0].CourseID, catId);
-    console.log(hot);
     var max = (hot[0].NumberStudent > listProduct[0].NumberStudent) ? hot[0].NumberStudent : listProduct[0].NumberStudent;
 
     res.render('courses/byCat', {
@@ -167,6 +166,16 @@ router.get('/detail/check/is-like', auth.auth, async function (req, res) {
     return res.json('fail');
 })
 
+router.get('/remove/fav', auth.auth, async function(req, res) {
+    const id = req.query.courseid;
+
+    var result = await likeDb.remove(req.session.authUser.Username, id);
+    if (result !== false) {
+        res.json('success');
+    } else {
+        res.json('fail')
+    }
+})
 router.get('/detail/check/is-buy', auth.auth, async function (req, res) {
     const id = req.query.courseid;
     
