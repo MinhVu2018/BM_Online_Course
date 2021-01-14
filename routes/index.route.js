@@ -9,8 +9,6 @@ router.get('/', async function(req, res, next) {
   var topView = await db.sortByView();
   var topCategory = await db.sortCategory();
 
-  //console.log(topNewest);
-
   if (req.session.auth === true) {
     res.render('index', { 
       auth: true,

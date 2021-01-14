@@ -41,14 +41,24 @@ router.post('/del_course', auth.authAdmin, async function(req, res) {
 router.post('/del_user', auth.authAdmin, async function(req, res) {
     const username = req.body.del_username;
 
-    var result = await userDb.deleteUser(username);
+    //xóa database dựa vào user
+    await userDb.deleteUser(username);
     await buyDb.deleteByUser(username);
     await likeDb.deleteByUser(username);
     await learnDb.deleteByUser(username);
-    
-    //delete courses if user own courses
-    //do here
 
+    //nếu user là teacher, xóa những khóa học liên quan
+    var courses = proDb.getByTeacher(username);
+    if (courses != null) {
+        await proDb.deleteByUsername(username);
+        for (var i = 0; i < courses.length; i++) {
+            await buyDb.deleteByID(courses[i].CourseID);
+            await likeDb.deleteByID(courses[i].CourseID);
+            await lessonDb.deleteByID(courses[i].CourseID);
+            await learnDb.deleteByID(courses[i].CourseID);
+        }
+    }
+    
     res.redirect('back');
 })
 
