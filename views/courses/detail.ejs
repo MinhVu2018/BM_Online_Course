@@ -127,30 +127,32 @@
 
             <h3 style="font-weight: 700; margin-top: 50px;">Các khóa học liên quan: </h3>
             <div class="container d-flex flex-row" style="margin-right:100px; height: fit-content;">
-                <% for(var i=0; i < relative.length; i++) { %>
-                    <div class="card" style="margin: 10px; text-align: left; border:1px solid black; width: 20%;">
-                        <div style="width: 100%; height: 140px">
-                            <a href="/courses/detail/<%= relative[i].CourseID %>"><img src="/images/courses/<%= relative[i].CourseID %>.jpg" class="img-fluid mx-auto d-block" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
-                            <div style="position: absolute; top: 5px; right: 10px;"><span class="badge badge-danger">FREE</span></div>
+                <% if (relative != null) {%>
+                    <% for(var i=0; i < relative.length; i++) { %>
+                        <div class="card" style="margin: 10px; text-align: left; border:1px solid black; width: 20%;">
+                            <div style="width: 100%; height: 140px">
+                                <a href="/courses/detail/<%= relative[i].CourseID %>"><img src="/images/courses/<%= relative[i].CourseID %>.jpg" class="img-fluid mx-auto d-block" style="position:relative; width: fit-content; height: 100%;" alt="img1"></a>
+                                <div style="position: absolute; top: 5px; right: 10px;"><span class="badge badge-danger">FREE</span></div>
+                            </div>
+                            <div class="card-body" style="margin:10px; padding-top: 10px; padding-left: 0px; padding-right: 0px;">
+                                <% if (relative[i].Category == 1) { %>
+                                    <h5 class="card-title" style="color: black"><%= relative[i].Name %> <br> <span class="badge badge-info">Web</span></h5>
+                                <% } %>
+                                <% if (relative[i].Category == 2) { %>
+                                    <h5 class="card-title" style="color: black"><%= relative[i].Name %> <br> <span class="badge badge-warning">App</span></h5>
+                                <% } %>
+                                
+                                <p style="color:black;"><i class="fas fa-chalkboard-teacher"></i> <%= relative[i].Teacher %>&emsp; &emsp; <i class="fas fa-users"></i> <%= relative[i].NumberStudent %></p>
+                                
+                                <% for(var j=0; j < Math.round(relative[i].Preview); j++) { %>
+                                    <i class="fas fa-star" style="color: orange;"></i>
+                                <% } %>
+                                <% for(var j=0; j < 5 - Math.round(relative[i].Preview); j++) { %>
+                                    <i class="far fa-star" style="color: orange"></i>
+                                <% } %>
+                            </div>
                         </div>
-                        <div class="card-body" style="margin:10px; padding-top: 10px; padding-left: 0px; padding-right: 0px;">
-                            <% if (relative[i].Category == 1) { %>
-                                <h5 class="card-title" style="color: black"><%= relative[i].Name %> <br> <span class="badge badge-info">Web</span></h5>
-                            <% } %>
-                            <% if (relative[i].Category == 2) { %>
-                                <h5 class="card-title" style="color: black"><%= relative[i].Name %> <br> <span class="badge badge-warning">App</span></h5>
-                            <% } %>
-                            
-                            <p style="color:black;"><i class="fas fa-chalkboard-teacher"></i> <%= relative[i].Teacher %>&emsp; &emsp; <i class="fas fa-users"></i> <%= relative[i].NumberStudent %></p>
-                            
-                            <% for(var j=0; j < Math.round(relative[i].Preview); j++) { %>
-                                <i class="fas fa-star" style="color: orange;"></i>
-                            <% } %>
-                            <% for(var j=0; j < 5 - Math.round(relative[i].Preview); j++) { %>
-                                <i class="far fa-star" style="color: orange"></i>
-                            <% } %>
-                        </div>
-                    </div>
+                    <% } %>
                 <% } %>
             </div>
 

@@ -28,4 +28,15 @@ Preview = Rating
 _admin_:            bm.onlinecourses@gmail.com      admin
 _teacher_:          tvuminht@gmail.com              123456
 _student_1_:        lethanhbinh3920@gmail.com       iloveyou3920
-_student_2_:        lulien315@gmail.com             1234567890
+_teacher_2_:        lulien315@gmail.com             1234567890
+bluefacbook392@gmail.com hocvienchamchi
+
+// note
+global host db
+5 cate
+noi bat, moi, giam gia trong list cate
+xóa course likeDb
+disable khóa học, account 
+sort trong search
+
+
