@@ -4,6 +4,8 @@ var auth = require('../middlewares/auth.mdw');
 const proDb = require('../models/product.model');
 const likeDb = require('../models/like.model');
 const buyDb = require('../models/buy.model');
+const learnDb = require('../models/learn.model');
+const lessonDb = require('../models/lesson.model');
 var bcrypt = require('bcrypt');
 var db = require('../models/user.model');
 var userDb = require('../models/user.model');
@@ -122,6 +124,10 @@ router.get('/enroll_courses', auth.auth, async function(req, res){
     name = req.session.authUser.Username;
     auth = true;
 
+    //list course learn
+    var courseLearn = await learnDb.numLessonLearn(name);
+    var numLesson = await lessonDb.numberLesson();
+
     //current page
     var page = req.query.page || 1; 
 
@@ -153,6 +159,8 @@ router.get('/enroll_courses', auth.auth, async function(req, res){
         curPage: +page,
         numPage: nPages,
         numCourse: total,
+        numLesson: numLesson,
+        courseLearn: courseLearn,
         error: null
     });
 })
@@ -184,7 +192,6 @@ router.get('/my_courses', auth.auth, async function(req, res){
 
     const offset = (page - 1) * paginate.limit;
     const listProduct = await proDb.pageByTeacherCourses(name, offset);
-    console.log(listProduct);
     
     res.render('profile/myCourses', {
         auth: auth,

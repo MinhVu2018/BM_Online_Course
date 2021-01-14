@@ -36,5 +36,13 @@ module.exports = {
         const sql = `delete from UserLessonLearn where Username = '${lesson.Username}' and CourseID = '${lesson.CourseID}' and Lesson = '${lesson.Lesson}'`;
         const [rows, fields] = await db.load(sql);
         return rows;
+    },
+
+    async numLessonLearn(username) {
+        const sql = `SELECT CourseID, Count(Lesson) as Num FROM onCourses.UserLessonLearn where Username='${username}' group by CourseID`;
+        const [rows, fields] = await db.load(sql);
+
+        return rows;
     }
+
 }
