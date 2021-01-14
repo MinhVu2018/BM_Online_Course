@@ -171,6 +171,32 @@ router.get('/detail/check/is-buy', auth.auth, async function (req, res) {
     return res.json('fail');
 })
 
+router.get('/detail/check/learn', auth.auth, async function (req, res) {
+    const courseid = req.query.courseid;
+    const lessonid = req.query.lessonid;
+    const status = req.query.status;
+    const username = req.session.authUser.Username;
+    
+
+    var lesson = {Username: username, CourseID: courseid, Lesson: lessonid};
+
+
+    var result;
+    if (status == 'true') {
+        result = await learnDb.updateLearnLesson(lesson);
+        console.log("123");
+    } else {
+        result = await learnDb.deleteLesson(lesson);
+        console.log("456");
+    }
+
+    if (result === true) {
+        res.json("success");
+    } else {
+        res.json("fail");
+    }
+})
+
 router.get('/course/:id/like', auth.auth, async function(req, res){
     var id = req.params.id;
 
@@ -314,28 +340,6 @@ router.post('/new_lesson/:courseid', async function(req,res) {
 
     await lessonDb.addLesson(lesson);
     res.redirect('/courses/detail/' + courseid);
-})
-
-router.get('/learning/:courseid/:lessonid', auth.auth, async function(req, res) {
-    var lessonid = req.params.lessonid;
-    var courseid = req.params.courseid;
-
-    var lesson = await lessonDb.singeLessonByID(+courseid, +lessonid);
-
-    //update user learned lesson
-    var learn = {
-        Username: req.session.authUser.Username,
-        CourseID: +courseid,
-        Lesson: +lessonid
-    }
-
-    var temp = await learnDb.checkExist(learn);
-    if (temp == null)
-        await learnDb.updateLearnLesson(learn);
-
-    res.render('courses/lesson', {
-        lesson: lesson
-    });
 })
 
 router.get('/edit', auth.auth, async function(req, res) {

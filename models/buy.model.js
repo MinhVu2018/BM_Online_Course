@@ -40,4 +40,4 @@ module.exports = {
         const [result, fields] = await db.load(sql);
         return result;
     }
-};
+  };
