@@ -57,6 +57,19 @@
                             <div class="row">
                                 <div id="cover" class = "col-sm-4">
                                     <img src="/images/courses/<%= courses[i].CourseID %>.jpg" style = "width: 300px; height: 200px; object-fit: fill; border: 1px solid black;">
+                                    <div style="position: absolute; top: 10px; left: 25px;">
+                                        <% var now = moment(new Date()); %>
+                                        <% var end = moment(courses[i].DateStart);  %>
+                                        <% var duration = moment.duration(now.diff(end));  %>
+                                        <% var days = duration.asDays(); %>
+                                        <% if (days <= 7) { %> 
+                                            <span class="badge badge-danger">NEW</span>
+                                        <% } %>
+
+                                        <% if (courses[i].NumberStudent == max) { %> 
+                                            <span class="badge badge-danger">HOT</span>
+                                        <% } %>
+                                    </div>
                                 </div>
 
                                 <div id="content" class = "col" style="line-height: 3; color:black">

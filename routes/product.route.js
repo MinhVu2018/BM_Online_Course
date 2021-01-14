@@ -48,6 +48,12 @@ router.get('/it/:id', async function(req, res) {
         name = null;
     }
 
+    //list hot courses
+    
+    var hot = await proDb.relativeCourses(listProduct[0].CourseID, catId);
+    console.log(hot);
+    var max = (hot[0].NumberStudent > listProduct[0].NumberStudent) ? hot[0].NumberStudent : listProduct[0].NumberStudent;
+
     res.render('courses/byCat', {
         auth: auth,
         name: name,
@@ -56,6 +62,8 @@ router.get('/it/:id', async function(req, res) {
         numCourse: total,
         cate: req.params.id,
         curPage: +page,
+        moment: moment,
+        max: max
     });
 })
 
