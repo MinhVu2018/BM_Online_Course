@@ -7,6 +7,7 @@ const lessonDb = require('../models/lesson.model');
 const learnDb = require('../models/learn.model');
 const commentDb = require('../models/comment.model');
 const userDb = require('../models/user.model');
+const cateDb = require('../models/cate.model');
 const { paginate } = require('../config/default.json');
 const auth = require('../middlewares/auth.mdw');
 var upload = require('../middlewares/upload.mdw');
@@ -243,13 +244,18 @@ router.get('/new_course', auth.auth, async function(req, res) {
     if (req.session.authUser.Type == 'admin') {
         teachers = await userDb.listType('teacher');
     }
+
+    var listCate = await cateDb.getListCateName();
+    console.log(listCate);
+
     res.render('courses/add_course', {
         type: req.session.authUser.Type,
-        teachers: teachers
+        teachers: teachers,
+        listCate: listCate,
     });
 })
 
-router.post('/new_course', upload.single('course_img'), async function(req, res, next) {
+router.post('/new_course', upload.upload.single('course_img'), async function(req, res, next) {
     console.log("Add a new course");
 
     var today = new Date();
@@ -257,7 +263,7 @@ router.post('/new_course', upload.single('course_img'), async function(req, res,
     var mm = today.getMonth()+1; 
     var yyyy = today.getFullYear();
 
-
+    var catid = await cateDb.getId(req.body.course_cate);
     var course = {
         CourseID: null,
         Name: req.body.course_name,
@@ -268,7 +274,7 @@ router.post('/new_course', upload.single('course_img'), async function(req, res,
         DateStart: yyyy + '-' + mm + '-' + dd,
         NumberStudent: 0,
         Status: 0,
-        Category: req.body.course_cate == 'web' ? 1 : 2,
+        Category: catid,
         View: 0,
         Price: 0
     }
@@ -357,10 +363,8 @@ router.get('/edit', auth.auth, async function(req, res) {
                 lessons_all.push([]);
             else 
                 lessons_all.push(lessons);
-
         }
     }
-
 
     res.render('courses/edit', {
         courses: courses,

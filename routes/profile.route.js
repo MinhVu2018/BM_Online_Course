@@ -10,7 +10,6 @@ var userDb = require('../models/user.model');
 const { paginate } = require('../config/default.json');
 //Khởi tạo biến cấu hình cho việc lưu trữ file
 
-
 router.get('/', auth.auth, function(req, res) {
     var name;
     if (req.session.authUser.Name == null) {
@@ -89,7 +88,7 @@ router.get('/favorite_courses', auth.auth, async function(req, res) {
 
     //find the number of page
     var list = await likeDb.listByUser(name);
-    const total = 0;
+    var total = 0;
     if (list != null)
         total = list.length;
     var nPages = Math.floor(total/+paginate.limit);
@@ -128,9 +127,10 @@ router.get('/enroll_courses', auth.auth, async function(req, res){
 
     //find the number of page
     var list = await buyDb.listByUser(name);
-    const total = 0;
+    var total = 0;
     if (list != null)
         total = list.length;
+
     var nPages = Math.floor(total/+paginate.limit);
     
     if (total % +paginate.limit > 0) nPages++;
@@ -167,7 +167,7 @@ router.get('/my_courses', auth.auth, async function(req, res){
 
     //find the number of page
     var list = await proDb.getByTeacher(name);
-    const total = 0;
+    var total = 0;
     if (list != null)
         total = list.length;
     var nPages = Math.floor(total/+paginate.limit);

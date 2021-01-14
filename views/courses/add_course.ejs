@@ -25,8 +25,9 @@
                     <div class="col form-group">
                         <label for="course_cate" style="width: 100%;">Category</p>
                         <select class="form-control" name="course_cate" id="course_cate">
-                            <option value="web" selected>Web development</option>
-                            <option value="app">App development</option>
+                            <% for(var i=0; i<listCate.length; i++){%>
+                                <option value="<%= listCate[i].CatName %>"> <%= listCate[i].CatName %> development</option>
+                            <%}%>
                             <option disabled>Comming soon...</option>
                         </select>
                     </div>
