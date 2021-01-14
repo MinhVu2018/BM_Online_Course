@@ -18,17 +18,16 @@ router.get('/', async function(req, res, next) {
       topView: topView,
       topCategory: topCategory
     });
-    return;
+  } else {
+    res.render('index', {
+      auth: false,
+      name: null,
+      topCourses: topCourses,
+      topNewest: topNewest,
+      topView: topView,
+      topCategory: topCategory
+    })
   }
-
-  res.render('index', {
-    auth: false,
-    name: null,
-    topCourses: topCourses,
-    topNewest: topNewest,
-    topView: topView,
-    topCategory: topCategory
-  })
   
 });
 
