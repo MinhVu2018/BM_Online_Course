@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../models/product.model');
+var cateDb = require('../models/cate.model');
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -8,6 +9,7 @@ router.get('/', async function(req, res, next) {
   var topNewest = await db.sortByDate();
   var topView = await db.sortByView();
   var topCategory = await db.sortCategory();
+  var cateList = await cateDb.allCate();
 
   if (req.session.auth === true) {
     res.render('index', { 
@@ -16,7 +18,8 @@ router.get('/', async function(req, res, next) {
       topCourses: topCourses,
       topNewest: topNewest,
       topView: topView,
-      topCategory: topCategory
+      topCategory: topCategory,
+      cate: cateList
     });
   } else {
     res.render('index', {
@@ -25,7 +28,8 @@ router.get('/', async function(req, res, next) {
       topCourses: topCourses,
       topNewest: topNewest,
       topView: topView,
-      topCategory: topCategory
+      topCategory: topCategory,
+      cate: cateList
     })
   }
   

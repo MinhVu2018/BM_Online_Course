@@ -14,16 +14,38 @@ var upload = require('../middlewares/upload.mdw');
 var moment = require('moment');
 
 router.get('/it/:id', async function(req, res) {
-    var catId = 1;  // web
-    if (req.params.id == "app")
-        catId = 2;
+    var catId = req.params.id;  
+
+    var auth, name;
+    if (req.session.auth === true) {
+        auth = true;
+        name = req.session.authUser.Username;
+    } else {
+        auth = false;
+        name = null;
+    }
 
     //current page
     var page = req.query.page || 1; 
 
     //find the number of page
     var list = await proDb.getByCategory(catId);
-    const total = list.length;
+    var total;
+    if (list == null) {
+        total = 0;
+    } else {
+        total = list.length;
+    }
+
+    //no course in cate
+    if (total == 0) {
+        res.render('courses/byCat', {
+            auth: auth,
+            name: name,
+            empty: true,
+            numCourse: 0
+        })
+    }
     var nPages = Math.floor(total/+paginate.limit);
     
     if (total % +paginate.limit > 0) nPages++;
@@ -38,24 +60,23 @@ router.get('/it/:id', async function(req, res) {
 
     const offset = (page - 1) * paginate.limit;
     const listProduct = await proDb.pageByCat(catId, offset);
-    
-    var auth, name;
-    if (req.session.auth === true) {
-        auth = true;
-        name = req.session.authUser.Username;
-    } else {
-        auth = false;
-        name = null;
-    }
 
     //list hot courses
     
     var hot = await proDb.relativeCourses(listProduct[0].CourseID, catId);
-    var max = (hot[0].NumberStudent > listProduct[0].NumberStudent) ? hot[0].NumberStudent : listProduct[0].NumberStudent;
+    var max;
+    if (hot != null)
+        max = (hot[0].NumberStudent > listProduct[0].NumberStudent) ? hot[0].NumberStudent : listProduct[0].NumberStudent;
+    else
+        max = listProduct[0].NumberStudent;
 
+    if (max == 0)
+        max = 1
+    
     res.render('courses/byCat', {
         auth: auth,
         name: name,
+        empty: false,
         courses: listProduct,
         numPage: nPages,
         numCourse: total,
@@ -320,13 +341,16 @@ router.post('/new_course', upload.upload.single('course_img'), async function(re
     res.redirect('/courses/detail/' + course.CourseID);
 })
 
-router.get('/new_lesson/:courseid', auth.authTeacher, async function(req, res) {
+router.get('/new_lesson/:courseid', auth.auth, async function(req, res) {
     var courseid = req.params.courseid;
     var course = await proDb.singleByID(courseid);
 
-    if (course.Teacher != req.session.authUser.Username) {
-        res.redirect('/');
+    if (req.session.authUser.Type != 'admin') {
+        if (course.Teacher != req.session.authUser.Username) {
+            res.redirect('/');
+        }
     }
+
     res.render('courses/add_lesson', {
         course: course
     });

@@ -50,6 +50,7 @@
             <main>
                 <h1> Các khóa học: (<%= numCourse %> kết quả)</h1>
 
+                <% if (empty == false) { %> 
                 <% for(var i=0; i < courses.length; i++) { %>
                     <hr style="border-top: 1px solid black;">
                     <div class="container" style="margin-top:20px; margin-bottom: 20px;">
@@ -123,6 +124,11 @@
                 <% if (reqPage > numPage) reqPage = numPage%>
                 <a href="/courses/it/<%= cate %>/?page=<%= reqPage%>">&raquo;</a>
             </div>
+            <% } else { %>
+                <div style="height: 500px;">
+                    <h1 style="color:rgb(224, 172, 28)">Lĩnh vực này hiện chưa có khóa học</p>
+                </div>
+            <% } %>
         </div>
     </div>
     <%- include('../partials/footer.ejs') %>
