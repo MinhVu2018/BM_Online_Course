@@ -136,7 +136,7 @@ router.post('/login', auth.isNotAuth, async function(req, res, next) {
   const url = req.session.retUrl || '/';
   res.render('account/noti', {
     status: "Đăng nhập thành công",
-    message: "Chào mừng bạn đến với Onlince Courses!"
+    message: "Chào mừng bạn đến với Online Courses!"
   })
 });
 
@@ -144,7 +144,6 @@ router.get('/logout', auth.auth, async function (req, res) {
   req.session.auth = false;
   req.session.authUser = null;
   req.session.retUrl = null;
-  //req.session.cart = [];
 
   const url = req.headers.referer || '/';
   res.redirect('/');

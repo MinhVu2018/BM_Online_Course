@@ -33,6 +33,23 @@
                     <div class="row">
                         <div id="cover" class = "col-sm-4">
                             <img src="/images/courses/<%= courses[i].CourseID %>.jpg" style = "width: 300px; height: 200px; object-fit: fill; border: 1px solid black;">
+                            <div style="position: absolute; top: 10px; left: 25px;">
+                                <% var complete = false; %>
+                                <% for (var j=0; j < courseLearn.length; j++) { %>
+                                <%      if (courseLearn[j].CourseID == courses[i].CourseID) { %> 
+                                <%          for (var k = 0; k < numLesson.length; k++) { %> 
+                                <%              if (courseLearn[j].CourseID == numLesson[k].CourseID) { %>
+                                <%                  if (courseLearn[j].Num == numLesson[k].Num) { complete = true; %>
+                                <span class="badge badge-danger">COMPLETE</span>
+                                <%                  } %>
+                                <%              } %>
+                                <%          } %>
+                                <%      } %>
+                                <% } %>
+                                <% if (complete == false) { %> 
+                                    <span class="badge badge-danger">LEARING</span>
+                                <% } %>
+                            </div>
                         </div>
 
                         <div id="content" class = "col" style="line-height: 3; color:black">

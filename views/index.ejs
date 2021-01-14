@@ -106,11 +106,10 @@
                 <div style="position: absolute; top: 25px; right: 10px;"><span class="badge badge-danger">FREE</span></div>
             </div>
             <div class="card-body" style="margin:10px; padding-top: 10px; padding-left: 0px; padding-right: 0px;">
-                <% if (topNewest[i].Category == 1) { %>
-                    <h5 class="card-title" style="color: black"><%= topNewest[i].Name %> <br> <span class="badge badge-info">Web</span></h5>
-                <% } %>
-                <% if (topNewest[i].Category == 2) { %>
-                    <h5 class="card-title" style="color: black"><%= topNewest[i].Name %> <br> <span class="badge badge-warning">App</span></h5>
+                <% for (var j = 0; j < cate.length; j++) { %> 
+                    <% if (topNewest[i].Category == cate[j].CatId) { %>
+                        <h5 class="card-title" style="color: black"><%= topNewest[i].Name %> <br> <span class="badge badge-info"><%= cate[j].CatName %></span></h5>
+                    <% } %>
                 <% } %>
 
 
@@ -163,12 +162,7 @@
         <div class = "row">
             <% for(var i=0; i < topCategory.length; i++) { %>
             <div class = "col">
-                <% if (topCategory[i].Category == 1) { %>
-                    <a href="/courses/it/web"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category1" width="100%" height ="100%"></a>
-                <% } %>
-                <% if (topCategory[i].Category == 2) { %>
-                    <a href="/courses/it/app"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category1" width="100%" height ="100%"></a>
-                <% } %>
+                <a href="/courses/it/<%= topCategory[i].Category %>"><img class="mx-auto d-block" src="images/cate/<%= topCategory[i].Category %>.jpg" alt="category" width="100%" height ="100%"></a>
             </div>
             <% } %>
         </div>

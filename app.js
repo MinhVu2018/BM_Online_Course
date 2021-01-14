@@ -30,7 +30,7 @@ app.use(function (err, req, res, next) {
 })
 
 //open port
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
   console.log(`E-Commerce app is listening at http://localhost:${PORT}`)
 })

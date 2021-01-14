@@ -30,6 +30,11 @@ module.exports = {
         const sql = `delete from CourseDetail where CourseID = '${courseid}'`;
         const [rows, fields] = await db.load(sql);
         return rows;
-    }
+    },
 
+    async numberLesson() {
+        const sql = `SELECT CourseID, COUNT(*) as Num FROM CourseDetail GROUP BY CourseID`;
+        const [rows, fields] = await db.load(sql);
+        return rows;
+    }
 }

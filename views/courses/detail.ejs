@@ -163,7 +163,7 @@
                     <img src="/images/avatar/avatar.png" style="width: 100%; height: 100%;">
                 </div>
                 <form action="comment/<%= course.CourseID %>" class="d-flex flex-column align-items-center" method="POST" id="form_comment" style="margin-left: 30px;">
-                    <textarea style="height: 100px; border: 1px solid #dcdacb; resize: none; padding: 10px 0 10px 10px;" name="comment" cols="80" placeholder="Nhận xét khóa học ở đây"></textarea>
+                    <textarea style="height: 100px; border: 1px solid #dcdacb; resize: none; padding: 10px 0 10px 10px;" name="comment" cols="130" placeholder="Nhận xét khóa học ở đây"></textarea>
                     <div class="d-flex flex-row" style="width: 100%; height: 70px; background-color: #f5f6f7;">
                         <div class="range" style="width: fit-content; margin: 15px 0px 0px 15px;">
                             <label for="point" id="score"></label>
@@ -209,7 +209,7 @@
             
         </div>
 
-        <div class="p2 dc_card card" >
+        <div class="p2 dc_card card" style="margin: 30px;" >
             <img class="card-img-top dc_img" src="/images/courses/<%= course.CourseID %>.jpg" alt="Card image cap">
             <div class="card-body text-center">
                 <h1 class="text-danger">Miễn phí</h1>
@@ -261,7 +261,7 @@
         });
 
         $(document).ready(function() {
-            $.getJSON('/courses/detail/check/is-buy?courseid=<%= course.CourseID %>', function (data) {
+            $.getJSON('/courses/detail/check/show?courseid=<%= course.CourseID %>', function (data) {
                 if (data == 'success') {
                     $('.hide').hide();
                     $('.need-to-buy').show();

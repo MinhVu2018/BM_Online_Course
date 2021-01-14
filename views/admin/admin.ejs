@@ -36,40 +36,42 @@
                 <div id="cate_table" style="margin-left: 20px;"></div>
             </div>
 
-            <form id="edit_cate" action="manage/edit_cate" enctype="multipart/form-data" method="POST" style="margin: 20px;">
-                <h4>Edit category:</h4>
-                <div class="d-flex flex-row">
-                    <input type="text" id="edit_cateid" name="edit_cateid" class="form-control" placeholder="Input category ID" required style="margin-right: 15px">
-                    <input type="text" id="edit_catename" name="edit_catename" class="form-control" placeholder="Input new category name" style="margin-right: 15px">
-                    <input class="btn" value="EDIT" type="submit" style="background-color: black; color:#d5d5d5;">
-                </div>
+            <div style="margin: 20px">
+                <form id="edit_cate" action="manage/edit_cate" enctype="multipart/form-data" method="POST" style="margin: 20px;">
+                    <h4>Edit category:</h4>
+                    <div class="d-flex flex-row">
+                        <input type="text" id="edit_cateid" name="edit_cateid" class="form-control" placeholder="Input category ID" required style="margin-right: 15px">
+                        <input type="text" id="edit_catename" name="edit_catename" class="form-control" placeholder="Input new category name" style="margin-right: 15px">
+                        <input class="btn" value="EDIT" type="submit" style="background-color: black; color:#d5d5d5;">
+                    </div>
 
-                <div class="custom-file" style="width: 90%;">
-                    <label class="custom-file-label" for="cate_img">Select image:</label>
-                    <input class="custom-file-input" type="file" id="cate_img" name="cate_img" accept=".jpg">
-                </div>
-            </form>
+                    <div class="custom-file" style="width: 90%; margin-top: 20px;">
+                        <label class="custom-file-label" for="cate_img">Select image:</label>
+                        <input class="custom-file-input" type="file" id="cate_img" name="cate_img" accept=".jpg">
+                    </div>
+                </form>
 
-            <form id="add_cate" action="manage/add_cate" enctype="multipart/form-data" method="POST" style="margin: 20px;">
-                <h4>Add new category:</h4>
-                <div class="d-flex flex-row">
-                    <input type="text" id="add_catename" name="add_catename" class="form-control" placeholder="Input category name" required style="margin-right: 15px">
-                    <input class="btn" value="ADD" type="submit" style="background-color: black; color:#d5d5d5;">
-                </div>
+                <form id="add_cate" action="manage/add_cate" enctype="multipart/form-data" method="POST" style="margin: 20px;">
+                    <h4>Add new category:</h4>
+                    <div class="d-flex flex-row">
+                        <input type="text" id="add_catename" name="add_catename" class="form-control" placeholder="Input category name" required style="margin-right: 15px">
+                        <input class="btn" value="ADD" type="submit" style="background-color: black; color:#d5d5d5;">
+                    </div>
 
-                <div class="custom-file" style="width: 90%;">
-                    <label class="custom-file-label" for="cate_img">Select image:</label>
-                    <input class="custom-file-input" type="file" id="cate_img" name="cate_img" accept=".jpg">
-                </div>
-            </form>
+                    <div class="custom-file" style="width: 90%; margin-top: 20px;">
+                        <label class="custom-file-label" for="cate_img">Select image:</label>
+                        <input class="custom-file-input" type="file" id="cate_img" name="cate_img" accept=".jpg">
+                    </div>
+                </form>
 
-            <form id="del_cate" action="manage/del_cate" method="POST" style="margin: 20px;">
-                <h4>Delete category:</h4>
-                <div class="d-flex flex-row">
-                    <input type="text" id="del_catename" name="del_catename" class="form-control" placeholder="Input category name you want to delete" required style="margin-right: 30px">
-                    <input class="btn" value="DELETE" type="submit" style="background-color: black; color:#d5d5d5;">
-                </div>
-            </form>
+                <form id="del_cate" action="manage/del_cate" method="POST" style="margin: 20px;">
+                    <h4>Delete category:</h4>
+                    <div class="d-flex flex-row">
+                        <input type="text" id="del_catename" name="del_catename" class="form-control" placeholder="Input category name you want to delete" required style="margin-right: 30px">
+                        <input class="btn" value="DELETE" type="submit" style="background-color: black; color:#d5d5d5;">
+                    </div>
+                </form>
+            </div>
         </div>
         
         <div id="manage_course" style="height: 100vh; width: 1200px">
