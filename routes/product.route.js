@@ -197,6 +197,23 @@ router.get('/remove/fav', auth.auth, async function(req, res) {
         res.json('fail')
     }
 })
+
+router.get('/detail/check/show', async function (req, res) {
+    const id = req.query.courseid; 
+    
+    var user;
+    if (req.session.auth == true) {
+        user = await buyDb.ifUserBuy(req.session.authUser.Username, id);
+    } else {
+        return res.json('success');
+    }
+
+    if (user === null) {
+        return res.json('success');
+    }
+    
+    return res.json('fail');
+})
 router.get('/detail/check/is-buy', auth.auth, async function (req, res) {
     const id = req.query.courseid;
     
@@ -222,10 +239,8 @@ router.get('/detail/check/learn', auth.auth, async function (req, res) {
     var result;
     if (status == 'true') {
         result = await learnDb.updateLearnLesson(lesson);
-        console.log("123");
     } else {
         result = await learnDb.deleteLesson(lesson);
-        console.log("456");
     }
 
     if (result === true) {
